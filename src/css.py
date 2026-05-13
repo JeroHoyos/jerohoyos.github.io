@@ -36,7 +36,8 @@ body{background:#f4f4ef;color:var(--black);font-family:'Space Mono',monospace;ov
 .tab-btn.active{color:var(--white)}
 .tab-btn.active::after{transform:scaleX(1)}
 .tab-panel{display:none;position:relative;background:#f4f4ef}
-.tab-panel.active{display:block}
+.tab-panel.active{display:block;animation:tabIn .3s ease both}
+@keyframes tabIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 .tab-panel>canvas{position:absolute;inset:0;z-index:0;pointer-events:none;display:block;width:100%;height:100%}
 .panel-content{position:relative;z-index:2}
 .dark-panel{background:rgba(244,244,239,0.78);padding:5rem 4rem 6rem}

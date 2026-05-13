@@ -59,13 +59,14 @@ def _conway():
     grid=n;
   }
   (function loop() {
+    requestAnimationFrame(loop);
+    if (document.hidden) return;
     frame++;
     if (frame%5===0) step();
     cx.clearRect(0,0,cv.width,cv.height);
     for (let x=0;x<cols;x++) for (let y=0;y<rows;y++) {
       if (grid[x][y]) { cx.fillStyle='rgba(255,255,255,0.18)'; cx.fillRect(x*SZ+1,y*SZ+1,SZ-2,SZ-2); }
     }
-    requestAnimationFrame(loop);
   })();
   init(); window.addEventListener('resize', init);
 })();"""
@@ -110,7 +111,7 @@ def _delaunay():
   }
   let t=0;
   (function loop() {
-    if (!pts.length) { requestAnimationFrame(loop); return; }
+    if (!pts.length || document.hidden) { requestAnimationFrame(loop); return; }
     t++; pts.forEach(p => { p.x+=p.vx; p.y+=p.vy; if(p.x<0||p.x>W) p.vx*=-1; if(p.y<0||p.y>H) p.vy*=-1; });
     cx.fillStyle='#f4f4ef'; cx.fillRect(0,0,W,H);
     try {
@@ -150,7 +151,7 @@ def _flow():
   }
   (function loop() {
     requestAnimationFrame(loop);
-    if (!active) return;
+    if (!active || document.hidden) return;
     cx.fillStyle='rgba(244,244,239,0.018)'; cx.fillRect(0,0,W,H);
     particles.forEach(p => {
       const angle=noise(p.x,p.y,t)*Math.PI*2, speed=2.2;
@@ -203,7 +204,7 @@ def _chladni():
     cv.width=W; cv.height=H; transT=0;
   }
   (function loop() {
-    requestAnimationFrame(loop); if(!active) return;
+    requestAnimationFrame(loop); if(!active || document.hidden) return;
     const nextIdx=(pairIdx+1)%PAIRS.length;
     const [m0,n0]=PAIRS[pairIdx],[m1,n1]=PAIRS[nextIdx];
     const a=ss(Math.min(1,transT/TRANS));
@@ -258,7 +259,7 @@ def _particles():
   }
 
   (function loop(){
-    requestAnimationFrame(loop);if(!active)return;
+    requestAnimationFrame(loop);if(!active||document.hidden)return;
     t+=0.005;
     cx.fillStyle='rgba(244,244,239,0.028)';cx.fillRect(0,0,W,H);
     for(const p of pts){
@@ -384,7 +385,7 @@ def _euler_helix():
   }
 
   function frame(){
-    if(!active){animId=null;return;}
+    if(!active||document.hidden){animId=null;return;}
 
     // Avanzar 4 pasos por frame
     for(let s=0;s<4;s++){
@@ -443,6 +444,7 @@ def _euler_helix():
     if(on&&!active){if(!initialized){init();initialized=true;} active=true; if(!animId) frame();}
     else if(!on) active=false;
   }).observe(document.getElementById('panel-blog'),{attributes:true,attributeFilter:['class']});
+  document.addEventListener('visibilitychange',()=>{ if(!document.hidden&&active&&!animId) frame(); });
   window.addEventListener('resize',()=>{if(active)init();});
 })();"""
 
