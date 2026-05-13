@@ -76,7 +76,7 @@ def _delaunay():
 /* ═══ ABOUT — Delaunay Triangulation ═══ */
 (function() {
   const cv = document.getElementById('c-delaunay'), cx = cv.getContext('2d');
-  let pts=[], W=0, H=0;
+  let pts=[], W=0, H=0, initialized=false;
   function circ(ax,ay,bx,by,ex,ey) {
     const D=2*(ax*(by-ey)+bx*(ey-ay)+ex*(ay-by));
     if (Math.abs(D)<1e-10) return null;
@@ -128,7 +128,7 @@ def _delaunay():
     requestAnimationFrame(loop);
   })();
   resize(); window.addEventListener('resize',resize);
-  new MutationObserver(() => { if (document.getElementById('panel-about').classList.contains('active')) resize(); })
+  new MutationObserver(() => { if (document.getElementById('panel-about').classList.contains('active')&&!initialized){resize();initialized=true;} })
     .observe(document.getElementById('panel-about'),{attributes:true,attributeFilter:['class']});
 })();"""
 
@@ -138,7 +138,7 @@ def _flow():
 /* ═══ PROJECTS — Flow Field ═══ */
 (function() {
   const cv=document.getElementById('c-flow'), cx=cv.getContext('2d');
-  let W,H,particles=[],t=0,active=false;
+  let W,H,particles=[],t=0,active=false,initialized=false;
   const NP=900;
   function noise(x,y,t) { return Math.sin(x*.009+t)*Math.cos(y*.007+t*.9)+Math.sin(x*.018-t*.7)*Math.cos(y*.013+t*.4)+Math.sin((x+y)*.005+t)+Math.sin(x*.004-y*.006+t*.3)*0.5; }
   function init() {
@@ -164,7 +164,7 @@ def _flow():
     t+=0.004;
   })();
   init();
-  new MutationObserver(() => { const on=document.getElementById('panel-projects').classList.contains('active'); if(on&&!active){init();active=true;}else if(!on) active=false; })
+  new MutationObserver(() => { const on=document.getElementById('panel-projects').classList.contains('active'); if(on&&!active){if(!initialized){init();initialized=true;}active=true;}else if(!on) active=false; })
     .observe(document.getElementById('panel-projects'),{attributes:true,attributeFilter:['class']});
   window.addEventListener('resize', () => { if(active) init(); });
 })();"""
@@ -174,7 +174,7 @@ def _chladni():
 /* ═══ CONTACT — Chladni Figures ═══ */
 (function() {
   const cv=document.getElementById('c-fourier'), cx=cv.getContext('2d');
-  let W,H,active=false,transT=0,pairIdx=0;
+  let W,H,active=false,initialized=false,transT=0,pairIdx=0;
   const PAIRS=[[2,3],[3,2],[4,3],[3,4],[2,5],[5,2],[4,5],[5,4],[3,5],[5,3],[4,7],[7,4]];
   const TRANS=200;
   const off=document.createElement('canvas'), oc=off.getContext('2d');
@@ -211,7 +211,7 @@ def _chladni():
     if(++transT>=TRANS){pairIdx=nextIdx;transT=0;}
   })();
   init();
-  new MutationObserver(()=>{const on=document.getElementById('panel-contact').classList.contains('active');if(on&&!active){init();active=true;}else if(!on)active=false;}).observe(document.getElementById('panel-contact'),{attributes:true,attributeFilter:['class']});
+  new MutationObserver(()=>{const on=document.getElementById('panel-contact').classList.contains('active');if(on&&!active){if(!initialized){init();initialized=true;}active=true;}else if(!on)active=false;}).observe(document.getElementById('panel-contact'),{attributes:true,attributeFilter:['class']});
   window.addEventListener('resize',()=>{if(active)init();});
 })();"""
 
@@ -221,7 +221,7 @@ def _particles():
 /* ═══ ARTE — Campo de partículas con atractores ═══ */
 (function(){
   const cv=document.getElementById('c-dp'),cx=cv.getContext('2d');
-  let W,H,active=false,t=0,pts=[];
+  let W,H,active=false,initialized=false,t=0,pts=[];
   const N=900;
 
   function init(){
@@ -283,7 +283,7 @@ def _particles():
   })();
 
   init();
-  new MutationObserver(()=>{const on=document.getElementById('panel-arte').classList.contains('active');if(on&&!active){init();active=true;}else if(!on)active=false;}).observe(document.getElementById('panel-arte'),{attributes:true,attributeFilter:['class']});
+  new MutationObserver(()=>{const on=document.getElementById('panel-arte').classList.contains('active');if(on&&!active){if(!initialized){init();initialized=true;}active=true;}else if(!on)active=false;}).observe(document.getElementById('panel-arte'),{attributes:true,attributeFilter:['class']});
   window.addEventListener('resize',()=>{if(active)init();});
 })();"""
 
@@ -293,7 +293,7 @@ def _euler_helix():
 /* ═══ BLOG — Lorenz Attractor (estilo Manim, fondo negro) ═══ */
 (function() {
   const cv=document.getElementById('c-scatter'), cx=cv.getContext('2d');
-  let W,H,active=false,animId=null;
+  let W,H,active=false,initialized=false,animId=null;
 
   // Parámetros clásicos de Lorenz
   const SIGMA=10, RHO=28, BETA=8/3;
@@ -440,7 +440,7 @@ def _euler_helix():
   init();
   new MutationObserver(()=>{
     const on=document.getElementById('panel-blog').classList.contains('active');
-    if(on&&!active){if(Math.abs((cv.width||0)-W)>80) init(); active=true; if(!animId) frame();}
+    if(on&&!active){if(!initialized){init();initialized=true;} active=true; if(!animId) frame();}
     else if(!on) active=false;
   }).observe(document.getElementById('panel-blog'),{attributes:true,attributeFilter:['class']});
   window.addEventListener('resize',()=>{if(active)init();});

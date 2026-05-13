@@ -185,7 +185,7 @@ footer{padding:1.2rem 4rem;border-top:1px solid #e5e5e5;display:flex;justify-con
   .lang-toggle{top:.6rem;right:.6rem;gap:.2rem}
   .lang-btn{font-size:.6rem;padding:.35rem .6rem}
   #hero{height:100svh}
-  .hero-name{letter-spacing:-1px;line-height:.9}
+  .hero-name{font-size:clamp(3.5rem,18vw,7rem);letter-spacing:-1px;line-height:.9}
   .hero-sub{margin-top:1.2rem}
   .hero-bottom{flex-direction:column;align-items:center;gap:1rem;bottom:1.8rem;padding:0 1.2rem}
   .hero-socials{gap:.5rem}
