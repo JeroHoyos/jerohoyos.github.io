@@ -1,3 +1,7 @@
+def _mobile_detect():
+    return "const _mob=window.innerWidth<=768||('ontouchstart' in window);\n"
+
+
 def _lang_toggle():
     return """
 /* ═══ LANGUAGE TOGGLE ═══ */
@@ -42,7 +46,7 @@ def _conway():
 /* ═══ HERO — Conway's Game of Life ═══ */
 (function() {
   const cv = document.getElementById('c-conway'), cx = cv.getContext('2d');
-  const SZ = 18; let cols, rows, grid, frame = 0;
+  const SZ = _mob?32:18, STEP=_mob?8:5; let cols, rows, grid, frame = 0;
   function init() {
     const r = cv.parentElement.getBoundingClientRect();
     cv.width = r.width || window.innerWidth; cv.height = r.height || window.innerHeight;
@@ -62,7 +66,7 @@ def _conway():
     requestAnimationFrame(loop);
     if (document.hidden) return;
     frame++;
-    if (frame%5===0) step();
+    if (frame%STEP===0) step();
     cx.clearRect(0,0,cv.width,cv.height);
     for (let x=0;x<cols;x++) for (let y=0;y<rows;y++) {
       if (grid[x][y]) { cx.fillStyle='rgba(255,255,255,0.18)'; cx.fillRect(x*SZ+1,y*SZ+1,SZ-2,SZ-2); }
@@ -107,7 +111,7 @@ def _delaunay():
     H=r.height||panel.offsetHeight||window.innerHeight;
     if(W<10||H<10) return; // panel oculto, no reinicializar
     cv.width=W; cv.height=H;
-    pts=Array.from({length:48}, () => ({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.55,vy:(Math.random()-.5)*.55}));
+    pts=Array.from({length:_mob?20:48}, () => ({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.55,vy:(Math.random()-.5)*.55}));
   }
   let t=0;
   (function loop() {
@@ -140,8 +144,8 @@ def _flow():
 (function() {
   const cv=document.getElementById('c-flow'), cx=cv.getContext('2d');
   let W,H,particles=[],t=0,active=false,initialized=false;
-  const NP=900;
-  function noise(x,y,t) { return Math.sin(x*.009+t)*Math.cos(y*.007+t*.9)+Math.sin(x*.018-t*.7)*Math.cos(y*.013+t*.4)+Math.sin((x+y)*.005+t)+Math.sin(x*.004-y*.006+t*.3)*0.5; }
+  const NP=_mob?200:900;
+  function noise(x,y,t) { return _mob ? Math.sin(x*.009+t)*Math.cos(y*.007+t*.9)+Math.sin((x+y)*.005+t) : Math.sin(x*.009+t)*Math.cos(y*.007+t*.9)+Math.sin(x*.018-t*.7)*Math.cos(y*.013+t*.4)+Math.sin((x+y)*.005+t)+Math.sin(x*.004-y*.006+t*.3)*0.5; }
   function init() {
     const panel=document.getElementById('panel-projects');
     W=panel.offsetWidth||window.innerWidth; H=panel.offsetHeight||window.innerHeight;
@@ -181,7 +185,7 @@ def _chladni():
   const off=document.createElement('canvas'), oc=off.getContext('2d');
   function ss(t){return t*t*(3-2*t);}
   function render(m,n) {
-    const SC=4, cols=Math.max(1,Math.floor(W/SC)), rows=Math.max(1,Math.floor(H/SC));
+    const SC=_mob?10:4, cols=Math.max(1,Math.floor(W/SC)), rows=Math.max(1,Math.floor(H/SC));
     if(off.width!==cols||off.height!==rows){off.width=cols;off.height=rows;}
     const img=oc.createImageData(cols,rows), d=img.data;
     for(let i=0;i<rows;i++){
@@ -223,7 +227,7 @@ def _particles():
 (function(){
   const cv=document.getElementById('c-dp'),cx=cv.getContext('2d');
   let W,H,active=false,initialized=false,t=0,pts=[];
-  const N=900;
+  const N=_mob?200:900;
 
   function init(){
     const p=document.getElementById('panel-arte');
@@ -303,7 +307,7 @@ def _euler_helix():
   const ROT_Y=2.42, ROT_X=0.38;
 
   // Dos trayectorias con condiciones iniciales casi idénticas
-  const TRAILS=2, MAX_PTS=1800;
+  const TRAILS=2, MAX_PTS=_mob?500:1800;
   const inits=[[0.1,0.1,20],[0.1+0.001,0.1,20]];
   let states, histories;
 
@@ -387,8 +391,8 @@ def _euler_helix():
   function frame(){
     if(!active||document.hidden){animId=null;return;}
 
-    // Avanzar 4 pasos por frame
-    for(let s=0;s<4;s++){
+    // Avanzar pasos por frame
+    for(let s=0;s<(_mob?1:4);s++){
       states.forEach((st,idx)=>{
         const [nx,ny,nz]=rk4(st.x,st.y,st.z);
         st.x=nx;st.y=ny;st.z=nz;
@@ -469,6 +473,7 @@ def _contact_form():
 def build_js():
     return (
         "<script>"
+        + _mobile_detect()
         + _lang_toggle()
         + _tabs()
         + _contact_form()
