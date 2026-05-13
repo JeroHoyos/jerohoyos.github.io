@@ -7,9 +7,9 @@ body{background:#f4f4ef;color:var(--black);font-family:'Space Mono',monospace;ov
 
 /* LANG TOGGLE */
 .lang-toggle{position:fixed;top:1.2rem;right:1.5rem;z-index:200;display:flex;gap:.3rem}
-.lang-btn{font-family:'Space Mono',monospace;font-size:.46rem;letter-spacing:2.5px;text-transform:uppercase;padding:.38rem .7rem;background:none;border:1px solid #ccc;color:#999;cursor:pointer;transition:all .2s}
-.lang-btn.active{border-color:#555;color:var(--black)}
-.lang-btn:hover{border-color:#888;color:#555}
+.lang-btn{font-family:'Space Mono',monospace;font-size:.46rem;letter-spacing:2.5px;text-transform:uppercase;padding:.38rem .7rem;background:rgba(30,30,30,0.35);border:1px solid rgba(160,160,160,0.35);color:#888;cursor:pointer;transition:all .2s;backdrop-filter:blur(6px)}
+.lang-btn.active{border-color:rgba(180,180,180,0.65);color:#bbb}
+.lang-btn:hover{border-color:rgba(160,160,160,0.55);color:#aaa}
 
 /* HERO */
 #hero{height:65vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;position:relative;overflow:hidden;background:var(--black)}
@@ -19,12 +19,12 @@ body{background:#f4f4ef;color:var(--black);font-family:'Space Mono',monospace;ov
 .hero-sub{font-family:'DM Serif Display',serif;font-style:italic;font-size:clamp(1.1rem,3.5vw,1.7rem);color:var(--gray);margin-top:2rem;line-height:1.6;animation:fadeUp .8s .2s ease both}
 .hero-bottom{position:absolute;bottom:2.5rem;left:0;right:0;display:flex;justify-content:space-between;align-items:flex-end;padding:0 4rem;z-index:2;animation:fadeIn 1.2s .5s ease both}
 .hero-socials{display:flex;gap:.8rem;flex-wrap:wrap;justify-content:center}
-.hero-socials a{display:inline-flex;align-items:center;gap:.6rem;font-size:.75rem;letter-spacing:2.5px;text-transform:uppercase;color:#ccc;text-decoration:none;padding:.85rem 1.6rem;border:1px solid #333;background:rgba(255,255,255,0.06);backdrop-filter:blur(6px);transition:all .25s;position:relative;overflow:hidden}
+.hero-socials a{display:inline-flex;align-items:center;gap:.4rem;font-size:.52rem;letter-spacing:2px;text-transform:uppercase;color:#ccc;text-decoration:none;padding:.55rem 1rem;border:1px solid #333;background:rgba(255,255,255,0.06);backdrop-filter:blur(6px);transition:all .25s;position:relative;overflow:hidden}
 .hero-socials a::before{content:'';position:absolute;inset:0;background:var(--white);transform:scaleX(0);transform-origin:left;transition:transform .3s cubic-bezier(.76,0,.24,1);z-index:0}
 .hero-socials a:hover::before{transform:scaleX(1)}
 .hero-socials a:hover{color:var(--black);border-color:var(--white)}
 .hero-socials a svg,.hero-socials a span{position:relative;z-index:1}
-.hero-socials a svg{width:18px;height:18px;fill:currentColor;flex-shrink:0}
+.hero-socials a svg{width:14px;height:14px;fill:currentColor;flex-shrink:0}
 
 /* SHELL / TABS */
 #shell{display:flex;flex-direction:column}

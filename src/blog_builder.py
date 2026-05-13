@@ -25,7 +25,13 @@ artículos escritos a mano.
 """
 
 import re
+import html as _html
 from pathlib import Path
+
+
+def _e(s):
+    """Escape a plain-text string for safe insertion into HTML."""
+    return _html.escape(str(s), quote=True)
 
 FONTS = (
     "https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400"
@@ -35,6 +41,9 @@ FONTS = (
 KATEX_CSS = "https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"
 KATEX_JS  = "https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"
 KATEX_AR  = "https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+KATEX_CSS_SRI = "sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+"
+KATEX_JS_SRI  = "sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg"
+KATEX_AR_SRI  = "sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk"
 
 
 # ── Parseo de frontmatter ──────────────────────────────────────────────────
@@ -99,13 +108,13 @@ def _simple_md(text):
 # ── Plantilla HTML ─────────────────────────────────────────────────────────
 
 def _blog_template(meta, body_html):
-    title    = meta.get("title_es", "")
-    date     = meta.get("date_es", "")
-    excerpt  = meta.get("excerpt_es", "")
-    rt       = meta.get("read_time", "")
+    title    = _e(meta.get("title_es", ""))
+    date     = _e(meta.get("date_es", ""))
+    excerpt  = _e(meta.get("excerpt_es", ""))
+    rt       = _e(meta.get("read_time", ""))
     tags_raw = meta.get("tags", "")
     tags     = [t.strip() for t in tags_raw.split(",") if t.strip()]
-    tags_html = "".join(f'<span class="hero-tag">{t}</span>' for t in tags)
+    tags_html = "".join(f'<span class="hero-tag">{_e(t)}</span>' for t in tags)
     rt_html  = f'<span class="hero-tag hero-tag--accent">{rt} lectura</span>' if rt else ""
 
     return f"""<!DOCTYPE html>
@@ -115,7 +124,7 @@ def _blog_template(meta, body_html):
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{title} — Blog</title>
 <link href="{FONTS}" rel="stylesheet">
-<link rel="stylesheet" href="{KATEX_CSS}">
+<link rel="stylesheet" href="{KATEX_CSS}" integrity="{KATEX_CSS_SRI}" crossorigin="anonymous">
 <style>
 *{{margin:0;padding:0;box-sizing:border-box}}
 html{{scroll-behavior:smooth}}
@@ -190,8 +199,8 @@ nav{{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.94);backdrop
 <article class="article-wrap">
 {body_html}
 </article>
-<script defer src="{KATEX_JS}"></script>
-<script defer src="{KATEX_AR}" onload="renderMathInElement(document.body,{{delimiters:[{{left:'$$',right:'$$',display:true}},{{left:'$',right:'$',display:false}}]}})"></script>
+<script defer src="{KATEX_JS}" integrity="{KATEX_JS_SRI}" crossorigin="anonymous"></script>
+<script defer src="{KATEX_AR}" integrity="{KATEX_AR_SRI}" crossorigin="anonymous" onload="renderMathInElement(document.body,{{delimiters:[{{left:'$$',right:'$$',display:true}},{{left:'$',right:'$',display:false}}]}})"></script>
 </body>
 </html>"""
 

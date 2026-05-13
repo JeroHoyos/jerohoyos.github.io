@@ -28,6 +28,9 @@ def build():
 <title>{C.NOMBRE.replace('<br>', ' ')}</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐈‍⬛</text></svg>">
 <meta name="description" content="{C.TITULO} · {C.CIUDAD}, {C.PAIS}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link href="{FONTS}" rel="stylesheet">
 {build_css()}
 </head>

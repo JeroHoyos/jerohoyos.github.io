@@ -168,7 +168,7 @@ def _flow():
     });
     t+=0.004;
   })();
-  init();
+  init(); initialized=true;
   new MutationObserver(() => { const on=document.getElementById('panel-projects').classList.contains('active'); if(on&&!active){if(!initialized){init();initialized=true;}active=true;}else if(!on) active=false; })
     .observe(document.getElementById('panel-projects'),{attributes:true,attributeFilter:['class']});
   window.addEventListener('resize', () => { if(active) init(); });
@@ -215,7 +215,7 @@ def _chladni():
     render(m0+(m1-m0)*a, n0+(n1-n0)*a);
     if(++transT>=TRANS){pairIdx=nextIdx;transT=0;}
   })();
-  init();
+  init(); initialized=true;
   new MutationObserver(()=>{const on=document.getElementById('panel-contact').classList.contains('active');if(on&&!active){if(!initialized){init();initialized=true;}active=true;}else if(!on)active=false;}).observe(document.getElementById('panel-contact'),{attributes:true,attributeFilter:['class']});
   window.addEventListener('resize',()=>{if(active)init();});
 })();"""
@@ -287,7 +287,7 @@ def _particles():
     }
   })();
 
-  init();
+  init(); initialized=true;
   new MutationObserver(()=>{const on=document.getElementById('panel-arte').classList.contains('active');if(on&&!active){if(!initialized){init();initialized=true;}active=true;}else if(!on)active=false;}).observe(document.getElementById('panel-arte'),{attributes:true,attributeFilter:['class']});
   window.addEventListener('resize',()=>{if(active)init();});
 })();"""
@@ -442,7 +442,7 @@ def _euler_helix():
     animId=requestAnimationFrame(frame);
   }
 
-  init();
+  init(); initialized=true;
   new MutationObserver(()=>{
     const on=document.getElementById('panel-blog').classList.contains('active');
     if(on&&!active){if(!initialized){init();initialized=true;} active=true; if(!animId) frame();}

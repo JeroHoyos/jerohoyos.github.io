@@ -166,11 +166,11 @@ BLOG = []
 # Agrega imágenes con: {"tipo": "imagen", "url": "dibujos/archivo.jpg",
 #                        "titulo_es": "Título", "titulo_en": "Title"}
 ARTE = [
-    {"tipo": "imagen", "url": "dibujos/pokemon.jpg", "titulo_es": "Pokémon",  "titulo_en": "Pokémon"},
-    {"tipo": "imagen", "url": "dibujos/cato.jpg",    "titulo_es": "Cato",     "titulo_en": "Cato"},
-    {"tipo": "imagen", "url": "dibujos/foxy.jpg",    "titulo_es": "Foxy",     "titulo_en": "Foxy"},
-    {"tipo": "imagen", "url": "dibujos/tryk.jpg",    "titulo_es": "Tryk",     "titulo_en": "Tryk"},
-    {"tipo": "imagen", "url": "dibujos/monster.jpg", "titulo_es": "Monster",  "titulo_en": "Monster"},
+    {"tipo": "imagen", "url": "dibujos/pokemon.webp", "titulo_es": "Pokémon",  "titulo_en": "Pokémon"},
+    {"tipo": "imagen", "url": "dibujos/cato.webp",    "titulo_es": "Cato",     "titulo_en": "Cato"},
+    {"tipo": "imagen", "url": "dibujos/foxy.webp",    "titulo_es": "Foxy",     "titulo_en": "Foxy"},
+    {"tipo": "imagen", "url": "dibujos/tryk.webp",    "titulo_es": "Tryk",     "titulo_en": "Tryk"},
+    {"tipo": "imagen", "url": "dibujos/monster.webp", "titulo_es": "Monster",  "titulo_en": "Monster"},
 ]
 
 # ── IDIOMAS ───────────────────────────────────────────────────────────
