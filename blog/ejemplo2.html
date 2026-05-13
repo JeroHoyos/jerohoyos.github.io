@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ejemplo 2 — Gradient Descent desde cero — Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+:root{--bg:#ffffff;--ink:#111111;--mid:#444;--soft:#888;--faint:#ccc;--rule:#e8e8e8;--code-bg:#f5f5f3}
+body{background:var(--bg);color:var(--ink);font-family:'Space Mono',monospace;overflow-x:hidden;line-height:1.8}
+
+nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--rule);padding:1.2rem 4rem;display:flex;align-items:center;justify-content:space-between}
+.nav-back{font-size:.55rem;letter-spacing:3px;text-transform:uppercase;color:var(--soft);text-decoration:none;display:flex;align-items:center;gap:.5rem;transition:color .2s}
+.nav-back:hover{color:var(--ink)}
+.nav-date{font-size:.48rem;letter-spacing:2px;text-transform:uppercase;color:var(--faint)}
+
+.article-hero{min-height:55vh;display:flex;flex-direction:column;justify-content:flex-end;padding:4rem;position:relative;overflow:hidden;border-bottom:1px solid var(--rule);background:#f9f9f7}
+.hero-bg{position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse 60% 50% at 80% 20%,rgba(0,0,0,.03) 0%,transparent 70%),radial-gradient(ellipse 40% 60% at 20% 80%,rgba(0,0,0,.02) 0%,transparent 60%)}
+.hero-grid{position:absolute;inset:0;z-index:0;background-image:linear-gradient(rgba(0,0,0,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,.04) 1px,transparent 1px);background-size:60px 60px}
+.hero-num{font-family:'Bebas Neue',sans-serif;font-size:clamp(6rem,14vw,14rem);color:rgba(0,0,0,.05);position:absolute;top:1.5rem;right:3rem;line-height:1;z-index:1;pointer-events:none;letter-spacing:-4px}
+.hero-inner{position:relative;z-index:2;max-width:860px}
+.hero-meta{display:flex;align-items:center;gap:.8rem;margin-bottom:2rem;flex-wrap:wrap}
+.hero-tag{font-size:.44rem;letter-spacing:3px;text-transform:uppercase;padding:.3rem .8rem;border:1px solid var(--rule);color:var(--soft)}
+.hero-tag--accent{border-color:var(--ink);background:var(--ink);color:#fff}
+.hero-date{font-size:.48rem;letter-spacing:2px;text-transform:uppercase;color:var(--faint)}
+.article-hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.8rem,6vw,5.5rem);letter-spacing:1px;line-height:.92;color:var(--ink);margin-bottom:1.8rem}
+.hero-excerpt{font-family:'DM Serif Display',serif;font-style:italic;font-size:clamp(.95rem,2vw,1.2rem);color:var(--soft);line-height:1.75;max-width:640px}
+
+.article-wrap{max-width:760px;margin:0 auto;padding:5rem 2rem 8rem}
+.article-wrap h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.8rem,4vw,3rem);letter-spacing:1px;line-height:1;color:var(--ink);margin:4rem 0 1.5rem;padding-top:1rem;border-top:1px solid var(--rule)}
+.article-wrap h3{font-family:'DM Serif Display',serif;font-size:1.3rem;color:var(--ink);margin:2.5rem 0 1rem}
+.article-wrap h4{font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--mid);margin:2rem 0 .8rem}
+.article-wrap p{font-size:.72rem;line-height:2.15;color:#333;margin-bottom:1.4rem}
+.article-wrap strong{color:var(--ink)}
+.article-wrap em{font-family:'DM Serif Display',serif;font-style:italic}
+.article-wrap a{color:var(--ink);text-underline-offset:3px}
+.article-wrap a:hover{color:var(--soft)}
+.article-wrap code{font-family:'Space Mono',monospace;font-size:.63rem;background:var(--code-bg);padding:.15rem .4rem;border:1px solid #eee}
+.article-wrap pre{background:var(--code-bg);border:1px solid #e5e5e5;padding:1.5rem;overflow-x:auto;margin:2rem 0}
+.article-wrap pre code{background:none;border:none;padding:0;font-size:.62rem;line-height:1.8}
+.article-wrap blockquote{border-left:3px solid var(--ink);padding-left:1.5rem;margin:2rem 0;color:var(--mid)}
+.article-wrap ul,.article-wrap ol{margin:1rem 0 1.4rem 1.5rem}
+.article-wrap li{font-size:.72rem;line-height:2;color:#333;margin-bottom:.3rem}
+.article-wrap hr{border:none;border-top:1px solid var(--rule);margin:3rem 0}
+.article-wrap table{width:100%;border-collapse:collapse;font-size:.63rem;margin:2rem 0}
+.article-wrap th{text-align:left;border-bottom:2px solid var(--ink);padding:.5rem .8rem;font-size:.52rem;letter-spacing:2px;text-transform:uppercase}
+.article-wrap td{border-bottom:1px solid var(--rule);padding:.5rem .8rem;color:#444}
+.katex-display{overflow-x:auto;padding:.8rem 0}
+
+@media(max-width:600px){
+  nav{padding:1rem 1.2rem}
+  .article-hero{padding:2rem 1.2rem 3rem;min-height:40vh}
+  .hero-num{display:none}
+  .article-wrap{padding:3rem 1.2rem 5rem}
+}
+</style>
+</head>
+<body>
+<nav>
+  <a href="../index.html" class="nav-back">← Volver</a>
+  <span class="nav-date">Abril 2025</span>
+</nav>
+<div class="article-hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-num">01</div>
+  <div class="hero-inner">
+    <div class="hero-meta">
+      <span class="hero-tag">ML</span><span class="hero-tag">Optimización</span><span class="hero-tag">Python</span><span class="hero-tag">Matemáticas</span>
+      <span class="hero-tag hero-tag--accent">12 min lectura</span>
+      <span class="hero-date">Abril 2025</span>
+    </div>
+    <h1>Ejemplo 2 — Gradient Descent desde cero</h1>
+    <p class="hero-excerpt">Implementamos gradient descent y sus variantes (SGD, momentum, Adam) desde cero en NumPy. Entendemos la geometría detrás de cada paso y por qué Adam converge donde SGD se atasca.</p>
+  </div>
+</div>
+<article class="article-wrap">
+<h2>El problema que resuelve</h2>
+<p>Entrenar una red neuronal es, en esencia, resolver un problema de minimización:</p>
+<p>$$\theta^* = \arg\min_\theta \mathcal{L}(\theta)$$</p>
+<p>donde $\mathcal{L}$ es la función de pérdida y $\theta$ son los parámetros del modelo. El gradiente nos dice en qué dirección <em>sube</em> la pérdida, así que nos movemos en la dirección opuesta.</p>
+<h2>Gradient Descent básico</h2>
+<p>La actualización es simple:</p>
+<p>$$\theta_{t+1} = \theta_t - \alpha \nabla_\theta \mathcal{L}(\theta_t)$$</p>
+<p>donde $\alpha$ es el <em>learning rate</em>. En código:</p>
+<pre><code>import numpy as np
+<p>def gradient_descent(grad_fn, theta_init, lr=0.01, n_steps=1000):     theta = theta_init.copy()     history = [theta.copy()]     for _ in range(n_steps):         grad = grad_fn(theta)         theta -= lr * grad         history.append(theta.copy())     return theta, np.array(history) </code></pre></p>
+<p>El problema con GD puro es que usa <strong>todos los datos</strong> en cada paso — caro con datasets grandes.</p>
+<h2>SGD con momentum</h2>
+<p>Stochastic Gradient Descent usa un mini-batch aleatorio en cada paso, introduciendo ruido pero siendo mucho más rápido. El momentum suaviza la trayectoria acumulando un promedio exponencial de gradientes pasados:</p>
+<p>$$v_{t+1} = \beta v_t + (1 - \beta) \nabla \mathcal{L}$$ $$\theta_{t+1} = \theta_t - \alpha v_{t+1}$$</p>
+<pre><code>def sgd_momentum(grad_fn, theta_init, lr=0.01, beta=0.9, n_steps=1000):
+    theta = theta_init.copy()
+    v = np.zeros_like(theta)
+    for _ in range(n_steps):
+        grad = grad_fn(theta)
+        v = beta <em> v + (1 - beta) </em> grad
+        theta -= lr * v
+    return theta
+</code></pre>
+<p>Con $\beta = 0.9$, el gradiente de hace 10 pasos todavía contribuye con $0.9^{10} \approx 0.35$ del peso original.</p>
+<h2>Adam: momento + escala adaptativa</h2>
+<p>Adam combina momentum con una escala adaptativa por parámetro. Mantiene dos momentos:</p>
+<p>- <strong>Primer momento</strong> $m_t$: media exponencial de gradientes (dirección) - <strong>Segundo momento</strong> $v_t$: media exponencial de gradientes al cuadrado (magnitud)</p>
+<p>$$m_t = \beta_1 m_{t-1} + (1-\beta_1) g_t$$ $$v_t = \beta_2 v_{t-1} + (1-\beta_2) g_t^2$$</p>
+<p>Con corrección de sesgo (importante en los primeros pasos):</p>
+<p>$$\hat{m}_t = \frac{m_t}{1-\beta_1^t}, \quad \hat{v}_t = \frac{v_t}{1-\beta_2^t}$$</p>
+<p>$$\theta_{t+1} = \theta_t - \frac{\alpha}{\sqrt{\hat{v}_t} + \epsilon} \hat{m}_t$$</p>
+<pre><code>def adam(grad_fn, theta_init, lr=1e-3, beta1=0.9, beta2=0.999, eps=1e-8, n_steps=1000):
+    theta = theta_init.copy()
+    m = np.zeros_like(theta)
+    v = np.zeros_like(theta)
+    for t in range(1, n_steps + 1):
+        g = grad_fn(theta)
+        m = beta1 <em> m + (1 - beta1) </em> g
+        v = beta2 <em> v + (1 - beta2) </em> g**2
+        m_hat = m / (1 - beta1**t)
+        v_hat = v / (1 - beta2**t)
+        theta -= lr * m_hat / (np.sqrt(v_hat) + eps)
+    return theta
+</code></pre>
+<h2>¿Cuándo usar qué?</h2>
+<p>| Optimizador | Cuándo usarlo | |---|---| | GD | Problemas pequeños, análisis teórico | | SGD + momentum | Visión por computador, quieres control total | | Adam | Default razonable para casi todo | | AdaGrad | NLP con features esparsos |</p>
+<h2>La intuición geométrica</h2>
+<p>Imagina la superficie de pérdida como un paisaje montañoso. GD básico da pasos iguales en todas las direcciones. Adam, en cambio, da pasos <strong>grandes</strong> en direcciones donde la pérdida varía poco (gradientes históricos pequeños) y <strong>pequeños</strong> donde varía mucho — se adapta a la geometría local.</p>
+<p>Esto explica por qué Adam suele converger más rápido en práctica, aunque GD con buen learning rate puede generalizar mejor en algunos problemas de visión.</p>
+</article>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]})"></script>
+</body>
+</html>

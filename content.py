@@ -155,91 +155,44 @@ PROYECTOS = [
         "meta_es": "Graph Theory · 5+ algoritmos",
         "meta_en": "Graph Theory · 5+ algorithms",
     },
-    {
-        "featured": False,
-        "url": GITHUB,
-        "lang": "GitHub",
-        "title_es": "Ver todos los repositorios →",
-        "title_en": "See all repositories →",
-        "desc_es": "16 repositorios públicos cubriendo ML, Data Science, Algoritmia, Scientific Computing y sistemas de simulación.",
-        "desc_en": "16 public repositories covering ML, Data Science, Algorithms, Scientific Computing and simulation systems.",
-        "badges": ["16 repos", "Open Source"],
-        "meta_es": "JeroHoyos",
-        "meta_en": "JeroHoyos",
-    },
 ]
 
 # ── BLOG ──────────────────────────────────────────────────────────────
-# Lista de artículos. url puede ser relativa ("blog-rmt.html") o absoluta.
-BLOG = [
-    {
-        "url": "blog/rmt.html",
-        "date_es": "Mayo 2025",
-        "date_en": "May 2025",
-        "tags": ["Matemáticas", "Random Matrix Theory", "Probabilidad", "ML"],
-        "title_es": "El camino a través de Random Matrix Theory: de la ley del semicírculo a covariance estimation",
-        "title_en": "The Road Through Random Matrix Theory: from the semicircle law to covariance estimation",
-        "excerpt_es": "Una bitácora honesta de lo que significa aprender RMT desde cero siendo data scientist: los teoremas que me rompieron la cabeza, los momentos en que todo conectó, y cómo esta teoría —nacida en física nuclear— termina siendo una herramienta sorprendentemente práctica para entender matrices de alta dimensión en ML.",
-        "excerpt_en": "An honest log of what it means to learn RMT from scratch as a data scientist: the theorems that broke my brain, the moments when everything clicked, and how this theory — born in nuclear physics — turns out to be a surprisingly practical tool for understanding high-dimensional matrices in ML.",
-        "read_es": "Leer artículo →",
-        "read_en": "Read article →",
-    },
-]
+# Los artículos se gestionan desde blog/posts/*.md
+# build.py los escanea automáticamente — no editar esta lista.
+BLOG = []
 
 # ── ARTE ──────────────────────────────────────────────────────────────
-# tipo "generativo" → animación canvas (id debe coincidir con src/js.py)
-# tipo "imagen"     → imagen estática desde la carpeta dibujos/
-#
-# Ejemplo de dibujo:
-# {
-#     "tipo": "imagen",
-#     "url": "dibujos/mi-dibujo.jpg",
-#     "titulo_es": "Sin título",
-#     "titulo_en": "Untitled",
-#     "desc_es": "Descripción del dibujo.",
-#     "desc_en": "Drawing description.",
-#     "año": "2025",
-#     "medio_es": "Lápiz · Papel",
-#     "medio_en": "Pencil · Paper",
-# }
+# Agrega imágenes con: {"tipo": "imagen", "url": "dibujos/archivo.jpg",
+#                        "titulo_es": "Título", "titulo_en": "Title"}
 ARTE = [
-    {
-        "tipo": "imagen",
-        "url": "dibujos/pokemon.jpg",
-        "titulo_es": "Pokémon",
-        "titulo_en": "Pokémon",
-        "año": "2025",
-    },
-    {
-        "tipo": "imagen",
-        "url": "dibujos/cato.jpg",
-        "titulo_es": "Cato",
-        "titulo_en": "Cato",
-        "año": "2025",
-    },
-    {
-        "tipo": "imagen",
-        "url": "dibujos/foxy.jpg",
-        "titulo_es": "Foxy",
-        "titulo_en": "Foxy",
-        "año": "2025",
-    },
-    {
-        "tipo": "imagen",
-        "url": "dibujos/tryk.jpg",
-        "titulo_es": "Tryk",
-        "titulo_en": "Tryk",
-        "año": "2025",
-    },
-    {
-        "tipo": "imagen",
-        "url": "dibujos/monster.jpg",
-        "titulo_es": "Monster",
-        "titulo_en": "Monster",
-        "año": "2025",
-    },
+    {"tipo": "imagen", "url": "dibujos/pokemon.jpg", "titulo_es": "Pokémon",  "titulo_en": "Pokémon"},
+    {"tipo": "imagen", "url": "dibujos/cato.jpg",    "titulo_es": "Cato",     "titulo_en": "Cato"},
+    {"tipo": "imagen", "url": "dibujos/foxy.jpg",    "titulo_es": "Foxy",     "titulo_en": "Foxy"},
+    {"tipo": "imagen", "url": "dibujos/tryk.jpg",    "titulo_es": "Tryk",     "titulo_en": "Tryk"},
+    {"tipo": "imagen", "url": "dibujos/monster.jpg", "titulo_es": "Monster",  "titulo_en": "Monster"},
 ]
+
+# ── IDIOMAS ───────────────────────────────────────────────────────────
+IDIOMAS = [
+    {"name": "Español", "level_es": "Nativo",  "level_en": "Native"},
+    {"name": "Inglés",  "level_es": "B1",       "level_en": "B1"},
+]
+
+# ── PROYECTOS ─────────────────────────────────────────────────────────
+PROYECTOS_SUB_ES = "Código que construye, modela y explora — de transformers desde cero hasta juegos retro."
+PROYECTOS_SUB_EN = "Code that builds, models and explores — from scratch transformers to retro games."
+
+# ── BLOG ──────────────────────────────────────────────────────────────
+BLOG_SUB_ES = "Notas sobre matemáticas, modelos y todo lo que me parece interesante pensar en voz alta."
+BLOG_SUB_EN = "Notes on math, models and everything I find interesting to think out loud about."
+
+# ── ARTE ──────────────────────────────────────────────────────────────
+ARTE_SUB_ES = "Dibujos digitales hechos en ratos libres. Personajes, criaturas y lo que salga."
+ARTE_SUB_EN = "Digital drawings made in my spare time. Characters, creatures and whatever comes out."
 
 # ── CONTACTO ──────────────────────────────────────────────────────────
 CONTACTO_TITULO_ES = "HABLEMOS"
-CONTACTO_TITULO_EN = "GET IN TOUCH"
+CONTACTO_TITULO_EN = "LET'S TALK"
+CONTACTO_SUB_ES    = "Si tienes alguna pregunta, propuesta u oportunidad de colaboración, no dudes en contactarme."
+CONTACTO_SUB_EN    = "If you have a question, proposal, or collaboration opportunity, don't hesitate to reach out."

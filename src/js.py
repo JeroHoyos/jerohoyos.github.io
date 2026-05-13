@@ -24,9 +24,6 @@ document.querySelectorAll('.lang-btn').forEach(btn => {
 def _tabs():
     return """
 /* ═══ TABS ═══ */
-document.getElementById('scroll-cta').addEventListener('click', () => {
-  document.getElementById('shell').scrollIntoView({ behavior: 'smooth', block: 'start' });
-});
 document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     const id = btn.dataset.tab;
@@ -159,7 +156,7 @@ def _flow():
       const angle=noise(p.x,p.y,t)*Math.PI*2, speed=2.2;
       const nx=p.x+Math.cos(angle)*speed, ny=p.y+Math.sin(angle)*speed;
       const a=p.life/p.maxLife, fade=a<.08?a/.08:a>.85?(1-a)/.15:1;
-      cx.beginPath(); cx.strokeStyle=`rgba(5,5,5,${(0.85*fade).toFixed(3)})`; cx.lineWidth=p.w;
+      cx.beginPath(); cx.strokeStyle=`rgba(5,5,5,${(0.3*fade).toFixed(3)})`; cx.lineWidth=p.w;
       cx.moveTo(p.x,p.y); cx.lineTo(nx,ny); cx.stroke();
       p.x=nx; p.y=ny; p.life++;
       if (p.life>p.maxLife||p.x<-5||p.x>W+5||p.y<-5||p.y>H+5) { p.x=Math.random()*W; p.y=Math.random()*H; p.life=0; p.maxLife=80+Math.random()*120; }
@@ -450,17 +447,35 @@ def _euler_helix():
 })();"""
 
 
+import content as _C
+
+def _contact_form():
+    return f"""
+/* ═══ CONTACT FORM ═══ */
+(function(){{
+  const form = document.getElementById('contact-form');
+  if (!form) return;
+  form.addEventListener('submit', function(e) {{
+    e.preventDefault();
+    const d = new FormData(this);
+    const body = 'De: ' + (d.get('name')||'') + '\\nEmail: ' + (d.get('email')||'') + '\\n\\n' + (d.get('message')||'');
+    window.location.href = 'mailto:{_C.EMAIL}?subject=' + encodeURIComponent(d.get('subject')||'') + '&body=' + encodeURIComponent(body);
+  }});
+}})();"""
+
+
 def build_js():
     return (
         "<script>"
         + _lang_toggle()
         + _tabs()
+        + _contact_form()
         + _conway()
         + _delaunay()
         + _flow()
         + _chladni()
         + _euler_helix()
-        + _particles()  
+        + _particles()
         + "\n</script>"
     )
 

@@ -4,25 +4,29 @@
 # ╚══════════════════════════════════════════════════════════════════╝
 
 import content as C
-from src.css  import build_css
-from src.html import (
+from src.css          import build_css
+from src.html         import (
     build_hero, build_tab_bar,
     build_panel_about, build_panel_projects,
     build_panel_blog, build_panel_arte,
     build_panel_contact, build_footer,
 )
-from src.js import build_js
+from src.js           import build_js
+from src.blog_builder import build_blog_pages
 
 FONTS = "https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&display=swap"
 
 
 def build():
+    blog_items = build_blog_pages()
+
     html = f"""<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{C.NOMBRE.replace('<br>', ' ')} — {C.TITULO}</title>
+<title>{C.NOMBRE.replace('<br>', ' ')}</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐈‍⬛</text></svg>">
 <meta name="description" content="{C.TITULO} · {C.CIUDAD}, {C.PAIS}">
 <link href="{FONTS}" rel="stylesheet">
 {build_css()}
@@ -30,13 +34,14 @@ def build():
 <body>
 {build_hero()}
 {build_tab_bar()}
-{build_panel_about()}
+{build_panel_about(blog_items)}
 {build_panel_projects()}
-{build_panel_blog()}
+{build_panel_blog(blog_items)}
 {build_panel_arte()}
 {build_panel_contact()}
 {build_footer()}
 {build_js()}
+<script src="oneko.js"></script>
 </body>
 </html>"""
 
@@ -48,7 +53,7 @@ def build():
     print(f"   Email    : {C.EMAIL}")
     print(f"   GitHub   : {C.GITHUB}")
     print(f"   Proyectos: {len(C.PROYECTOS)}")
-    print(f"   Blog     : {len(C.BLOG)} artículo(s)")
+    print(f"   Blog     : {len(blog_items)} artículo(s)")
     print(f"   Arte     : {len(C.ARTE)} pieza(s)")
 
 
