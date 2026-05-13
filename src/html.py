@@ -170,7 +170,7 @@ def build_panel_about(blog_items=None):
               {ICON_EMAIL}<span>Email</span>
             </a>
           </div>
-          <button onclick="document.querySelector('[data-tab=contact]').click()" class="apm-ver-mas"><span data-es="Ver formulario completo →" data-en="See full contact form →">Ver formulario completo →</span></button>
+          <button onclick="document.querySelector('[data-tab=contact]').click()" class="apm-ver-mas"><span data-es="Todos los canales →" data-en="All channels →">Todos los canales →</span></button>
         </div>
 
       </div>
@@ -199,23 +199,77 @@ def build_panel_projects():
 
 def build_panel_blog(blog_items=None):
     items = blog_items if blog_items is not None else C.BLOG
+
+    # Group: standalone entries + series blocks (first chapter of each series wins the slot)
+    groups = []
+    series_seen = set()
+    for entry in items:
+        s = entry.get("series")
+        if not s:
+            groups.append(("standalone", entry))
+        elif s not in series_seen:
+            series_seen.add(s)
+            chapters = sorted(
+                [e for e in items if e.get("series") == s],
+                key=lambda e: int(e.get("chapter", 0)),
+            )
+            groups.append(("series", {
+                "series_es": chapters[0].get("series_es", s),
+                "series_en": chapters[0].get("series_en", s),
+                "tags":      chapters[0].get("tags", []),
+                "chapters":  chapters,
+            }))
+
     rows = ""
-    for i, a in enumerate(items):
-        tags = "".join(f'<span class="br-tag">{t}</span>' for t in a["tags"])
+    for i, (kind, data) in enumerate(groups):
         num = str(i + 1).zfill(2)
-        rows += f"""
+        if kind == "standalone":
+            a = data
+            rows += f"""
         <a href="{a['url']}" class="blog-row">
-          <div class="br-left">
-            <div class="br-num">{num}</div>
-            <div class="br-date" data-es="{a['date_es']}" data-en="{a['date_en']}">{a['date_es']}</div>
-          </div>
-          <div class="br-right">
-            <div class="br-tags">{tags}</div>
-            <div class="br-title" data-es="{a['title_es']}" data-en="{a['title_en']}">{a['title_es']}</div>
-            <div class="br-excerpt" data-es="{a['excerpt_es']}" data-en="{a['excerpt_en']}">{a['excerpt_es']}</div>
-            <div class="br-read" data-es="{a['read_es']}" data-en="{a['read_en']}">{a['read_es']}</div>
+          <span class="br-num">{num}</span>
+          <div class="br-body">
+            <div class="br-title-row">
+              <div class="br-title" data-es="{a['title_es']}" data-en="{a['title_en']}">{a['title_es']}</div>
+              <span class="br-arrow" aria-hidden="true">↗</span>
+            </div>
+            <p class="br-excerpt" data-es="{a['excerpt_es']}" data-en="{a['excerpt_en']}">{a['excerpt_es']}</p>
+            <div class="br-meta">
+              <span class="br-date" data-es="{a['date_es']}" data-en="{a['date_en']}">{a['date_es']}</span>
+              <span class="br-dot">·</span>
+              <span class="br-read" data-es="{a['read_es']}" data-en="{a['read_en']}">{a['read_es']}</span>
+            </div>
           </div>
         </a>"""
+        else:
+            d = data
+            count_es = f"{len(d['chapters'])} capítulos"
+            count_en = f"{len(d['chapters'])} chapters"
+            first_url = d["chapters"][0]["url"]
+            chs_html = ""
+            for ch in d["chapters"]:
+                cn = str(ch.get("chapter", 0)).zfill(2)
+                chs_html += f"""
+              <span class="sb-ch">
+                <span class="sb-ch-num">{cn}</span>
+                <span class="sb-ch-title" data-es="{ch['title_es']}" data-en="{ch['title_en']}">{ch['title_es']}</span>
+                <span class="sb-ch-date" data-es="{ch['date_es']}" data-en="{ch['date_en']}">{ch['date_es']}</span>
+              </span>"""
+            rows += f"""
+        <a href="{first_url}" class="blog-row series-block">
+          <span class="br-num">{num}</span>
+          <div class="br-body">
+            <div class="br-title-row">
+              <div class="br-serie-badge" data-es="SERIE" data-en="SERIES">SERIE</div>
+              <span class="br-arrow" aria-hidden="true">↗</span>
+            </div>
+            <div class="br-title" data-es="{d['series_es']}" data-en="{d['series_en']}">{d['series_es']}</div>
+            <div class="sb-chapters">{chs_html}
+            </div>
+            <div class="br-count" data-es="{count_es}" data-en="{count_en}">{count_es}</div>
+          </div>
+        </a>"""
+
     return f"""
   <!-- BLOG -->
   <div class="tab-panel" id="panel-blog" role="tabpanel">
@@ -232,10 +286,20 @@ def build_panel_blog(blog_items=None):
 def _arte_piece(pieza):
     if pieza["tipo"] != "imagen":
         return ""
+    url = pieza["url"]
+    dims = ""
+    try:
+        from PIL import Image
+        img = Image.open(url)
+        w, h = img.size
+        img.close()
+        dims = f' width="{w}" height="{h}"'
+    except Exception:
+        pass
     return f"""
       <div class="arte-piece">
         <div class="arte-img-wrap">
-          <img src="{pieza["url"]}" alt="{pieza["titulo_es"]}" loading="lazy">
+          <img src="{url}" alt="{pieza['titulo_es']}" loading="lazy"{dims}>
         </div>
       </div>"""
 
@@ -269,26 +333,11 @@ def build_panel_contact():
         <div class="sec-title ct-big" data-es="{C.CONTACTO_TITULO_ES}" data-en="{C.CONTACTO_TITULO_EN}">{C.CONTACTO_TITULO_ES}</div>
         <div class="ct-sub" data-es="{C.CONTACTO_SUB_ES}" data-en="{C.CONTACTO_SUB_EN}">{C.CONTACTO_SUB_ES}</div>
       </div>
-      <div class="ct-form-wrap">
-        <form id="contact-form" class="cf-wrap" novalidate>
-          <label class="cf-label">
-            <span data-es="Nombre" data-en="Name">Nombre</span>
-            <input type="text" name="name" required>
-          </label>
-          <label class="cf-label">
-            <span data-es="Correo Electrónico" data-en="Email">Correo Electrónico</span>
-            <input type="email" name="email" required>
-          </label>
-          <label class="cf-label">
-            <span data-es="Asunto" data-en="Subject">Asunto</span>
-            <input type="text" name="subject" required>
-          </label>
-          <label class="cf-label">
-            <span data-es="Mensaje" data-en="Message">Mensaje</span>
-            <textarea name="message" rows="5" required></textarea>
-          </label>
-          <button type="submit" class="cf-btn" data-es="Enviar Mensaje" data-en="Send Message">Enviar Mensaje</button>
-        </form>
+      <div class="ct-email-wrap">
+        <button class="ct-email-btn" id="ct-email-copy" data-email="{C.EMAIL}">
+          <span>{C.EMAIL}</span>
+        </button>
+        <div class="ct-email-hint" data-es="clic para copiar" data-en="click to copy">clic para copiar</div>
       </div>
       <div class="ct-socials">
         <a href="{C.GITHUB}" target="_blank" rel="noopener noreferrer" class="ct-soc">

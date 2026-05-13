@@ -1,7 +1,7 @@
 ---
 slug: ejemplo2
-title_es: Ejemplo 2 — Gradient Descent desde cero
-title_en: Example 2 — Gradient Descent from Scratch
+title_es: Gradient Descent desde cero
+title_en: Gradient Descent from Scratch
 date_es: Abril 2025
 date_en: April 2025
 tags: ML, Optimización, Python, Matemáticas
@@ -10,6 +10,10 @@ excerpt_en: We implement gradient descent and its variants (SGD, momentum, Adam)
 read_time: 12 min
 read_es: Leer artículo →
 read_en: Read article →
+series:     fundamentos-ml
+series_es:  Fundamentos de ML
+series_en:  ML Fundamentals
+chapter:    2
 ---
 
 ## El problema que resuelve

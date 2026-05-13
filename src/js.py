@@ -6,6 +6,7 @@ def _lang_toggle():
     return """
 /* ═══ LANGUAGE TOGGLE ═══ */
 function setLang(lang) {
+  document.documentElement.lang = lang;
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
   document.querySelectorAll('[data-es]').forEach(el => {
     const txt = el.getAttribute('data-' + lang);
@@ -22,7 +23,20 @@ function setLang(lang) {
 }
 document.querySelectorAll('.lang-btn').forEach(btn => {
   btn.addEventListener('click', () => setLang(btn.dataset.lang));
-});"""
+});
+/* Email copy button */
+(function() {
+  const btn = document.getElementById('ct-email-copy');
+  if (!btn) return;
+  const span = btn.querySelector('span');
+  btn.addEventListener('click', () => {
+    navigator.clipboard.writeText(btn.dataset.email).then(() => {
+      const prev = span.textContent;
+      span.textContent = '✓ copiado';
+      setTimeout(() => { span.textContent = prev; }, 2000);
+    });
+  });
+})();"""
 
 
 def _tabs():
@@ -459,30 +473,12 @@ def _euler_helix():
 })();"""
 
 
-import content as _C
-
-def _contact_form():
-    return f"""
-/* ═══ CONTACT FORM ═══ */
-(function(){{
-  const form = document.getElementById('contact-form');
-  if (!form) return;
-  form.addEventListener('submit', function(e) {{
-    e.preventDefault();
-    const d = new FormData(this);
-    const body = 'De: ' + (d.get('name')||'') + '\\nEmail: ' + (d.get('email')||'') + '\\n\\n' + (d.get('message')||'');
-    window.location.href = 'mailto:{_C.EMAIL}?subject=' + encodeURIComponent(d.get('subject')||'') + '&body=' + encodeURIComponent(body);
-  }});
-}})();"""
-
-
 def build_js():
     return (
         "<script>"
         + _mobile_detect()
         + _lang_toggle()
         + _tabs()
-        + _contact_form()
         + _conway()
         + _delaunay()
         + _flow()

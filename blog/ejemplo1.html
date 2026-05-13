@@ -3,81 +3,93 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ejemplo 1 — Por qué la maldición de la dimensionalidad importa — Blog</title>
+<title>Por qué la maldición de la dimensionalidad importa — Blog</title>
+<meta name="description" content="A medida que la dimensión crece, el espacio se vuelve casi vacío, las distancias pierden significado y nuestras intuiciones geométricas colapsan. Entendemos por qué esto rompe KNN, el histograma y la interpolación, y qué hacer al respecto.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-:root{--bg:#ffffff;--ink:#111111;--mid:#444;--soft:#888;--faint:#ccc;--rule:#e8e8e8;--code-bg:#f5f5f3}
+html{scroll-behavior:smooth;font-size:18px}
+:root{--bg:#fafaf8;--ink:#0d0d0d;--mid:#555;--soft:#888;--faint:#bbb;--rule:#e8e8e5;--code-bg:#f2f2f0;--accent:#0d0d0d}
 body{background:var(--bg);color:var(--ink);font-family:'Space Mono',monospace;overflow-x:hidden;line-height:1.8}
 
-nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--rule);padding:1.2rem 4rem;display:flex;align-items:center;justify-content:space-between}
-.nav-back{font-size:.55rem;letter-spacing:3px;text-transform:uppercase;color:var(--soft);text-decoration:none;display:flex;align-items:center;gap:.5rem;transition:color .2s}
-.nav-back:hover{color:var(--ink)}
-.nav-date{font-size:.48rem;letter-spacing:2px;text-transform:uppercase;color:var(--faint)}
+#progress{position:fixed;top:0;left:0;height:2px;background:var(--ink);width:0%;z-index:300;pointer-events:none;transition:width .08s linear}
 
-.article-hero{min-height:55vh;display:flex;flex-direction:column;justify-content:flex-end;padding:4rem;position:relative;overflow:hidden;border-bottom:1px solid var(--rule);background:#f9f9f7}
-.hero-bg{position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse 60% 50% at 80% 20%,rgba(0,0,0,.03) 0%,transparent 70%),radial-gradient(ellipse 40% 60% at 20% 80%,rgba(0,0,0,.02) 0%,transparent 60%)}
-.hero-grid{position:absolute;inset:0;z-index:0;background-image:linear-gradient(rgba(0,0,0,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,.04) 1px,transparent 1px);background-size:60px 60px}
-.hero-num{font-family:'Bebas Neue',sans-serif;font-size:clamp(6rem,14vw,14rem);color:rgba(0,0,0,.05);position:absolute;top:1.5rem;right:3rem;line-height:1;z-index:1;pointer-events:none;letter-spacing:-4px}
-.hero-inner{position:relative;z-index:2;max-width:860px}
-.hero-meta{display:flex;align-items:center;gap:.8rem;margin-bottom:2rem;flex-wrap:wrap}
-.hero-tag{font-size:.44rem;letter-spacing:3px;text-transform:uppercase;padding:.3rem .8rem;border:1px solid var(--rule);color:var(--soft)}
-.hero-tag--accent{border-color:var(--ink);background:var(--ink);color:#fff}
-.hero-date{font-size:.48rem;letter-spacing:2px;text-transform:uppercase;color:var(--faint)}
-.article-hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.8rem,6vw,5.5rem);letter-spacing:1px;line-height:.92;color:var(--ink);margin-bottom:1.8rem}
-.hero-excerpt{font-family:'DM Serif Display',serif;font-style:italic;font-size:clamp(.95rem,2vw,1.2rem);color:var(--soft);line-height:1.75;max-width:640px}
+nav{position:sticky;top:0;z-index:200;background:rgba(250,250,248,.96);backdrop-filter:blur(14px);border-bottom:1px solid var(--rule);padding:.9rem 5vw;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.nav-back{display:inline-flex;align-items:center;gap:.5rem;font-size:.48rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--soft);text-decoration:none;border:1px solid var(--rule);padding:.45rem 1rem;transition:all .2s;white-space:nowrap}
+.nav-back:hover{color:var(--ink);border-color:var(--ink);background:rgba(0,0,0,.03)}
+.nav-title{font-size:.5rem;letter-spacing:1px;color:var(--faint);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;text-align:center;opacity:0;transition:opacity .3s}
+.nav-title.visible{opacity:1}
+.nav-rt{font-size:.46rem;letter-spacing:2px;text-transform:uppercase;color:var(--faint);white-space:nowrap}
 
-.article-wrap{max-width:760px;margin:0 auto;padding:5rem 2rem 8rem}
-.article-wrap h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.8rem,4vw,3rem);letter-spacing:1px;line-height:1;color:var(--ink);margin:4rem 0 1.5rem;padding-top:1rem;border-top:1px solid var(--rule)}
-.article-wrap h3{font-family:'DM Serif Display',serif;font-size:1.3rem;color:var(--ink);margin:2.5rem 0 1rem}
-.article-wrap h4{font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--mid);margin:2rem 0 .8rem}
-.article-wrap p{font-size:.72rem;line-height:2.15;color:#333;margin-bottom:1.4rem}
-.article-wrap strong{color:var(--ink)}
-.article-wrap em{font-family:'DM Serif Display',serif;font-style:italic}
+.article-hero{padding:5.5rem 5vw 5rem;border-bottom:1px solid var(--rule);background:var(--bg)}
+.hero-kicker{font-size:.46rem;letter-spacing:4px;text-transform:uppercase;color:var(--soft);margin-bottom:2.2rem;display:flex;align-items:center;gap:.9rem}
+.hero-kicker-bar{width:1.8rem;height:1px;background:var(--faint);flex-shrink:0}
+.article-hero h1{font-family:'DM Serif Display',serif;font-size:clamp(2rem,4.5vw,4.2rem);letter-spacing:-.02em;line-height:1.1;color:var(--ink);margin-bottom:2rem;max-width:1000px}
+.hero-excerpt{font-size:.9rem;line-height:2;color:var(--mid);max-width:860px;margin-bottom:2.5rem}
+.hero-foot{display:flex;align-items:center;gap:.8rem;font-size:.48rem;letter-spacing:2px;text-transform:uppercase;color:var(--faint);padding-top:1.8rem;border-top:1px solid var(--rule)}
+.hero-foot-sep{color:var(--rule)}
+
+.article-wrap{max-width:1200px;margin:0 auto;padding:4.5rem 5vw 8rem}
+.article-wrap h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.9rem,4vw,3rem);letter-spacing:1px;line-height:1;color:var(--ink);margin:4rem 0 1.4rem;padding-top:1.2rem;border-top:2px solid var(--ink)}
+.article-wrap h3{font-family:'DM Serif Display',serif;font-size:1.5rem;color:var(--ink);margin:2.8rem 0 .9rem;font-style:italic}
+.article-wrap h4{font-size:.65rem;letter-spacing:3px;text-transform:uppercase;color:var(--soft);margin:2rem 0 .7rem}
+.article-wrap p{font-size:1rem;line-height:2;color:#2a2a2a;margin-bottom:1.6rem}
+.article-wrap strong{color:var(--ink);font-weight:700}
+.article-wrap em{font-family:'DM Serif Display',serif;font-style:italic;font-size:1.05em}
 .article-wrap a{color:var(--ink);text-underline-offset:3px}
 .article-wrap a:hover{color:var(--soft)}
-.article-wrap code{font-family:'Space Mono',monospace;font-size:.63rem;background:var(--code-bg);padding:.15rem .4rem;border:1px solid #eee}
-.article-wrap pre{background:var(--code-bg);border:1px solid #e5e5e5;padding:1.5rem;overflow-x:auto;margin:2rem 0}
-.article-wrap pre code{background:none;border:none;padding:0;font-size:.62rem;line-height:1.8}
-.article-wrap blockquote{border-left:3px solid var(--ink);padding-left:1.5rem;margin:2rem 0;color:var(--mid)}
-.article-wrap ul,.article-wrap ol{margin:1rem 0 1.4rem 1.5rem}
-.article-wrap li{font-size:.72rem;line-height:2;color:#333;margin-bottom:.3rem}
-.article-wrap hr{border:none;border-top:1px solid var(--rule);margin:3rem 0}
-.article-wrap table{width:100%;border-collapse:collapse;font-size:.63rem;margin:2rem 0}
-.article-wrap th{text-align:left;border-bottom:2px solid var(--ink);padding:.5rem .8rem;font-size:.52rem;letter-spacing:2px;text-transform:uppercase}
-.article-wrap td{border-bottom:1px solid var(--rule);padding:.5rem .8rem;color:#444}
-.katex-display{overflow-x:auto;padding:.8rem 0}
+.article-wrap code{font-family:'Space Mono',monospace;font-size:.72rem;background:var(--code-bg);padding:.18rem .45rem;border-radius:2px}
+.article-wrap pre{background:var(--code-bg);border-left:3px solid var(--ink);padding:1.6rem 1.8rem;overflow-x:auto;margin:2.4rem 0}
+.article-wrap pre code{background:none;padding:0;font-size:.7rem;line-height:2;border-radius:0}
+.article-wrap blockquote{border-left:3px solid var(--faint);padding-left:1.6rem;margin:2.4rem 0;color:var(--mid);font-family:'DM Serif Display',serif;font-style:italic;font-size:1.05rem;line-height:1.9}
+.article-wrap ul,.article-wrap ol{margin:1.2rem 0 1.8rem 1.8rem}
+.article-wrap li{font-size:1rem;line-height:2;color:#2a2a2a;margin-bottom:.4rem}
+.article-wrap hr{border:none;border-top:1px solid var(--rule);margin:3.5rem 0}
+.article-wrap table{width:100%;border-collapse:collapse;font-size:.75rem;margin:2rem 0}
+.article-wrap th{text-align:left;border-bottom:2px solid var(--ink);padding:.6rem .8rem;font-size:.55rem;letter-spacing:2.5px;text-transform:uppercase}
+.article-wrap td{border-bottom:1px solid var(--rule);padding:.6rem .8rem;color:#444}
+.katex-display{overflow-x:auto;padding:.9rem 0}
 
-@media(max-width:600px){
-  nav{padding:1rem 1.2rem}
-  .article-hero{padding:2rem 1.2rem 3rem;min-height:40vh}
-  .hero-num{display:none}
-  .article-wrap{padding:3rem 1.2rem 5rem}
+.series-nav{background:#efefed;border-left:3px solid var(--ink);padding:1.2rem 1.5rem;margin:0 0 3.5rem}
+.sn-label{font-size:.46rem;letter-spacing:3.5px;text-transform:uppercase;color:var(--soft);margin-bottom:.9rem}
+.sn-name{color:var(--ink)}
+.sn-chapters{display:flex;flex-direction:column}
+.sn-ch,.sn-ch--active{display:flex;align-items:baseline;gap:.8rem;padding:.55rem 0;border-top:1px solid var(--rule);text-decoration:none;color:var(--soft);font-size:.75rem;transition:color .2s}
+.sn-ch:hover{color:var(--ink)}
+.sn-ch--active{color:var(--ink);pointer-events:none;font-family:'DM Serif Display',serif;font-style:italic}
+.sn-num{font-size:.44rem;letter-spacing:2px;min-width:2.2rem;padding-top:.1rem}
+
+@media(max-width:700px){
+  nav{padding:.8rem 1.4rem}
+  .nav-title{display:none}
+  .article-hero{padding:3.5rem 1.4rem 3.5rem}
+  .article-wrap{padding:3rem 1.4rem 5rem}
+}
+@media(max-width:420px){
+  html{font-size:16px}
+  .article-hero{padding:2.5rem 1.2rem 2.5rem}
+  .article-wrap{padding:2.5rem 1.2rem 4rem}
 }
 </style>
 </head>
 <body>
+<div id="progress"></div>
 <nav>
-  <a href="../index.html" class="nav-back">← Volver</a>
-  <span class="nav-date">Mayo 2025</span>
+  <a href="../index.html" class="nav-back">← Blog</a>
+  <span class="nav-title" id="nav-title">Por qué la maldición de la dimensionalidad importa</span>
+  <span class="nav-rt">15 min lectura</span>
 </nav>
 <div class="article-hero">
-  <div class="hero-bg"></div>
-  <div class="hero-grid"></div>
-  <div class="hero-num">01</div>
-  <div class="hero-inner">
-    <div class="hero-meta">
-      <span class="hero-tag">Estadística</span><span class="hero-tag">Alta dimensión</span><span class="hero-tag">ML</span><span class="hero-tag">Intuición</span>
-      <span class="hero-tag hero-tag--accent">15 min lectura</span>
-      <span class="hero-date">Mayo 2025</span>
-    </div>
-    <h1>Ejemplo 1 — Por qué la maldición de la dimensionalidad importa</h1>
-    <p class="hero-excerpt">A medida que la dimensión crece, el espacio se vuelve casi vacío, las distancias pierden significado y nuestras intuiciones geométricas colapsan. Entendemos por qué esto rompe KNN, el histograma y la interpolación, y qué hacer al respecto.</p>
-  </div>
+  <div class="hero-kicker"><span class="hero-kicker-bar"></span>Fundamentos de ML &nbsp;·&nbsp; CAP. 1</div>
+  <h1>Por qué la maldición de la dimensionalidad importa</h1>
+  <p class="hero-excerpt">A medida que la dimensión crece, el espacio se vuelve casi vacío, las distancias pierden significado y nuestras intuiciones geométricas colapsan. Entendemos por qué esto rompe KNN, el histograma y la interpolación, y qué hacer al respecto.</p>
+  <div class="hero-foot"><span>Mayo 2025</span><span class="hero-foot-sep">·</span><span>15 min de lectura</span></div>
 </div>
 <article class="article-wrap">
+<div class="series-nav"><div class="sn-label">SERIE — <span class="sn-name">Fundamentos de ML</span></div><div class="sn-chapters"><span class="sn-ch sn-ch--active"><span class="sn-num">01</span>Por qué la maldición de la dimensionalidad importa</span><a href="ejemplo2.html" class="sn-ch"><span class="sn-num">02</span>Gradient Descent desde cero</a></div></div>
 <h2>El fenómeno</h2>
 <p>Toma un hipercubo unitario en $d$ dimensiones: $[0,1]^d$. Ahora mete una hiperesfera inscrita de radio $r = 0.5$. ¿Qué fracción del volumen del cubo ocupa la esfera?</p>
 <p>$$\frac{V_{\text{esfera}}(d)}{V_{\text{cubo}}(d)} = \frac{\pi^{d/2} / \Gamma(d/2 + 1)}{1} \xrightarrow{d \to \infty} 0$$</p>
@@ -90,7 +102,7 @@ nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.94);backdrop-
 <p>$$\frac{\|x\|^2}{d} \approx \mathbb{E}[x_i^2] = \frac{1}{3}$$</p>
 <p>Es decir, $\|x\| \approx \sqrt{d/3}$. Todos los puntos quedan a distancias muy parecidas del origen — y entre sí.</p>
 <pre><code>import numpy as np
-<p>for d in [2, 10, 100, 1000]:     pts = np.random.uniform(0, 1, (500, d))     dists = np.linalg.norm(pts, axis=1)     cv = dists.std() / dists.mean()   # coeficiente de variación     print(f"d={d:5d}  mean={dists.mean():.3f}  CV={cv:.4f}") </code></pre></p>
+<p>for d in [2, 10, 100, 1000]:     pts = np.random.uniform(0, 1, (500, d))     dists = np.linalg.norm(pts, axis=1)     cv = dists.std() / dists.mean()   # coeficiente de variación     print(f&quot;d={d:5d}  mean={dists.mean():.3f}  CV={cv:.4f}&quot;) </code></pre></p>
 <pre><code>d=    2  mean=0.522  CV=0.3821
 d=   10  mean=1.817  CV=0.0867
 d=  100  mean=5.762  CV=0.0280
@@ -108,6 +120,20 @@ d= 1000  mean=18.25  CV=0.0089
 <p>La maldición de la dimensionalidad no es una abstracción — es la razón por la que KNN funciona en iris pero falla en features de audio, por la que necesitas regularización en regresión de alta dimensión, y por la que ninguna técnica no-paramétrica escala sin supuestos estructurales.</p>
 <p>Entenderla te hace mejor a la hora de elegir modelos.</p>
 </article>
+<script>
+(function(){
+  const bar=document.getElementById('progress');
+  const nav=document.getElementById('nav-title');
+  const hero=document.querySelector('.article-hero');
+  window.addEventListener('scroll',function(){
+    const d=document.documentElement;
+    const s=d.scrollTop||document.body.scrollTop;
+    const h=d.scrollHeight-d.clientHeight;
+    if(h>0) bar.style.width=(s/h*100)+'%';
+    if(hero) nav.classList.toggle('visible', s > hero.offsetHeight * .6);
+  },{passive:true});
+})();
+</script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]})"></script>
 </body>

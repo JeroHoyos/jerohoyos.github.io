@@ -1,7 +1,7 @@
 ---
 slug: ejemplo1
-title_es: Ejemplo 1 — Por qué la maldición de la dimensionalidad importa
-title_en: Example 1 — Why the Curse of Dimensionality Matters
+title_es: Por qué la maldición de la dimensionalidad importa
+title_en: Why the Curse of Dimensionality Matters
 date_es: Mayo 2025
 date_en: May 2025
 tags: Estadística, Alta dimensión, ML, Intuición
@@ -10,6 +10,10 @@ excerpt_en: As dimension grows, space becomes nearly empty, distances lose meani
 read_time: 15 min
 read_es: Leer artículo →
 read_en: Read article →
+series:     fundamentos-ml
+series_es:  Fundamentos de ML
+series_en:  ML Fundamentals
+chapter:    1
 ---
 
 ## El fenómeno
