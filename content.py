@@ -210,6 +210,34 @@ ARTE = [
         "titulo_en": "Pokémon",
         "año": "2025",
     },
+    {
+        "tipo": "imagen",
+        "url": "dibujos/cato.jpg",
+        "titulo_es": "Cato",
+        "titulo_en": "Cato",
+        "año": "2025",
+    },
+    {
+        "tipo": "imagen",
+        "url": "dibujos/foxy.jpg",
+        "titulo_es": "Foxy",
+        "titulo_en": "Foxy",
+        "año": "2025",
+    },
+    {
+        "tipo": "imagen",
+        "url": "dibujos/tryk.jpg",
+        "titulo_es": "Tryk",
+        "titulo_en": "Tryk",
+        "año": "2025",
+    },
+    {
+        "tipo": "imagen",
+        "url": "dibujos/monster.jpg",
+        "titulo_es": "Monster",
+        "titulo_en": "Monster",
+        "año": "2025",
+    },
 ]
 
 # ── CONTACTO ──────────────────────────────────────────────────────────
