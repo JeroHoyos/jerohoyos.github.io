@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://jerohoyos.github.io/</loc><priority>1.0</priority></url>
-  <url><loc>https://jerohoyos.github.io/blog/ejemplo2.html</loc><priority>0.7</priority></url>
-  <url><loc>https://jerohoyos.github.io/blog/ejemplo1.html</loc><priority>0.7</priority></url>
+  <url><loc>https://jerohoyos.github.io/blog/sistemas-inteligentes.html</loc><priority>0.7</priority></url>
+  <url><loc>https://jerohoyos.github.io/blog/mineria-de-datos.html</loc><priority>0.7</priority></url>
+  <url><loc>https://jerohoyos.github.io/blog/matematicas-discretas.html</loc><priority>0.7</priority></url>
+  <url><loc>https://jerohoyos.github.io/blog/investigacion-de-operaciones-i.html</loc><priority>0.7</priority></url>
+  <url><loc>https://jerohoyos.github.io/blog/estadistica-i.html</loc><priority>0.7</priority></url>
+  <url><loc>https://jerohoyos.github.io/blog/base-de-datos-i.html</loc><priority>0.7</priority></url>
+  <url><loc>https://jerohoyos.github.io/blog/arquitectura-computadores.html</loc><priority>0.7</priority></url>
 </urlset>

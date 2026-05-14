@@ -20,10 +20,14 @@ function setLang(lang) {
     const t = btn.getAttribute('data-' + lang);
     if (t) btn.textContent = t;
   });
+  try { localStorage.setItem('lang', lang); } catch(e) {}
 }
 document.querySelectorAll('.lang-btn').forEach(btn => {
   btn.addEventListener('click', () => setLang(btn.dataset.lang));
 });
+(function() {
+  try { const s = localStorage.getItem('lang'); if (s && s !== 'es') setLang(s); } catch(e) {}
+})();
 /* Email copy button */
 (function() {
   const btn = document.getElementById('ct-email-copy');
@@ -32,7 +36,7 @@ document.querySelectorAll('.lang-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     navigator.clipboard.writeText(btn.dataset.email).then(() => {
       const prev = span.textContent;
-      span.textContent = '✓ copiado';
+      span.textContent = document.documentElement.lang === 'en' ? '✓ copied' : '✓ copiado';
       setTimeout(() => { span.textContent = prev; }, 2000);
     });
   });
@@ -42,17 +46,26 @@ document.querySelectorAll('.lang-btn').forEach(btn => {
 def _tabs():
     return """
 /* ═══ TABS ═══ */
+function activateTab(id) {
+  const panel = document.getElementById('panel-' + id);
+  if (!panel) return;
+  document.querySelectorAll('.tab-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  const btn = document.querySelector('.tab-btn[data-tab="' + id + '"]');
+  if (btn) { btn.classList.add('active'); btn.setAttribute('aria-selected','true'); }
+  panel.classList.add('active');
+}
 document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
-    const id = btn.dataset.tab;
-    document.querySelectorAll('.tab-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
-    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-    btn.classList.add('active'); btn.setAttribute('aria-selected','true');
-    document.getElementById('panel-' + id).classList.add('active');
+    activateTab(btn.dataset.tab);
     const sh=document.getElementById('shell');
     window.scrollTo(0, sh.getBoundingClientRect().top + window.pageYOffset);
   });
-});"""
+});
+(function() {
+  const hash = window.location.hash.replace('#','');
+  if (hash) activateTab(hash);
+})();"""
 
 
 def _conway():

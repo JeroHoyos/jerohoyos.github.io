@@ -197,10 +197,30 @@ def build_panel_projects():
   </div>"""
 
 
+_MONTHS = {
+    'enero':1,'febrero':2,'marzo':3,'abril':4,'mayo':5,'junio':6,
+    'julio':7,'agosto':8,'septiembre':9,'octubre':10,'noviembre':11,'diciembre':12,
+    'january':1,'february':2,'march':3,'april':4,'may':5,'june':6,
+    'july':7,'august':8,'september':9,'october':10,'november':11,'december':12,
+}
+
+def _date_key(date_str):
+    p = date_str.lower().split()
+    yr  = int(p[1]) if len(p) > 1 and p[1].isdigit() else 0
+    mon = _MONTHS.get(p[0], 0) if p else 0
+    return (yr, mon)
+
+def _group_date(group):
+    kind, data = group
+    if kind == "standalone":
+        return _date_key(data.get("date_es", ""))
+    dates = [_date_key(ch.get("date_es", "")) for ch in data["chapters"]]
+    return max(dates) if dates else (0, 0)
+
+
 def build_panel_blog(blog_items=None):
     items = blog_items if blog_items is not None else C.BLOG
 
-    # Group: standalone entries + series blocks (first chapter of each series wins the slot)
     groups = []
     series_seen = set()
     for entry in items:
@@ -214,61 +234,133 @@ def build_panel_blog(blog_items=None):
                 key=lambda e: int(e.get("chapter", 0)),
             )
             groups.append(("series", {
-                "series_es": chapters[0].get("series_es", s),
-                "series_en": chapters[0].get("series_en", s),
-                "tags":      chapters[0].get("tags", []),
-                "chapters":  chapters,
+                "slug":       s,
+                "series_es":  chapters[0].get("series_es", s),
+                "series_en":  chapters[0].get("series_en", s),
+                "excerpt_es": chapters[0].get("series_excerpt_es", chapters[0].get("excerpt_es", "")),
+                "excerpt_en": chapters[0].get("series_excerpt_en", chapters[0].get("excerpt_en", "")),
+                "tags":       chapters[0].get("tags", []),
+                "chapters":   chapters,
             }))
 
-    rows = ""
+    groups.sort(key=_group_date, reverse=True)
+
+    wide_entry = ""
+    col1 = []
+    col2 = []
+    scroll_inits = []
+
     for i, (kind, data) in enumerate(groups):
-        num = str(i + 1).zfill(2)
+        is_new = i == 0
+        new_badge = '\n          <div class="bc-new"><span class="bc-new-dot"></span><span data-es="Nuevo" data-en="New">Nuevo</span></div>' if is_new else ''
         if kind == "standalone":
             a = data
-            rows += f"""
-        <a href="{a['url']}" class="blog-row">
-          <span class="br-num">{num}</span>
-          <div class="br-body">
-            <div class="br-title-row">
-              <div class="br-title" data-es="{a['title_es']}" data-en="{a['title_en']}">{a['title_es']}</div>
-              <span class="br-arrow" aria-hidden="true">↗</span>
+            new_cls = " bc-entry--new" if is_new else ""
+            entry_html = f"""
+        <a href="{a['url']}" class="bc-entry{new_cls}">{new_badge}
+          <div class="bc-title" data-es="{a['title_es']}" data-en="{a['title_en']}">{a['title_es']}</div>
+          <p class="bc-excerpt" data-es="{a['excerpt_es']}" data-en="{a['excerpt_en']}">{a['excerpt_es']}</p>
+          <div class="bc-foot">
+            <div class="bc-meta">
+              <span data-es="{a['date_es']}" data-en="{a['date_en']}">{a['date_es']}</span>
             </div>
-            <p class="br-excerpt" data-es="{a['excerpt_es']}" data-en="{a['excerpt_en']}">{a['excerpt_es']}</p>
-            <div class="br-meta">
-              <span class="br-date" data-es="{a['date_es']}" data-en="{a['date_en']}">{a['date_es']}</span>
-              <span class="br-dot">·</span>
-              <span class="br-read" data-es="{a['read_es']}" data-en="{a['read_en']}">{a['read_es']}</span>
-            </div>
+            <span class="bc-arrow" data-es="{a['read_es']}" data-en="{a['read_en']}">{a['read_es']}</span>
           </div>
         </a>"""
         else:
             d = data
-            count_es = f"{len(d['chapters'])} capítulos"
-            count_en = f"{len(d['chapters'])} chapters"
+            n_ch = len(d["chapters"])
+            count_es = f"{n_ch} capítulos"
+            count_en = f"{n_ch} chapters"
             first_url = d["chapters"][0]["url"]
-            chs_html = ""
-            for ch in d["chapters"]:
-                cn = str(ch.get("chapter", 0)).zfill(2)
-                chs_html += f"""
-              <span class="sb-ch">
-                <span class="sb-ch-num">{cn}</span>
-                <span class="sb-ch-title" data-es="{ch['title_es']}" data-en="{ch['title_en']}">{ch['title_es']}</span>
-                <span class="sb-ch-date" data-es="{ch['date_es']}" data-en="{ch['date_en']}">{ch['date_es']}</span>
-              </span>"""
-            rows += f"""
-        <a href="{first_url}" class="blog-row series-block">
-          <span class="br-num">{num}</span>
-          <div class="br-body">
-            <div class="br-title-row">
-              <div class="br-serie-badge" data-es="SERIE" data-en="SERIES">SERIE</div>
-              <span class="br-arrow" aria-hidden="true">↗</span>
-            </div>
-            <div class="br-title" data-es="{d['series_es']}" data-en="{d['series_en']}">{d['series_es']}</div>
-            <div class="sb-chapters">{chs_html}
-            </div>
-            <div class="br-count" data-es="{count_es}" data-en="{count_en}">{count_es}</div>
+            sid = d["slug"]
+
+            new_cls = " bc-entry--new" if is_new else ""
+            if n_ch <= 3:
+                chs_html = ""
+                for ch in d["chapters"]:
+                    cn = str(ch.get("chapter", 0)).zfill(2)
+                    chs_html += f"""
+              <div class="bc-ch">
+                <span class="bc-ch-num">{cn}</span>
+                <span class="bc-ch-title" data-es="{ch['title_es']}" data-en="{ch['title_en']}">{ch['title_es']}</span>
+                <span class="bc-ch-date" data-es="{ch['date_es']}" data-en="{ch['date_en']}">{ch['date_es']}</span>
+              </div>"""
+                entry_html = f"""
+        <div class="bc-entry bc-entry--series{new_cls}">{new_badge}
+          <div class="bc-series-title" data-es="{d['series_es']}" data-en="{d['series_en']}">{d['series_es']}</div>
+          <p class="bc-excerpt" data-es="{d['excerpt_es']}" data-en="{d['excerpt_en']}">{d['excerpt_es']}</p>
+          <div class="bc-chapters">{chs_html}
           </div>
-        </a>"""
+          <div class="bc-foot">
+            <div class="bc-meta"><span data-es="{count_es}" data-en="{count_en}">{count_es}</span></div>
+            <a href="{first_url}" class="bc-arrow" data-es="Ver serie →" data-en="View series →">Ver serie →</a>
+          </div>
+        </div>"""
+            else:
+                rows_html = ""
+                for ch in d["chapters"]:
+                    cn = str(ch.get("chapter", 0)).zfill(2)
+                    rows_html += f"""
+              <div class="bc-scroll-row">
+                <div class="bc-scroll-inner"><span class="bc-ch-num">{cn}</span><span class="bc-ch-title" data-es="{ch['title_es']}" data-en="{ch['title_en']}">{ch['title_es']}</span></div>
+                <span class="bc-ch-date" data-es="{ch['date_es']}" data-en="{ch['date_en']}">{ch['date_es']}</span>
+              </div>"""
+                scroll_inits.append(f"_s['{sid}']="+"{"+f"c:0,m:{n_ch-3},t:{n_ch}"+"}"+";")
+                entry_html = f"""
+        <div class="bc-entry bc-entry--series{new_cls}">{new_badge}
+          <div class="bc-series-title" data-es="{d['series_es']}" data-en="{d['series_en']}">{d['series_es']}</div>
+          <p class="bc-excerpt" data-es="{d['excerpt_es']}" data-en="{d['excerpt_en']}">{d['excerpt_es']}</p>
+          <div class="bc-scroll-wrap">
+            <div class="bc-scroll-vp" id="svp-{sid}">
+              <div class="bc-scroll-list" id="sl-{sid}">{rows_html}
+              </div>
+            </div>
+          </div>
+          <div class="bc-scroll-ctrl">
+            <div class="bc-scroll-btns">
+              <button class="bc-scroll-btn" id="sbp-{sid}" onclick="bcScroll('{sid}',-1)" disabled>↑</button>
+              <button class="bc-scroll-btn bc-scroll-btn--on" id="sbn-{sid}" onclick="bcScroll('{sid}',1)">↓</button>
+            </div>
+            <span class="bc-scroll-counter" id="sc-{sid}">1–3 / {n_ch}</span>
+          </div>
+          <div class="bc-foot">
+            <div class="bc-meta"><span data-es="{count_es}" data-en="{count_en}">{count_es}</span></div>
+            <a href="{first_url}" class="bc-arrow" data-es="Ver serie →" data-en="View series →">Ver serie →</a>
+          </div>
+        </div>"""
+
+        if i == 0:
+            wide_entry = entry_html
+        elif i % 2 == 1:
+            col1.append(entry_html)
+        else:
+            col2.append(entry_html)
+
+    scroll_js = ""
+    if scroll_inits:
+        inits_str = "\n  ".join(scroll_inits)
+        scroll_js = (
+            "\n<script>\n(function(){\n  var _s = {};\n"
+            "  window.bcScroll = function(id, dir) {\n"
+            "    var s = _s[id]; if (!s) return;\n"
+            "    s.c = Math.max(0, Math.min(s.m, s.c + dir));\n"
+            "    document.getElementById('sl-' + id).style.transform = 'translateY(-' + (s.c * 48) + 'px)';\n"
+            "    var bp = document.getElementById('sbp-' + id);\n"
+            "    var bn = document.getElementById('sbn-' + id);\n"
+            "    var sc = document.getElementById('sc-' + id);\n"
+            "    bp.disabled = s.c === 0;\n"
+            "    bp.className = 'bc-scroll-btn' + (s.c > 0 ? ' bc-scroll-btn--on' : '');\n"
+            "    bn.disabled = s.c >= s.m;\n"
+            "    bn.className = 'bc-scroll-btn' + (s.c < s.m ? ' bc-scroll-btn--on' : '');\n"
+            "    sc.textContent = (s.c + 1) + '–' + Math.min(s.c + 3, s.t) + ' / ' + s.t;\n"
+            "  };\n"
+            f"  {inits_str}\n"
+            "}());\n</script>"
+        )
+
+    col1_html = "".join(col1)
+    col2_html = "".join(col2)
 
     return f"""
   <!-- BLOG -->
@@ -277,10 +369,16 @@ def build_panel_blog(blog_items=None):
     <div class="panel-content dark-panel">
       <div class="sec-title">BLOG</div>
       <div class="sec-sub" data-es="{C.BLOG_SUB_ES}" data-en="{C.BLOG_SUB_EN}">{C.BLOG_SUB_ES}</div>
-      <div class="blog-list">{rows}
+      <div class="blog-list">{wide_entry}
+        <div class="blog-cols">
+          <div class="bc-col">{col1_html}
+          </div>
+          <div class="bc-col">{col2_html}
+          </div>
+        </div>
       </div>
     </div>
-  </div>"""
+  </div>{scroll_js}"""
 
 
 def _arte_piece(pieza):

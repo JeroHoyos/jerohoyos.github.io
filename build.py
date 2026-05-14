@@ -3,8 +3,12 @@
 # ║  Edita content.py y luego corre:  python build.py               ║
 # ╚══════════════════════════════════════════════════════════════════╝
 
+import re
 import content as C
 from pathlib import Path
+
+def _strip_html(s):
+    return re.sub(r'<[^>]+>', '', s)
 from src.css          import build_css
 from src.html         import (
     build_hero, build_tab_bar,
@@ -30,7 +34,7 @@ def build():
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{NOMBRE}</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐈‍⬛</text></svg>">
-<meta name="description" content="{C.TITULO} en {C.CIUDAD}. {C.BIO_EN[0].replace(chr(34), '&quot;')}">
+<meta name="description" content="{C.TITULO} en {C.CIUDAD}. {_strip_html(C.BIO_EN[0]).replace(chr(34), '&quot;')}">
 <meta property="og:title" content="{NOMBRE} — {C.TITULO}">
 <meta property="og:description" content="{C.TITULO} en {C.CIUDAD}. Estudiante de Ingeniería en Sistemas, Universidad Nacional de Colombia.">
 <meta property="og:type" content="website">

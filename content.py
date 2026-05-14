@@ -48,7 +48,7 @@ STACK = [
         "label_es": "Lenguajes",
         "label_en": "Languages",
         "chip_class": "chip-lang",
-        "items": ["Python", "C++", "R","SQL", "Rust"],
+        "items": ["Python","R","SQL", "C++"],
     },
     {
         "label_es": "Datos & Feature Engineering",
