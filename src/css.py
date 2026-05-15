@@ -166,6 +166,16 @@ body{background:#f4f4ef;color:var(--black);font-family:'Space Mono',monospace;ov
 .arte-piece{break-inside:avoid;margin-bottom:1.8rem;overflow:hidden;border:1px solid #e5e5e5;background:#f7f7f2}
 .arte-img-wrap{width:100%;overflow:hidden}
 .arte-img-wrap img{display:block;width:100%;height:auto;object-fit:cover}
+img.lb-trigger{cursor:zoom-in;transition:opacity .2s}
+img.lb-trigger:hover{opacity:.88}
+
+/* LIGHTBOX */
+#lightbox{position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.93);display:none;align-items:center;justify-content:center;cursor:zoom-out}
+#lightbox.open{display:flex;animation:lbIn .18s ease}
+@keyframes lbIn{from{opacity:0}to{opacity:1}}
+#lightbox img{max-width:90vw;max-height:90vh;object-fit:contain;display:block;cursor:default;box-shadow:0 8px 40px rgba(0,0,0,.6)}
+#lb-close{position:absolute;top:1.2rem;right:1.4rem;background:none;border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.6);font-size:1.1rem;line-height:1;padding:.5rem .7rem;cursor:pointer;transition:all .18s;font-family:'Space Mono',monospace}
+#lb-close:hover{color:#fff;border-color:rgba(255,255,255,.55)}
 
 /* CONTACT */
 .ct-header{text-align:center;margin-bottom:1.6rem}

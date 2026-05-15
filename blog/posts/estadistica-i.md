@@ -1,13 +1,21 @@
 ---
-slug: estadistica-i
-title_es: Estadística I
-title_en: Statistics I
+slug: estadistica-i-01
+title_es: Probabilidad y Variables Aleatorias
+title_en: Probability and Random Variables
 date_es: Mayo 2025
 date_en: May 2025
 tags: Estadística, Probabilidad, Distribuciones
 excerpt_es: Probabilidad, variables aleatorias y las distribuciones más importantes del curso.
 excerpt_en: Probability, random variables, and the most important distributions of the course.
 read_time: 8 min
+series: estadistica-i
+series_es: Estadística I
+series_en: Statistics I
+series_desc_es: Notas y apuntes del curso de Estadística I.
+series_desc_en: Notes and summaries from the Statistics I course.
+series_about_es: En esta serie cubrimos los conceptos esenciales de la estadística inferencial. Partimos de los axiomas de probabilidad y las variables aleatorias, exploramos las distribuciones más usadas —Normal, Binomial, Poisson y Exponencial— y terminamos con las herramientas de inferencia: estimación por intervalos y pruebas de hipótesis. || Cada capítulo es un resumen conciso pensado para repasar antes de un parcial, con las fórmulas clave y ejemplos en Python usando scipy y statsmodels.
+series_about_en: This series covers the essential concepts of inferential statistics. We start from the axioms of probability and random variables, explore the most commonly used distributions —Normal, Binomial, Poisson, and Exponential— and finish with inference tools: interval estimation and hypothesis testing. || Each chapter is a concise summary designed for pre-exam review, with key formulas and Python examples using scipy and statsmodels.
+chapter: 1
 ---
 
 ## Espacio muestral y probabilidad

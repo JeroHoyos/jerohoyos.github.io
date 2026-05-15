@@ -10,7 +10,11 @@
 <meta property="og:description" content="Data Scientist en Medellín. Estudiante de Ingeniería en Sistemas, Universidad Nacional de Colombia.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://jerohoyos.github.io/">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="https://jerohoyos.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://jerohoyos.github.io/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -182,6 +186,16 @@ body{background:#f4f4ef;color:var(--black);font-family:'Space Mono',monospace;ov
 .arte-piece{break-inside:avoid;margin-bottom:1.8rem;overflow:hidden;border:1px solid #e5e5e5;background:#f7f7f2}
 .arte-img-wrap{width:100%;overflow:hidden}
 .arte-img-wrap img{display:block;width:100%;height:auto;object-fit:cover}
+img.lb-trigger{cursor:zoom-in;transition:opacity .2s}
+img.lb-trigger:hover{opacity:.88}
+
+/* LIGHTBOX */
+#lightbox{position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.93);display:none;align-items:center;justify-content:center;cursor:zoom-out}
+#lightbox.open{display:flex;animation:lbIn .18s ease}
+@keyframes lbIn{from{opacity:0}to{opacity:1}}
+#lightbox img{max-width:90vw;max-height:90vh;object-fit:contain;display:block;cursor:default;box-shadow:0 8px 40px rgba(0,0,0,.6)}
+#lb-close{position:absolute;top:1.2rem;right:1.4rem;background:none;border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.6);font-size:1.1rem;line-height:1;padding:.5rem .7rem;cursor:pointer;transition:all .18s;font-family:'Space Mono',monospace}
+#lb-close:hover{color:#fff;border-color:rgba(255,255,255,.55)}
 
 /* CONTACT */
 .ct-header{text-align:center;margin-bottom:1.6rem}
@@ -459,17 +473,44 @@ footer{padding:1.2rem 4rem;border-top:1px solid #e5e5e5;display:flex;justify-con
       <div class="sec-title">BLOG</div>
       <div class="sec-sub" data-es="Notas sobre matemáticas, modelos y todo lo que me parece interesante pensar en voz alta." data-en="Notes on math, models and everything I find interesting to think out loud about.">Notas sobre matemáticas, modelos y todo lo que me parece interesante pensar en voz alta.</div>
       <div class="blog-list">
-        <a href="blog/estadistica-i.html" class="bc-entry bc-entry--new">
+        <div class="bc-entry bc-entry--series bc-entry--new">
           <div class="bc-new"><span class="bc-new-dot"></span><span data-es="Nuevo" data-en="New">Nuevo</span></div>
-          <div class="bc-title" data-es="Estadística I" data-en="Statistics I">Estadística I</div>
+          <div class="bc-series-title" data-es="Estadística I" data-en="Statistics I">Estadística I</div>
           <p class="bc-excerpt" data-es="Probabilidad, variables aleatorias y las distribuciones más importantes del curso." data-en="Probability, random variables, and the most important distributions of the course.">Probabilidad, variables aleatorias y las distribuciones más importantes del curso.</p>
-          <div class="bc-foot">
-            <div class="bc-meta">
-              <span data-es="Mayo 2025" data-en="May 2025">Mayo 2025</span>
+          <div class="bc-scroll-wrap">
+            <div class="bc-scroll-vp" id="svp-estadistica-i">
+              <div class="bc-scroll-list" id="sl-estadistica-i">
+              <div class="bc-scroll-row">
+                <div class="bc-scroll-inner"><span class="bc-ch-num">01</span><span class="bc-ch-title" data-es="Probabilidad y Variables Aleatorias" data-en="Probability and Random Variables">Probabilidad y Variables Aleatorias</span></div>
+                <span class="bc-ch-date" data-es="Mayo 2025" data-en="May 2025">Mayo 2025</span>
+              </div>
+              <div class="bc-scroll-row">
+                <div class="bc-scroll-inner"><span class="bc-ch-num">02</span><span class="bc-ch-title" data-es="Distribuciones de Probabilidad" data-en="Probability Distributions">Distribuciones de Probabilidad</span></div>
+                <span class="bc-ch-date" data-es="Mayo 2025" data-en="May 2025">Mayo 2025</span>
+              </div>
+              <div class="bc-scroll-row">
+                <div class="bc-scroll-inner"><span class="bc-ch-num">03</span><span class="bc-ch-title" data-es="Estimación e Intervalos de Confianza" data-en="Estimation and Confidence Intervals">Estimación e Intervalos de Confianza</span></div>
+                <span class="bc-ch-date" data-es="Mayo 2025" data-en="May 2025">Mayo 2025</span>
+              </div>
+              <div class="bc-scroll-row">
+                <div class="bc-scroll-inner"><span class="bc-ch-num">04</span><span class="bc-ch-title" data-es="Pruebas de Hipótesis" data-en="Hypothesis Testing">Pruebas de Hipótesis</span></div>
+                <span class="bc-ch-date" data-es="Mayo 2025" data-en="May 2025">Mayo 2025</span>
+              </div>
+              </div>
             </div>
-            <span class="bc-arrow" data-es="Leer artículo →" data-en="Read article →">Leer artículo →</span>
           </div>
-        </a>
+          <div class="bc-scroll-ctrl">
+            <div class="bc-scroll-btns">
+              <button class="bc-scroll-btn" id="sbp-estadistica-i" onclick="bcScroll('estadistica-i',-1)" disabled>↑</button>
+              <button class="bc-scroll-btn bc-scroll-btn--on" id="sbn-estadistica-i" onclick="bcScroll('estadistica-i',1)">↓</button>
+            </div>
+            <span class="bc-scroll-counter" id="sc-estadistica-i">1–3 / 4</span>
+          </div>
+          <div class="bc-foot">
+            <div class="bc-meta"><span data-es="4 capítulos" data-en="4 chapters">4 capítulos</span></div>
+            <a href="blog/estadistica-i.html" class="bc-arrow" data-es="Ver serie →" data-en="View series →">Ver serie →</a>
+          </div>
+        </div>
         <div class="blog-cols">
           <div class="bc-col">
         <a href="blog/sistemas-inteligentes.html" class="bc-entry">
@@ -539,6 +580,25 @@ footer{padding:1.2rem 4rem;border-top:1px solid #e5e5e5;display:flex;justify-con
       </div>
     </div>
   </div>
+<script>
+(function(){
+  var _s = {};
+  window.bcScroll = function(id, dir) {
+    var s = _s[id]; if (!s) return;
+    s.c = Math.max(0, Math.min(s.m, s.c + dir));
+    document.getElementById('sl-' + id).style.transform = 'translateY(-' + (s.c * 48) + 'px)';
+    var bp = document.getElementById('sbp-' + id);
+    var bn = document.getElementById('sbn-' + id);
+    var sc = document.getElementById('sc-' + id);
+    bp.disabled = s.c === 0;
+    bp.className = 'bc-scroll-btn' + (s.c > 0 ? ' bc-scroll-btn--on' : '');
+    bn.disabled = s.c >= s.m;
+    bn.className = 'bc-scroll-btn' + (s.c < s.m ? ' bc-scroll-btn--on' : '');
+    sc.textContent = (s.c + 1) + '–' + Math.min(s.c + 3, s.t) + ' / ' + s.t;
+  };
+  _s['estadistica-i']={c:0,m:1,t:4};
+}());
+</script>
 
   <!-- ARTE -->
   <div class="tab-panel" id="panel-arte" role="tabpanel">
@@ -548,31 +608,36 @@ footer{padding:1.2rem 4rem;border-top:1px solid #e5e5e5;display:flex;justify-con
       <div class="sec-sub" data-es="Dibujos digitales hechos en ratos libres. Personajes, criaturas y lo que salga." data-en="Digital drawings made in my spare time. Characters, creatures and whatever comes out.">Dibujos digitales hechos en ratos libres. Personajes, criaturas y lo que salga.</div>
       <div class="arte-grid"><div class="arte-piece">
         <div class="arte-img-wrap">
-          <img src="dibujos/pokemon.webp" alt="Pokémon" loading="lazy" width="722" height="458">
+          <img src="dibujos/pokemon.webp" alt="Pokémon" loading="lazy" width="722" height="458" data-full="dibujos/pokemon.webp" class="lb-trigger">
         </div>
       </div>
       <div class="arte-piece">
         <div class="arte-img-wrap">
-          <img src="dibujos/cato.webp" alt="Cato" loading="lazy" width="698" height="571">
+          <img src="dibujos/cato.webp" alt="Cato" loading="lazy" width="698" height="571" data-full="dibujos/cato.webp" class="lb-trigger">
         </div>
       </div>
       <div class="arte-piece">
         <div class="arte-img-wrap">
-          <img src="dibujos/foxy.webp" alt="Foxy" loading="lazy" width="669" height="498">
+          <img src="dibujos/foxy.webp" alt="Foxy" loading="lazy" width="669" height="498" data-full="dibujos/foxy.webp" class="lb-trigger">
         </div>
       </div>
       <div class="arte-piece">
         <div class="arte-img-wrap">
-          <img src="dibujos/tryk.webp" alt="Tryk" loading="lazy" width="639" height="370">
+          <img src="dibujos/tryk.webp" alt="Tryk" loading="lazy" width="639" height="370" data-full="dibujos/tryk.webp" class="lb-trigger">
         </div>
       </div>
       <div class="arte-piece">
         <div class="arte-img-wrap">
-          <img src="dibujos/monster.webp" alt="Monster" loading="lazy" width="364" height="504">
+          <img src="dibujos/monster.webp" alt="Monster" loading="lazy" width="364" height="504" data-full="dibujos/monster.webp" class="lb-trigger">
         </div>
       </div>
       </div>
     </div>
+  </div>
+  <!-- LIGHTBOX -->
+  <div id="lightbox" role="dialog" aria-modal="true" aria-label="Imagen ampliada">
+    <button id="lb-close" aria-label="Cerrar">&#x2715;</button>
+    <img id="lb-img" src="" alt="">
   </div>
 
   <!-- CONTACT -->
@@ -703,6 +768,7 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
   let _cw=window.innerWidth;
   init();
   window.addEventListener('resize',()=>{ if(Math.abs(window.innerWidth-_cw)>30){_cw=window.innerWidth;init();} });
+  window.addEventListener('pageshow',e=>{ if(e.persisted) init(); });
 })();
 /* ═══ ABOUT — Delaunay Triangulation ═══ */
 (function() {
@@ -996,6 +1062,10 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
   }).observe(document.getElementById('panel-blog'),{attributes:true,attributeFilter:['class']});
   document.addEventListener('visibilitychange',()=>{ if(!document.hidden&&active&&!animId) frame(); });
   window.addEventListener('resize',()=>{if(active&&Math.abs(window.innerWidth-_cw)>30){_cw=window.innerWidth;init();}});
+  // Arrancar si el panel ya estaba activo cuando se registró el observer (e.g. index.html#blog)
+  if(document.getElementById('panel-blog').classList.contains('active')){active=true;if(!animId)frame();}
+  // Restaurar loop tras bfcache (document.hidden=true puede haber roto el loop antes de salir)
+  window.addEventListener('pageshow',e=>{ if(e.persisted&&active&&!animId) frame(); });
 })();
 /* ═══ ARTE — Campo de partículas con atractores ═══ */
 (function(){
@@ -1065,6 +1135,21 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
   init(); initialized=true;
   new MutationObserver(()=>{const on=document.getElementById('panel-arte').classList.contains('active');if(on&&!active){if(!initialized){init();initialized=true;}active=true;}else if(!on)active=false;}).observe(document.getElementById('panel-arte'),{attributes:true,attributeFilter:['class']});
   window.addEventListener('resize',()=>{if(active&&Math.abs(window.innerWidth-_cw)>30){_cw=window.innerWidth;init();}});
+})();
+/* ═══ LIGHTBOX ═══ */
+(function(){
+  const lb=document.getElementById('lightbox');
+  const lbImg=document.getElementById('lb-img');
+  const lbClose=document.getElementById('lb-close');
+  if(!lb||!lbImg) return;
+  function open(src,alt){lbImg.src=src;lbImg.alt=alt||'';lb.classList.add('open');document.body.style.overflow='hidden';}
+  function close(){lb.classList.remove('open');document.body.style.overflow='';lbImg.src='';}
+  document.querySelectorAll('img.lb-trigger').forEach(img=>{
+    img.addEventListener('click',()=>open(img.dataset.full||img.src,img.alt));
+  });
+  lbClose.addEventListener('click',close);
+  lb.addEventListener('click',e=>{if(e.target===lb)close();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&lb.classList.contains('open'))close();});
 })();
 </script>
 <script src="oneko.js"></script>

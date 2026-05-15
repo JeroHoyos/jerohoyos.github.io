@@ -102,6 +102,7 @@ def _conway():
   let _cw=window.innerWidth;
   init();
   window.addEventListener('resize',()=>{ if(Math.abs(window.innerWidth-_cw)>30){_cw=window.innerWidth;init();} });
+  window.addEventListener('pageshow',e=>{ if(e.persisted) init(); });
 })();"""
 
 
@@ -483,6 +484,29 @@ def _euler_helix():
   }).observe(document.getElementById('panel-blog'),{attributes:true,attributeFilter:['class']});
   document.addEventListener('visibilitychange',()=>{ if(!document.hidden&&active&&!animId) frame(); });
   window.addEventListener('resize',()=>{if(active&&Math.abs(window.innerWidth-_cw)>30){_cw=window.innerWidth;init();}});
+  // Arrancar si el panel ya estaba activo cuando se registró el observer (e.g. index.html#blog)
+  if(document.getElementById('panel-blog').classList.contains('active')){active=true;if(!animId)frame();}
+  // Restaurar loop tras bfcache (document.hidden=true puede haber roto el loop antes de salir)
+  window.addEventListener('pageshow',e=>{ if(e.persisted&&active&&!animId) frame(); });
+})();"""
+
+
+def _lightbox():
+    return """
+/* ═══ LIGHTBOX ═══ */
+(function(){
+  const lb=document.getElementById('lightbox');
+  const lbImg=document.getElementById('lb-img');
+  const lbClose=document.getElementById('lb-close');
+  if(!lb||!lbImg) return;
+  function open(src,alt){lbImg.src=src;lbImg.alt=alt||'';lb.classList.add('open');document.body.style.overflow='hidden';}
+  function close(){lb.classList.remove('open');document.body.style.overflow='';lbImg.src='';}
+  document.querySelectorAll('img.lb-trigger').forEach(img=>{
+    img.addEventListener('click',()=>open(img.dataset.full||img.src,img.alt));
+  });
+  lbClose.addEventListener('click',close);
+  lb.addEventListener('click',e=>{if(e.target===lb)close();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&lb.classList.contains('open'))close();});
 })();"""
 
 
@@ -498,6 +522,7 @@ def build_js():
         + _chladni()
         + _euler_helix()
         + _particles()
+        + _lightbox()
         + "\n</script>"
     )
 

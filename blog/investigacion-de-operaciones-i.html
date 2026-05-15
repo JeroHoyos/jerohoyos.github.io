@@ -5,6 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Investigación de Operaciones I — Blog</title>
 <meta name="description" content="Modelos de optimización, programación lineal, método simplex y aplicaciones a problemas de decisión.">
+<meta property="og:title" content="Investigación de Operaciones I">
+<meta property="og:description" content="Modelos de optimización, programación lineal, método simplex y aplicaciones a problemas de decisión.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://jerohoyos.github.io/blog/investigacion-de-operaciones-i.html">
+<meta property="og:image" content="https://jerohoyos.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://jerohoyos.github.io/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
@@ -30,12 +39,11 @@ body>nav{position:sticky;top:0;z-index:200;background:rgba(250,250,248,.97);back
 .lang-btn:hover{border-color:var(--soft);color:var(--ink)}
 
 .article-hero{padding:5.5rem 4vw 5rem;border-bottom:1px solid var(--rule);background:var(--bg)}
-.hero-kicker{font-size:.46rem;letter-spacing:4px;text-transform:uppercase;color:var(--soft);margin-bottom:2.2rem;display:flex;align-items:center;gap:.9rem}
-.hero-kicker-bar{width:1.8rem;height:1px;background:var(--faint);flex-shrink:0}
-.article-hero h1{font-family:'DM Serif Display',serif;font-size:clamp(2rem,4.5vw,4.2rem);letter-spacing:-.02em;line-height:1.1;color:var(--ink);margin-bottom:2rem;max-width:1000px}
-.hero-excerpt{font-size:.9rem;line-height:2;color:var(--mid);max-width:860px;margin-bottom:2.5rem}
-.hero-foot{display:flex;align-items:center;gap:.8rem;font-size:.48rem;letter-spacing:2px;text-transform:uppercase;color:var(--faint);padding-top:1.8rem;border-top:1px solid var(--rule)}
-.hero-foot-sep{color:var(--rule)}
+.hero-kicker{font-size:.46rem;letter-spacing:4px;text-transform:uppercase;color:var(--soft);margin-bottom:2rem;display:flex;align-items:center;gap:.9rem}
+.hero-meta{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:1rem;flex-wrap:wrap}
+.hero-date{font-size:.65rem;letter-spacing:3px;text-transform:uppercase;color:var(--mid);white-space:nowrap;flex-shrink:0}
+.article-hero h1{font-family:'DM Serif Display',serif;font-size:clamp(2.5rem,6vw,5.5rem);letter-spacing:-.025em;line-height:1.06;color:var(--ink);margin-bottom:1.2rem;max-width:1000px}
+.hero-excerpt{font-family:'DM Serif Display',serif;font-style:italic;font-size:1.3rem;line-height:1.65;color:#2a2a2a;max-width:820px}
 
 .article-outer{max-width:1560px;margin:0 auto;padding:4.5rem 4vw 8rem;display:grid;grid-template-columns:1fr 290px;gap:3.5rem;align-items:start}
 .article-wrap{min-width:0}
@@ -75,8 +83,8 @@ body>nav{position:sticky;top:0;z-index:200;background:rgba(250,250,248,.97);back
 .article-wrap td{border-bottom:1px solid var(--rule);padding:.6rem .8rem;color:#444}
 .katex-display{overflow-x:auto;padding:.9rem 0}
 
-.hero-tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.6rem}
-.hero-tag{font-size:.4rem;letter-spacing:2px;text-transform:uppercase;padding:.28rem .7rem;border:1px solid var(--rule);color:var(--soft)}
+.hero-tags{display:flex;flex-wrap:wrap;gap:.45rem}
+.hero-tag{font-size:.38rem;letter-spacing:2px;text-transform:uppercase;padding:.25rem .65rem;border:1px solid var(--rule);color:var(--soft)}
 
 .series-nav{border:1px solid var(--rule);border-left:3px solid var(--ink);padding:1.4rem 1.6rem;margin:0 0 3.5rem}
 .sn-header{display:flex;align-items:baseline;gap:.7rem;margin-bottom:1rem;padding-bottom:.8rem;border-bottom:1px solid var(--rule)}
@@ -140,10 +148,10 @@ body>nav{position:sticky;top:0;z-index:200;background:rgba(250,250,248,.97);back
   </div>
 </nav>
 <div class="article-hero">
-  <div class="hero-kicker"><span data-es="2025" data-en="2025">2025</span></div>
+  
+  <div class="hero-meta"><span class="hero-date" data-es="2025" data-en="2025">2025</span></div>
   <h1 data-es="Investigación de Operaciones I" data-en="Operations Research I">Investigación de Operaciones I</h1>
   <p class="hero-excerpt" data-es="Modelos de optimización, programación lineal, método simplex y aplicaciones a problemas de decisión." data-en="Optimization models, linear programming, the simplex method, and applications to decision-making problems.">Modelos de optimización, programación lineal, método simplex y aplicaciones a problemas de decisión.</p>
-  <div class="hero-foot"><span data-es="2025" data-en="2025">2025</span><span class="hero-foot-sep">·</span><span data-es="-- de lectura" data-en="-- read">-- de lectura</span></div>
 </div>
 <div class="article-outer">
 <article class="article-wrap">

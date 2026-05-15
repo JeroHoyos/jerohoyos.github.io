@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Matemáticas Discretas — Blog</title>
-<meta name="description" content="Lógica proposicional, teoría de grafos, combinatoria, relaciones y fundamentos de la computación discreta.">
-<meta property="og:title" content="Matemáticas Discretas">
-<meta property="og:description" content="Lógica proposicional, teoría de grafos, combinatoria, relaciones y fundamentos de la computación discreta.">
+<title>Estimación e Intervalos de Confianza — Blog</title>
+<meta name="description" content="Estimadores puntuales, propiedades deseables y cómo construir intervalos de confianza para la media y la proporción.">
+<meta property="og:title" content="Estimación e Intervalos de Confianza">
+<meta property="og:description" content="Estimadores puntuales, propiedades deseables y cómo construir intervalos de confianza para la media y la proporción.">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://jerohoyos.github.io/blog/matematicas-discretas.html">
+<meta property="og:url" content="https://jerohoyos.github.io/blog/estadistica-i-03.html">
 <meta property="og:image" content="https://jerohoyos.github.io/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -138,9 +138,9 @@ body>nav{position:sticky;top:0;z-index:200;background:rgba(250,250,248,.97);back
 <div id="progress"></div>
 <nav>
   <a href="../index.html#blog" class="nav-back" data-es="← Blog" data-en="← Blog">← Blog</a>
-  <span class="nav-title" id="nav-title" data-es="Matemáticas Discretas" data-en="Discrete Mathematics">Matemáticas Discretas</span>
+  <span class="nav-title" id="nav-title" data-es="Estimación e Intervalos de Confianza" data-en="Estimation and Confidence Intervals">Estimación e Intervalos de Confianza</span>
   <div class="nav-end">
-    <span class="nav-rt" data-es="-- lectura" data-en="-- read">-- lectura</span>
+    <span class="nav-rt" data-es="9 min lectura" data-en="9 min read">9 min lectura</span>
     <div class="lang-toggle">
       <button class="lang-btn active" data-lang="es">ES</button>
       <button class="lang-btn" data-lang="en">EN</button>
@@ -148,17 +148,136 @@ body>nav{position:sticky;top:0;z-index:200;background:rgba(250,250,248,.97);back
   </div>
 </nav>
 <div class="article-hero">
-  
-  <div class="hero-meta"><span class="hero-date" data-es="2025" data-en="2025">2025</span></div>
-  <h1 data-es="Matemáticas Discretas" data-en="Discrete Mathematics">Matemáticas Discretas</h1>
-  <p class="hero-excerpt" data-es="Lógica proposicional, teoría de grafos, combinatoria, relaciones y fundamentos de la computación discreta." data-en="Propositional logic, graph theory, combinatorics, relations, and foundations of discrete computation.">Lógica proposicional, teoría de grafos, combinatoria, relaciones y fundamentos de la computación discreta.</p>
+  <div class="hero-kicker"><span data-es="Estadística I &nbsp;·&nbsp; CAP. 3" data-en="Statistics I &nbsp;·&nbsp; CH. 3">Estadística I &nbsp;·&nbsp; CAP. 3</span></div>
+  <div class="hero-meta"><span class="hero-date" data-es="Mayo 2025" data-en="May 2025">Mayo 2025</span></div>
+  <h1 data-es="Estimación e Intervalos de Confianza" data-en="Estimation and Confidence Intervals">Estimación e Intervalos de Confianza</h1>
+  <p class="hero-excerpt" data-es="Estimadores puntuales, propiedades deseables y cómo construir intervalos de confianza para la media y la proporción." data-en="Point estimators, desirable properties, and how to build confidence intervals for the mean and proportion.">Estimadores puntuales, propiedades deseables y cómo construir intervalos de confianza para la media y la proporción.</p>
 </div>
 <div class="article-outer">
 <article class="article-wrap">
+<div class="series-nav"><div class="sn-header"><span class="sn-kicker" data-es="Serie" data-en="Series">Serie</span><span class="sn-name" data-es="Estadística I" data-en="Statistics I">Estadística I</span></div><div class="sn-chapters"><a href="estadistica-i-01.html" class="sn-ch"><span class="sn-num">01</span><span class="sn-info"><span class="sn-title" data-es="Probabilidad y Variables Aleatorias" data-en="Probability and Random Variables">Probabilidad y Variables Aleatorias</span><span class="sn-date" data-es="Mayo 2025" data-en="May 2025">Mayo 2025</span></span></a><a href="estadistica-i-02.html" class="sn-ch"><span class="sn-num">02</span><span class="sn-info"><span class="sn-title" data-es="Distribuciones de Probabilidad" data-en="Probability Distributions">Distribuciones de Probabilidad</span><span class="sn-date" data-es="Mayo 2025" data-en="May 2025">Mayo 2025</span></span></a><div class="sn-ch sn-ch--active"><span class="sn-num">03</span><span class="sn-info"><span class="sn-title" data-es="Estimación e Intervalos de Confianza" data-en="Estimation and Confidence Intervals">Estimación e Intervalos de Confianza</span><span class="sn-date" data-es="Mayo 2025" data-en="May 2025">Mayo 2025</span></span></div><a href="estadistica-i-04.html" class="sn-ch"><span class="sn-num">04</span><span class="sn-info"><span class="sn-title" data-es="Pruebas de Hipótesis" data-en="Hypothesis Testing">Pruebas de Hipótesis</span><span class="sn-date" data-es="Mayo 2025" data-en="May 2025">Mayo 2025</span></span></a></div></div>
+<div id="body-es"><h2 id="estimación-puntual">Estimación puntual</h2>
+<p>Un <strong>estimador</strong> $\hat{\theta}$ es una función de la muestra que aproxima un parámetro desconocido $\theta$.</p>
+<h3 id="propiedades-deseables">Propiedades deseables</h3>
+<strong>Insesgadez:</strong> $E[\hat{\theta}] = \theta$. El estimador no sobreestima ni subestima en promedio.
+<strong>Consistencia:</strong> $\hat{\theta} \to \theta$ cuando $n \to \infty$. Con más datos, el estimador converge al valor real.
+<strong>Eficiencia:</strong> Entre todos los estimadores insesgados, el eficiente tiene la menor varianza.
+<h3 id="estimadores-comunes">Estimadores comunes</h3>
+<table><thead><tr><th>Parámetro</th><th>Estimador</th><th>Insesgado</th></tr></thead><tbody><tr><td>Media $\mu$</td><td>$\bar{X} = \frac{1}{n}\sum X_i$</td><td>Sí</td></tr><tr><td>Varianza $\sigma^2$</td><td>$S^2 = \frac{1}{n-1}\sum(X_i - \bar{X})^2$</td><td>Sí</td></tr><tr><td>Proporción $p$</td><td>$\hat{p} = X/n$</td><td>Sí</td></tr></tbody></table>
+<p>La varianza muestral usa $n-1$ (corrección de Bessel) para ser insesgada.</p>
+<h2 id="distribución-muestral-de-barx">Distribución muestral de $\bar{X}$</h2>
+<p>Si $X_1, \ldots, X_n$ son i.i.d. con media $\mu$ y varianza $\sigma^2$, entonces:</p>
+<p>$$\bar{X} \sim \mathcal{N}\!\left(\mu,\, \frac{\sigma^2}{n}\right) \quad \text{(para } n \text{ grande, por el TCL)}$$</p>
+<p>El <strong>error estándar</strong> de $\bar{X}$ es $\text{SE} = \sigma/\sqrt{n}$.</p>
+<h2 id="intervalos-de-confianza-para-la-media">Intervalos de confianza para la media</h2>
+<p>Un intervalo de confianza al $(1-\alpha)\times 100\%$ es un rango que contiene al parámetro verdadero con esa probabilidad en muestreos repetidos.</p>
+<h3 id="sigma-conocida-distribución-normal">$\sigma$ conocida — distribución Normal</h3>
+<p>$$\bar{X} \pm z_{\alpha/2} \cdot \frac{\sigma}{\sqrt{n}}$$</p>
+<p>donde $z_{\alpha/2}$ es el cuantil de la Normal estándar. Para el 95%: $z_{0.025} = 1.96$.</p>
+<h3 id="sigma-desconocida-distribución-t">$\sigma$ desconocida — distribución $t$</h3>
+<p>$$\bar{X} \pm t_{\alpha/2,\, n-1} \cdot \frac{S}{\sqrt{n}}$$</p>
+<p>La distribución $t$ de Student con $n-1$ grados de libertad tiene colas más pesadas que la Normal. Cuando $n \geq 30$ la diferencia es pequeña.</p>
+<pre><code class="language-python">import numpy as np
+from scipy import stats
 
-<div id="body-es"><p class="stub-msg" data-es="Próximamente" data-en="Coming soon">Próximamente</p></div>
+data = [12.1, 11.8, 13.0, 12.5, 11.9, 12.7, 12.3]
+n    = len(data)
+xbar = np.mean(data)
+s    = np.std(data, ddof=1)
+
+# IC 95% con t de Student
+t_crit = stats.t.ppf(0.975, df=n-1)
+margin = t_crit * s / np.sqrt(n)
+
+print(f&quot;Media: {xbar:.3f}&quot;)
+print(f&quot;IC 95%: ({xbar - margin:.3f}, {xbar + margin:.3f})&quot;)
+</code></pre>
+<h2 id="intervalo-de-confianza-para-una-proporción">Intervalo de confianza para una proporción</h2>
+<p>$$\hat{p} \pm z_{\alpha/2} \sqrt{\frac{\hat{p}(1-\hat{p})}{n}}$$</p>
+<p>Válido cuando $n\hat{p} \geq 5$ y $n(1-\hat{p}) \geq 5$.</p>
+<pre><code class="language-python">from statsmodels.stats.proportion import proportion_confint
+
+# 45 éxitos en 120 ensayos
+ic = proportion_confint(45, 120, alpha=0.05, method=&#x27;normal&#x27;)
+print(f&quot;IC 95%: {ic}&quot;)
+</code></pre>
+<h2 id="tamaño-de-muestra">Tamaño de muestra</h2>
+<p>Para estimar $\mu$ con margen de error $E$ y confianza $(1-\alpha)$:</p>
+<p>$$n = \left(\frac{z_{\alpha/2}\,\sigma}{E}\right)^2$$</p>
+<p>Para estimar $p$ (sin conocimiento previo, usar $\hat{p} = 0.5$ es conservador):</p>
+<p>$$n = \frac{z_{\alpha/2}^2\, \hat{p}(1-\hat{p})}{E^2}$$</p></div>
+<div id="body-en" style="display:none"><h2 id="en-point-estimation">Point Estimation</h2>
+<p>An <strong>estimator</strong> $\hat{\theta}$ is a function of the sample that approximates an unknown parameter $\theta$.</p>
+<h3 id="en-desirable-properties">Desirable properties</h3>
+<strong>Unbiasedness:</strong> $E[\hat{\theta}] = \theta$. The estimator neither overestimates nor underestimates on average.
+<strong>Consistency:</strong> $\hat{\theta} \to \theta$ as $n \to \infty$. With more data, the estimator converges to the true value.
+<strong>Efficiency:</strong> Among all unbiased estimators, the efficient one has the smallest variance.
+<h3 id="en-common-estimators">Common estimators</h3>
+<table><thead><tr><th>Parameter</th><th>Estimator</th><th>Unbiased</th></tr></thead><tbody><tr><td>Mean $\mu$</td><td>$\bar{X} = \frac{1}{n}\sum X_i$</td><td>Yes</td></tr><tr><td>Variance $\sigma^2$</td><td>$S^2 = \frac{1}{n-1}\sum(X_i - \bar{X})^2$</td><td>Yes</td></tr><tr><td>Proportion $p$</td><td>$\hat{p} = X/n$</td><td>Yes</td></tr></tbody></table>
+<p>The sample variance uses $n-1$ (Bessel's correction) to be unbiased.</p>
+<h2 id="en-sampling-distribution-of-barx">Sampling Distribution of $\bar{X}$</h2>
+<p>If $X_1, \ldots, X_n$ are i.i.d. with mean $\mu$ and variance $\sigma^2$, then:</p>
+<p>$$\bar{X} \sim \mathcal{N}\!\left(\mu,\, \frac{\sigma^2}{n}\right) \quad \text{(for large } n \text{, by the CLT)}$$</p>
+<p>The <strong>standard error</strong> of $\bar{X}$ is $\text{SE} = \sigma/\sqrt{n}$.</p>
+<h2 id="en-confidence-intervals-for-the-mean">Confidence Intervals for the Mean</h2>
+<p>A $(1-\alpha)\times 100\%$ confidence interval is a range that contains the true parameter with that probability over repeated sampling.</p>
+<h3 id="en-known-sigma-normal-distribution">Known $\sigma$ — Normal distribution</h3>
+<p>$$\bar{X} \pm z_{\alpha/2} \cdot \frac{\sigma}{\sqrt{n}}$$</p>
+<p>where $z_{\alpha/2}$ is the quantile of the standard Normal. For 95%: $z_{0.025} = 1.96$.</p>
+<h3 id="en-unknown-sigma-t-distribution">Unknown $\sigma$ — $t$ distribution</h3>
+<p>$$\bar{X} \pm t_{\alpha/2,\, n-1} \cdot \frac{S}{\sqrt{n}}$$</p>
+<p>Student's $t$ distribution with $n-1$ degrees of freedom has heavier tails than the Normal. When $n \geq 30$ the difference is small.</p>
+<pre><code class="language-python">import numpy as np
+from scipy import stats
+
+data = [12.1, 11.8, 13.0, 12.5, 11.9, 12.7, 12.3]
+n    = len(data)
+xbar = np.mean(data)
+s    = np.std(data, ddof=1)
+
+# 95% CI with Student&#x27;s t
+t_crit = stats.t.ppf(0.975, df=n-1)
+margin = t_crit * s / np.sqrt(n)
+
+print(f&quot;Mean: {xbar:.3f}&quot;)
+print(f&quot;95% CI: ({xbar - margin:.3f}, {xbar + margin:.3f})&quot;)
+</code></pre>
+<h2 id="en-confidence-interval-for-a-proportion">Confidence Interval for a Proportion</h2>
+<p>$$\hat{p} \pm z_{\alpha/2} \sqrt{\frac{\hat{p}(1-\hat{p})}{n}}$$</p>
+<p>Valid when $n\hat{p} \geq 5$ and $n(1-\hat{p}) \geq 5$.</p>
+<pre><code class="language-python">from statsmodels.stats.proportion import proportion_confint
+
+# 45 successes in 120 trials
+ci = proportion_confint(45, 120, alpha=0.05, method=&#x27;normal&#x27;)
+print(f&quot;95% CI: {ci}&quot;)
+</code></pre>
+<h2 id="en-sample-size">Sample Size</h2>
+<p>To estimate $\mu$ with margin of error $E$ and confidence $(1-\alpha)$:</p>
+<p>$$n = \left(\frac{z_{\alpha/2}\,\sigma}{E}\right)^2$$</p>
+<p>To estimate $p$ (without prior knowledge, use $\hat{p} = 0.5$ as a conservative choice):</p>
+<p>$$n = \frac{z_{\alpha/2}^2\, \hat{p}(1-\hat{p})}{E^2}$$</p></div>
 </article>
-
+<aside class="toc-sidebar"><div id="toc-es"><div class="toc-kicker">Contenido</div><nav class="toc-nav">
+<a href="#estimación-puntual" class="toc-link">Estimación puntual</a>
+<a href="#propiedades-deseables" class="toc-link toc-h3">Propiedades deseables</a>
+<a href="#estimadores-comunes" class="toc-link toc-h3">Estimadores comunes</a>
+<a href="#distribución-muestral-de-barx" class="toc-link">Distribución muestral de $\bar{X}$</a>
+<a href="#intervalos-de-confianza-para-la-media" class="toc-link">Intervalos de confianza para la media</a>
+<a href="#sigma-conocida-distribución-normal" class="toc-link toc-h3">$\sigma$ conocida — distribución Normal</a>
+<a href="#sigma-desconocida-distribución-t" class="toc-link toc-h3">$\sigma$ desconocida — distribución $t$</a>
+<a href="#intervalo-de-confianza-para-una-proporción" class="toc-link">Intervalo de confianza para una proporción</a>
+<a href="#tamaño-de-muestra" class="toc-link">Tamaño de muestra</a>
+</nav></div><div id="toc-en" style="display:none"><div class="toc-kicker">Contents</div><nav class="toc-nav">
+<a href="#en-point-estimation" class="toc-link">Point Estimation</a>
+<a href="#en-desirable-properties" class="toc-link toc-h3">Desirable properties</a>
+<a href="#en-common-estimators" class="toc-link toc-h3">Common estimators</a>
+<a href="#en-sampling-distribution-of-barx" class="toc-link">Sampling Distribution of $\bar{X}$</a>
+<a href="#en-confidence-intervals-for-the-mean" class="toc-link">Confidence Intervals for the Mean</a>
+<a href="#en-known-sigma-normal-distribution" class="toc-link toc-h3">Known $\sigma$ — Normal distribution</a>
+<a href="#en-unknown-sigma-t-distribution" class="toc-link toc-h3">Unknown $\sigma$ — $t$ distribution</a>
+<a href="#en-confidence-interval-for-a-proportion" class="toc-link">Confidence Interval for a Proportion</a>
+<a href="#en-sample-size" class="toc-link">Sample Size</a>
+</nav></div></aside>
 </div>
 <script>
 /* ── Language toggle ── */
@@ -213,7 +332,7 @@ document.querySelectorAll('.lang-btn').forEach(function(btn){
   }
 })();
 </script>
-<footer class="article-footer"><a href="../index.html#blog" class="af-back" data-es="← Volver al blog" data-en="← Back to blog">← Volver al blog</a></footer>
+<footer class="article-footer"><div class="af-nav"><a href="estadistica-i-02.html" class="af-ch af-ch--prev"><span class="af-dir" data-es="← Capítulo anterior" data-en="← Previous chapter">← Capítulo anterior</span><span class="af-ch-title" data-es="Distribuciones de Probabilidad" data-en="Probability Distributions">Distribuciones de Probabilidad</span><span class="af-ch-num">Cap. 02</span></a><a href="estadistica-i-04.html" class="af-ch af-ch--next"><span class="af-dir" data-es="Siguiente capítulo →" data-en="Next chapter →">Siguiente capítulo →</span><span class="af-ch-title" data-es="Pruebas de Hipótesis" data-en="Hypothesis Testing">Pruebas de Hipótesis</span><span class="af-ch-num">Cap. 04</span></a></div><a href="../index.html#blog" class="af-back" data-es="← Volver al blog" data-en="← Back to blog">← Volver al blog</a></footer>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]})"></script>
 </body>

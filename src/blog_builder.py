@@ -42,6 +42,9 @@ FONTS = (
     "&family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&display=swap"
 )
 
+SITE_URL = "https://jerohoyos.github.io"
+OG_IMAGE = f"{SITE_URL}/og.png"
+
 KATEX_CSS = "https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"
 KATEX_JS  = "https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"
 KATEX_AR  = "https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
@@ -266,19 +269,11 @@ def _build_toc(body_html, read_time="", id_prefix="", lang="es"):
         else:
             links += f'<a href="#{sid}" class="toc-link toc-h3">{escaped}</a>\n'
 
-    h2_count = sum(1 for lvl, _, _ in items if lvl == "2")
     kicker = "Contenido" if lang == "es" else "Contents"
-    sections_label = "secciones" if lang == "es" else "sections"
-    footer_parts = [f'{h2_count} {sections_label}']
-    if read_time:
-        footer_parts.append(f'~{read_time}')
-    footer = f'<div class="toc-footer">{" &nbsp;|&nbsp; ".join(footer_parts)}</div>'
 
     toc_html = (
         f'<div class="toc-kicker">{kicker}</div>'
-        f'<div class="toc-label">Table of Contents</div>'
         f'<nav class="toc-nav">\n{links}</nav>'
-        f'{footer}'
     )
     return modified, toc_html
 
@@ -303,8 +298,8 @@ def _blog_template(meta, body_html, series_nav="", toc_html="", series_chapters=
         kicker    = series_name
         kicker_en = series_name_en
     else:
-        kicker    = date
-        kicker_en = date_en
+        kicker    = ""
+        kicker_en = ""
 
     # Tags chips
     raw_tags = [t.strip() for t in meta.get("tags", "").split(",") if t.strip()]
@@ -317,18 +312,17 @@ def _blog_template(meta, body_html, series_nav="", toc_html="", series_chapters=
     rt_es = f'{rt} lectura' if rt else ''
     rt_en = f'{rt} read'    if rt else ''
 
-    # Hero foot: individual bilingual spans (avoids HTML inside data-* attributes)
-    sep = '<span class="hero-foot-sep">·</span>'
-    foot_parts = []
-    if date:
-        foot_parts.append(
-            f'<span data-es="{date}" data-en="{date_en or date}">{date}</span>'
-        )
-    if rt:
-        foot_parts.append(
-            f'<span data-es="{rt} de lectura" data-en="{rt} read">{rt} de lectura</span>'
-        )
-    hero_foot_html = sep.join(foot_parts)
+    # Date span for hero-meta
+    hero_date_html = (
+        f'<span class="hero-date" data-es="{date}" data-en="{date_en or date}">{date}</span>'
+        if date else ''
+    )
+
+    # Kicker div (solo si hay contenido de kicker)
+    kicker_div = (
+        f'<div class="hero-kicker"><span data-es="{kicker}" data-en="{kicker_en}">{kicker}</span></div>'
+        if kicker else ''
+    )
 
     # Article footer (prev/next + back)
     footer_html = _article_footer(meta.get("slug", ""), series_chapters)
@@ -349,6 +343,8 @@ def _blog_template(meta, body_html, series_nav="", toc_html="", series_chapters=
     else:
         toc_sidebar_html = ""
 
+    slug = _e(meta.get("slug", ""))
+
     return f"""<!DOCTYPE html>
 <html lang="es">
 <head>
@@ -356,6 +352,15 @@ def _blog_template(meta, body_html, series_nav="", toc_html="", series_chapters=
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{title} — Blog</title>
 <meta name="description" content="{excerpt}">
+<meta property="og:title" content="{title}">
+<meta property="og:description" content="{excerpt}">
+<meta property="og:type" content="article">
+<meta property="og:url" content="{SITE_URL}/blog/{slug}.html">
+<meta property="og:image" content="{OG_IMAGE}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="{OG_IMAGE}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="{FONTS}" rel="stylesheet">
@@ -381,12 +386,11 @@ body>nav{{position:sticky;top:0;z-index:200;background:rgba(250,250,248,.97);bac
 .lang-btn:hover{{border-color:var(--soft);color:var(--ink)}}
 
 .article-hero{{padding:5.5rem 4vw 5rem;border-bottom:1px solid var(--rule);background:var(--bg)}}
-.hero-kicker{{font-size:.46rem;letter-spacing:4px;text-transform:uppercase;color:var(--soft);margin-bottom:2.2rem;display:flex;align-items:center;gap:.9rem}}
-.hero-kicker-bar{{width:1.8rem;height:1px;background:var(--faint);flex-shrink:0}}
-.article-hero h1{{font-family:'DM Serif Display',serif;font-size:clamp(2rem,4.5vw,4.2rem);letter-spacing:-.02em;line-height:1.1;color:var(--ink);margin-bottom:2rem;max-width:1000px}}
-.hero-excerpt{{font-size:.9rem;line-height:2;color:var(--mid);max-width:860px;margin-bottom:2.5rem}}
-.hero-foot{{display:flex;align-items:center;gap:.8rem;font-size:.48rem;letter-spacing:2px;text-transform:uppercase;color:var(--faint);padding-top:1.8rem;border-top:1px solid var(--rule)}}
-.hero-foot-sep{{color:var(--rule)}}
+.hero-kicker{{font-size:.46rem;letter-spacing:4px;text-transform:uppercase;color:var(--soft);margin-bottom:2rem;display:flex;align-items:center;gap:.9rem}}
+.hero-meta{{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:1rem;flex-wrap:wrap}}
+.hero-date{{font-size:.65rem;letter-spacing:3px;text-transform:uppercase;color:var(--mid);white-space:nowrap;flex-shrink:0}}
+.article-hero h1{{font-family:'DM Serif Display',serif;font-size:clamp(2.5rem,6vw,5.5rem);letter-spacing:-.025em;line-height:1.06;color:var(--ink);margin-bottom:1.2rem;max-width:1000px}}
+.hero-excerpt{{font-family:'DM Serif Display',serif;font-style:italic;font-size:1.3rem;line-height:1.65;color:#2a2a2a;max-width:820px}}
 
 .article-outer{{max-width:1560px;margin:0 auto;padding:4.5rem 4vw 8rem;display:grid;grid-template-columns:1fr 290px;gap:3.5rem;align-items:start}}
 .article-wrap{{min-width:0}}
@@ -426,8 +430,8 @@ body>nav{{position:sticky;top:0;z-index:200;background:rgba(250,250,248,.97);bac
 .article-wrap td{{border-bottom:1px solid var(--rule);padding:.6rem .8rem;color:#444}}
 .katex-display{{overflow-x:auto;padding:.9rem 0}}
 
-.hero-tags{{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.6rem}}
-.hero-tag{{font-size:.4rem;letter-spacing:2px;text-transform:uppercase;padding:.28rem .7rem;border:1px solid var(--rule);color:var(--soft)}}
+.hero-tags{{display:flex;flex-wrap:wrap;gap:.45rem}}
+.hero-tag{{font-size:.38rem;letter-spacing:2px;text-transform:uppercase;padding:.25rem .65rem;border:1px solid var(--rule);color:var(--soft)}}
 
 .series-nav{{border:1px solid var(--rule);border-left:3px solid var(--ink);padding:1.4rem 1.6rem;margin:0 0 3.5rem}}
 .sn-header{{display:flex;align-items:baseline;gap:.7rem;margin-bottom:1rem;padding-bottom:.8rem;border-bottom:1px solid var(--rule)}}
@@ -491,10 +495,10 @@ body>nav{{position:sticky;top:0;z-index:200;background:rgba(250,250,248,.97);bac
   </div>
 </nav>
 <div class="article-hero">
-  <div class="hero-kicker"><span data-es="{kicker}" data-en="{kicker_en}">{kicker}</span></div>
+  {kicker_div}
+  <div class="hero-meta">{hero_date_html}</div>
   <h1 data-es="{title}" data-en="{title_en}">{title}</h1>
   <p class="hero-excerpt" data-es="{excerpt}" data-en="{excerpt_en}">{excerpt}</p>
-  <div class="hero-foot">{hero_foot_html}</div>
 </div>
 <div class="article-outer">
 <article class="article-wrap">
@@ -563,6 +567,165 @@ document.querySelectorAll('.lang-btn').forEach(function(btn){{
 </html>"""
 
 
+# ── Página de presentación de serie ───────────────────────────────────────
+
+def _series_landing_template(series_slug, all_metas, has_content_set):
+    m0       = all_metas[0]
+    title_es = _e(m0.get("series_es", series_slug))
+    title_en = _e(m0.get("series_en", m0.get("series_es", series_slug)))
+    desc_es  = _e(m0.get("series_desc_es", ""))
+    desc_en  = _e(m0.get("series_desc_en", desc_es))
+    n        = len(all_metas)
+    badge_es = f"Serie &nbsp;·&nbsp; {n} capítulo{'s' if n != 1 else ''}"
+    badge_en = f"Series &nbsp;·&nbsp; {n} chapter{'s' if n != 1 else ''}"
+
+    excerpt_html = (
+        f'<p class="hero-excerpt" data-es="{desc_es}" data-en="{desc_en}">{desc_es}</p>'
+        if desc_es else ''
+    )
+
+    # Párrafos de introducción (separados por ||)
+    raw_about_es = m0.get("series_about_es", "")
+    raw_about_en = m0.get("series_about_en", raw_about_es)
+    about_es_parts = [_e(p.strip()) for p in raw_about_es.split("||") if p.strip()]
+    about_en_parts = [_e(p.strip()) for p in raw_about_en.split("||") if p.strip()]
+    about_html = ""
+    for i, para_es in enumerate(about_es_parts):
+        para_en = about_en_parts[i] if i < len(about_en_parts) else para_es
+        about_html += f'<p class="sl-about-p" data-es="{para_es}" data-en="{para_en}">{para_es}</p>\n'
+    about_section = f'<div class="sl-about">{about_html}</div>' if about_html else ""
+
+    chapters_html = ""
+    for meta in all_metas:
+        slug = meta.get("slug", "")
+        num  = str(meta.get("chapter", 0)).zfill(2)
+        t_es = _e(meta.get("title_es", ""))
+        t_en = _e(meta.get("title_en", meta.get("title_es", "")))
+        d_es = _e(meta.get("date_es", ""))
+        d_en = _e(meta.get("date_en", d_es))
+        live = slug in has_content_set
+        if live:
+            chapters_html += (
+                f'<a href="{slug}.html" class="sl-ch">'
+                f'<span class="sl-num">{num}</span>'
+                f'<div class="sl-info">'
+                f'<span class="sl-title" data-es="{t_es}" data-en="{t_en}">{t_es}</span>'
+                f'<span class="sl-date" data-es="{d_es}" data-en="{d_en}">{d_es}</span>'
+                f'</div>'
+                f'<span class="sl-arrow">→</span>'
+                f'</a>'
+            )
+        else:
+            chapters_html += (
+                f'<div class="sl-ch sl-ch--soon">'
+                f'<span class="sl-num">{num}</span>'
+                f'<div class="sl-info">'
+                f'<span class="sl-title" data-es="{t_es}" data-en="{t_en}">{t_es}</span>'
+                f'<span class="sl-soon" data-es="Próximamente" data-en="Coming soon">Próximamente</span>'
+                f'</div>'
+                f'</div>'
+            )
+
+    return f"""<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{title_es} — Serie</title>
+<meta name="description" content="{desc_es}">
+<meta property="og:title" content="{title_es}">
+<meta property="og:description" content="{desc_es}">
+<meta property="og:type" content="website">
+<meta property="og:url" content="{SITE_URL}/blog/{series_slug}.html">
+<meta property="og:image" content="{OG_IMAGE}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="{OG_IMAGE}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="{FONTS}" rel="stylesheet">
+<style>
+*{{margin:0;padding:0;box-sizing:border-box}}
+html{{scroll-behavior:smooth;font-size:18px}}
+:root{{--bg:#fafaf8;--ink:#0d0d0d;--mid:#555;--soft:#888;--faint:#bbb;--rule:#e8e8e5}}
+body{{background:var(--bg);color:var(--ink);font-family:'Space Mono',monospace;overflow-x:hidden;line-height:1.8}}
+body>nav{{position:sticky;top:0;z-index:200;background:rgba(250,250,248,.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--rule);padding:.85rem 5vw;display:flex;align-items:center;justify-content:space-between;gap:1.2rem}}
+.nav-back{{display:inline-flex;align-items:center;gap:.5rem;font-size:.55rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--ink);text-decoration:none;border:1px solid rgba(0,0,0,.18);padding:.5rem 1.1rem;transition:all .2s;white-space:nowrap;font-weight:700}}
+.nav-back:hover{{border-color:var(--ink);background:rgba(0,0,0,.04)}}
+.nav-end{{display:flex;align-items:center}}
+.lang-toggle{{display:flex;gap:.2rem}}
+.lang-btn{{font-family:'Space Mono',monospace;font-size:.44rem;letter-spacing:2px;text-transform:uppercase;padding:.32rem .6rem;background:none;border:1px solid var(--rule);color:var(--soft);cursor:pointer;transition:all .18s}}
+.lang-btn.active{{border-color:var(--ink);color:var(--ink);font-weight:700}}
+.lang-btn:hover{{border-color:var(--soft);color:var(--ink)}}
+.article-hero{{padding:5.5rem 4vw 4rem;border-bottom:1px solid var(--rule)}}
+.hero-meta{{margin-bottom:1rem}}
+.hero-date{{font-size:.65rem;letter-spacing:3px;text-transform:uppercase;color:var(--mid)}}
+.article-hero h1{{font-family:'DM Serif Display',serif;font-size:clamp(2.5rem,6vw,5.5rem);letter-spacing:-.025em;line-height:1.06;color:var(--ink);margin-bottom:1.2rem;max-width:900px}}
+.hero-excerpt{{font-family:'DM Serif Display',serif;font-style:italic;font-size:1.3rem;line-height:1.65;color:#2a2a2a;max-width:820px}}
+.sl-outer{{max-width:1100px;margin:0 auto;padding:4rem 4vw 8rem}}
+.sl-list{{display:flex;flex-direction:column}}
+.sl-ch{{display:flex;align-items:center;gap:1.5rem;padding:1.4rem 1rem;border-bottom:1px solid var(--rule);text-decoration:none;color:inherit;transition:background .15s;border-radius:4px;margin:0 -1rem}}
+.sl-ch:last-child{{border-bottom:none}}
+.sl-ch:not(.sl-ch--soon):hover{{background:rgba(0,0,0,.03)}}
+.sl-ch--soon{{opacity:.4;cursor:default}}
+.sl-num{{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;color:var(--faint);min-width:3.2rem;line-height:1;flex-shrink:0;transition:color .15s}}
+.sl-ch:not(.sl-ch--soon):hover .sl-num{{color:var(--ink)}}
+.sl-info{{flex:1;display:flex;flex-direction:column;gap:.3rem;min-width:0}}
+.sl-title{{font-family:'DM Serif Display',serif;font-size:1.15rem;color:var(--ink);line-height:1.3}}
+.sl-date,.sl-soon{{font-size:.58rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--soft)}}
+.sl-soon{{color:var(--faint)}}
+.sl-arrow{{font-size:1.1rem;color:var(--faint);transition:color .15s;flex-shrink:0}}
+.sl-ch:not(.sl-ch--soon):hover .sl-arrow{{color:var(--ink)}}
+.sl-about{{margin-bottom:3rem;padding-bottom:3rem;border-bottom:1px solid var(--rule)}}
+.sl-about-p{{font-family:'DM Serif Display',serif;font-style:italic;font-size:1.1rem;line-height:1.75;color:#3a3a3a;margin-bottom:1.1rem}}
+.sl-about-p:last-child{{margin-bottom:0}}
+.af-back{{display:inline-flex;align-items:center;gap:.5rem;font-size:.44rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--soft);text-decoration:none;border:1px solid var(--rule);padding:.55rem 1.2rem;transition:all .2s;margin-top:3rem}}
+.af-back:hover{{color:var(--ink);border-color:var(--ink);background:rgba(0,0,0,.02)}}
+@media(max-width:700px){{nav{{padding:.8rem 1.4rem}}.article-hero{{padding:3.5rem 1.4rem 3rem}}.sl-outer{{padding:3rem 1.4rem 5rem}}}}
+@media(max-width:420px){{html{{font-size:16px}}.article-hero{{padding:2.5rem 1.2rem 2.5rem}}}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="../index.html#blog" class="nav-back" data-es="← Blog" data-en="← Blog">← Blog</a>
+  <div class="nav-end">
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="es">ES</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+  </div>
+</nav>
+<div class="article-hero">
+  <div class="hero-meta"><span class="hero-date" data-es="{badge_es}" data-en="{badge_en}">{badge_es}</span></div>
+  <h1 data-es="{title_es}" data-en="{title_en}">{title_es}</h1>
+  {excerpt_html}
+</div>
+<div class="sl-outer">
+  {about_section}
+  <div class="sl-list">{chapters_html}
+  </div>
+  <a href="../index.html#blog" class="af-back" data-es="← Volver al blog" data-en="← Back to blog">← Volver al blog</a>
+</div>
+<script>
+function setLang(lang){{
+  document.documentElement.lang=lang;
+  document.querySelectorAll('.lang-btn').forEach(function(b){{b.classList.toggle('active',b.dataset.lang===lang);}});
+  document.querySelectorAll('[data-es]').forEach(function(el){{
+    var txt=el.getAttribute('data-'+lang);
+    if(txt!==null)el.innerHTML=txt;
+  }});
+  try{{localStorage.setItem('lang',lang);}}catch(e){{}}
+}}
+document.querySelectorAll('.lang-btn').forEach(function(btn){{
+  btn.addEventListener('click',function(){{setLang(btn.dataset.lang);}});
+}});
+(function(){{try{{var s=localStorage.getItem('lang');if(s&&s!=='es')setLang(s);}}catch(e){{}}}}());
+</script>
+</body>
+</html>"""
+
+
 # ── Punto de entrada ───────────────────────────────────────────────────────
 
 def build_blog_pages():
@@ -594,12 +757,14 @@ def build_blog_pages():
         series_map[s].sort(key=lambda m: int(m.get("chapter", 0)))
 
     # Pasada 2: generar HTML y construir entradas
+    has_content_set = set()
     entries = []
     for _, meta, content in post_data:
         slug = meta["slug"]
         output_path = Path("blog") / f"{slug}.html"
 
         if content:
+            has_content_set.add(slug)
             parts = re.split(r'\n<!--\s*EN\s*-->\n', content, maxsplit=1)
             content_es = parts[0].strip()
             content_en = parts[1].strip() if len(parts) > 1 else ""
@@ -642,5 +807,14 @@ def build_blog_pages():
             "series_en":  meta.get("series_en", ""),
             "chapter":    int(meta.get("chapter", 0)),
         })
+
+    # Generar páginas de presentación para cada serie
+    for s, chapters in series_map.items():
+        landing_path = Path("blog") / f"{s}.html"
+        landing_path.write_text(
+            _series_landing_template(s, chapters, has_content_set),
+            encoding="utf-8",
+        )
+        print(f"   📚 Serie:    blog/{s}.html")
 
     return entries

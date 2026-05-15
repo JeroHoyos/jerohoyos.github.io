@@ -272,7 +272,7 @@ def build_panel_blog(blog_items=None):
             n_ch = len(d["chapters"])
             count_es = f"{n_ch} capítulos"
             count_en = f"{n_ch} chapters"
-            first_url = d["chapters"][0]["url"]
+            first_url = f"blog/{d['slug']}.html"
             sid = d["slug"]
 
             new_cls = " bc-entry--new" if is_new else ""
@@ -397,7 +397,7 @@ def _arte_piece(pieza):
     return f"""
       <div class="arte-piece">
         <div class="arte-img-wrap">
-          <img src="{url}" alt="{pieza['titulo_es']}" loading="lazy"{dims}>
+          <img src="{url}" alt="{pieza['titulo_es']}" loading="lazy"{dims} data-full="{url}" class="lb-trigger">
         </div>
       </div>"""
 
@@ -418,6 +418,11 @@ def build_panel_arte():
       <div class="arte-grid">{grid_content}
       </div>
     </div>
+  </div>
+  <!-- LIGHTBOX -->
+  <div id="lightbox" role="dialog" aria-modal="true" aria-label="Imagen ampliada">
+    <button id="lb-close" aria-label="Cerrar">&#x2715;</button>
+    <img id="lb-img" src="" alt="">
   </div>"""
 
 
