@@ -432,7 +432,7 @@ body>nav{{position:sticky;top:0;z-index:200;background:rgba(250,250,248,.97);bac
 .hero-kicker{{display:flex;align-items:center;gap:.7rem;margin-bottom:2rem;flex-wrap:wrap}}
 .kicker-series{{font-family:'DM Serif Display',serif;font-style:italic;font-size:1.05rem;color:var(--ink);letter-spacing:0}}
 .kicker-sep{{color:var(--faint);font-size:.55rem;line-height:1}}
-.kicker-ch{{font-size:.4rem;letter-spacing:3px;text-transform:uppercase;color:var(--soft);border:1px solid var(--rule);padding:.22rem .65rem}}
+.kicker-ch{{font-size:.38rem;letter-spacing:3px;text-transform:uppercase;color:#f4f4ef;background:var(--ink);padding:.3rem .78rem}}
 .hero-meta{{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:1rem;flex-wrap:wrap}}
 .hero-date{{font-size:.65rem;letter-spacing:3px;text-transform:uppercase;color:var(--mid);white-space:nowrap;flex-shrink:0}}
 .article-hero h1{{font-family:'DM Serif Display',serif;font-size:clamp(2.5rem,6vw,5.5rem);letter-spacing:-.025em;line-height:1.06;color:var(--ink);margin-bottom:1.2rem;max-width:1000px}}
