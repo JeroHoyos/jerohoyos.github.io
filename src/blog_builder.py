@@ -319,11 +319,24 @@ def _blog_template(meta, body_html, series_nav="", toc_html="", series_chapters=
         if date else ''
     )
 
-    # Kicker div (solo si hay contenido de kicker)
-    kicker_div = (
-        f'<div class="hero-kicker"><span data-es="{kicker}" data-en="{kicker_en}">{kicker}</span></div>'
-        if kicker else ''
-    )
+    # Kicker div (split into styled parts for nicer appearance)
+    if series_name and chapter:
+        _ch = _e(str(chapter))
+        kicker_div = (
+            f'<div class="hero-kicker">'
+            f'<span class="kicker-series" data-es="{series_name}" data-en="{series_name_en}">{series_name}</span>'
+            f'<span class="kicker-sep" aria-hidden="true">·</span>'
+            f'<span class="kicker-ch" data-es="CAP. {_ch}" data-en="CH. {_ch}">CAP. {_ch}</span>'
+            f'</div>'
+        )
+    elif series_name:
+        kicker_div = (
+            f'<div class="hero-kicker">'
+            f'<span class="kicker-series" data-es="{series_name}" data-en="{series_name_en}">{series_name}</span>'
+            f'</div>'
+        )
+    else:
+        kicker_div = ''
 
     # Article footer (prev/next + back)
     footer_html = _article_footer(meta.get("slug", ""), series_chapters)
@@ -416,7 +429,10 @@ body>nav{{position:sticky;top:0;z-index:200;background:rgba(250,250,248,.97);bac
 .lang-btn:hover{{border-color:var(--soft);color:var(--ink)}}
 
 .article-hero{{padding:5.5rem 4vw 5rem;border-bottom:1px solid var(--rule);background:var(--bg)}}
-.hero-kicker{{font-size:.46rem;letter-spacing:4px;text-transform:uppercase;color:var(--soft);margin-bottom:2rem;display:flex;align-items:center;gap:.9rem}}
+.hero-kicker{{display:flex;align-items:center;gap:.7rem;margin-bottom:2rem;flex-wrap:wrap}}
+.kicker-series{{font-family:'DM Serif Display',serif;font-style:italic;font-size:1.05rem;color:var(--ink);letter-spacing:0}}
+.kicker-sep{{color:var(--faint);font-size:.55rem;line-height:1}}
+.kicker-ch{{font-size:.4rem;letter-spacing:3px;text-transform:uppercase;color:var(--soft);border:1px solid var(--rule);padding:.22rem .65rem}}
 .hero-meta{{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:1rem;flex-wrap:wrap}}
 .hero-date{{font-size:.65rem;letter-spacing:3px;text-transform:uppercase;color:var(--mid);white-space:nowrap;flex-shrink:0}}
 .article-hero h1{{font-family:'DM Serif Display',serif;font-size:clamp(2.5rem,6vw,5.5rem);letter-spacing:-.025em;line-height:1.06;color:var(--ink);margin-bottom:1.2rem;max-width:1000px}}
