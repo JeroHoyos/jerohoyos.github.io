@@ -14,6 +14,7 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://jerohoyos.github.io/og.png">
+<link rel="canonical" href="https://jerohoyos.github.io/blog/arquitectura-computadores.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
@@ -132,6 +133,33 @@ body>nav{position:sticky;top:0;z-index:200;background:rgba(250,250,248,.97);back
   .article-hero{padding:2.5rem 1.2rem 2.5rem}
   .article-outer{padding:2.5rem 1.2rem 4rem}
 }
+/* Copy button */
+.article-wrap pre{position:relative}
+.copy-btn{position:absolute;top:.5rem;right:.5rem;font-family:'Space Mono',monospace;font-size:.38rem;letter-spacing:1.5px;text-transform:uppercase;padding:.28rem .58rem;background:rgba(250,250,248,.94);border:1px solid var(--rule);color:var(--soft);cursor:pointer;transition:all .18s;opacity:0;pointer-events:none}
+.article-wrap pre:hover .copy-btn{opacity:1;pointer-events:auto}
+.copy-btn.copied{color:var(--ink);border-color:var(--ink)}
+/* Mobile TOC */
+.toc-mob{display:none;border:1px solid var(--rule);border-left:3px solid var(--ink);margin-bottom:2.5rem}
+@media(max-width:900px){.toc-mob{display:block}}
+.toc-mob details>summary{list-style:none;cursor:pointer;padding:.85rem 1.2rem;font-size:.46rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--soft);display:flex;align-items:center;justify-content:space-between;user-select:none}
+.toc-mob details>summary::-webkit-details-marker{display:none}
+.toc-mob-arr{transition:transform .2s;display:inline-block;margin-left:.4rem;font-size:.6rem}
+.toc-mob details[open] .toc-mob-arr{transform:rotate(180deg)}
+.toc-mob-body{padding:.5rem .8rem 1rem;border-top:1px solid var(--rule)}
+/* Share */
+.share-row{display:flex;align-items:center;flex-wrap:wrap;gap:.6rem;padding:1.6rem 5vw 0;max-width:1280px;margin:0 auto}
+.share-label{font-size:.42rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--faint)}
+.share-btn{font-size:.42rem;letter-spacing:2px;text-transform:uppercase;color:var(--soft);text-decoration:none;border:1px solid var(--rule);padding:.38rem .85rem;transition:all .18s}
+.share-btn:hover{color:var(--ink);border-color:var(--soft)}
+/* Print */
+@media print{
+  #progress,body>nav,.toc-sidebar,.toc-mob,.series-nav,.article-footer,.lang-toggle,.share-row{display:none!important}
+  body{font-size:11pt;color:#000;background:#fff}
+  .article-hero{padding:1.2rem 0;border-bottom:1.5pt solid #000}
+  .article-hero h1{font-size:1.8rem;color:#000}
+  .article-outer{display:block;padding:1.2rem 0}
+  .article-wrap pre{white-space:pre-wrap;word-break:break-all;border:1pt solid #ccc}
+}
 </style>
 </head>
 <body>
@@ -156,10 +184,12 @@ body>nav{position:sticky;top:0;z-index:200;background:rgba(250,250,248,.97);back
 <div class="article-outer">
 <article class="article-wrap">
 
+
 <div id="body-es"><p class="stub-msg" data-es="Próximamente" data-en="Coming soon">Próximamente</p></div>
 </article>
 
 </div>
+<div class="share-row"><span class="share-label" data-es="Compartir" data-en="Share">Compartir</span><a href="https://twitter.com/intent/tweet?url=https%3A//jerohoyos.github.io/blog/arquitectura-computadores.html&text=Introducci%C3%B3n%20a%20la%20Arquitectura%20de%20Computadores" target="_blank" rel="noopener noreferrer" class="share-btn">Twitter / X</a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//jerohoyos.github.io/blog/arquitectura-computadores.html" target="_blank" rel="noopener noreferrer" class="share-btn">LinkedIn</a></div>
 <script>
 /* ── Language toggle ── */
 function setLang(lang){
@@ -180,6 +210,10 @@ function setLang(lang){
     if(tEs) tEs.style.display=lang==='en'?'none':'';
     if(tEn) tEn.style.display=lang==='en'?'':'none';
   }
+  var tmEs=document.getElementById('toc-mob-es');
+  var tmEn=document.getElementById('toc-mob-en');
+  if(tmEs) tmEs.style.display=lang==='en'?'none':'';
+  if(tmEn) tmEn.style.display=lang==='en'?'':'none';
   try{localStorage.setItem('lang',lang);}catch(e){}
 }
 document.querySelectorAll('.lang-btn').forEach(function(btn){
@@ -211,6 +245,30 @@ document.querySelectorAll('.lang-btn').forEach(function(btn){
     },{rootMargin:'-5% 0px -80% 0px'});
     document.querySelectorAll('.article-wrap h2[id],.article-wrap h3[id]').forEach(function(h){obs.observe(h)});
   }
+})();
+/* ── Copy code ── */
+(function(){
+  document.querySelectorAll('.article-wrap pre').forEach(function(pre){
+    var btn=document.createElement('button');
+    btn.className='copy-btn';
+    btn.setAttribute('data-es','copiar');
+    btn.setAttribute('data-en','copy');
+    btn.textContent='copiar';
+    btn.addEventListener('click',function(){
+      var code=pre.querySelector('code');
+      var text=code?code.innerText:pre.innerText;
+      navigator.clipboard.writeText(text).then(function(){
+        var lang=document.documentElement.lang||'es';
+        btn.textContent=lang==='en'?'✓ copied':'✓ copiado';
+        btn.classList.add('copied');
+        setTimeout(function(){
+          btn.textContent=document.documentElement.lang==='en'?'copy':'copiar';
+          btn.classList.remove('copied');
+        },2000);
+      });
+    });
+    pre.appendChild(btn);
+  });
 })();
 </script>
 <footer class="article-footer"><a href="../index.html#blog" class="af-back" data-es="← Volver al blog" data-en="← Back to blog">← Volver al blog</a></footer>

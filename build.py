@@ -25,6 +25,40 @@ NOMBRE   = C.NOMBRE.replace("<br>", " ")
 OG_IMAGE = f"{SITE_URL}/og.png"
 
 
+def _build_favicon():
+    """Generate favicon.ico (16/32/48px) as a dark-background 'J' monogram."""
+    try:
+        from PIL import Image, ImageDraw, ImageFont
+
+        def _font(path, size):
+            try:
+                return ImageFont.truetype(path, size)
+            except Exception:
+                return None
+
+        # Draw at 96px then downscale — gives clean results at all sizes
+        SZ = 96
+        img = Image.new("RGBA", (SZ, SZ), (5, 5, 5, 255))
+        draw = ImageDraw.Draw(img)
+        f = (
+            _font(r"C:\Windows\Fonts\georgiab.ttf", 64) or
+            _font(r"C:\Windows\Fonts\arialbd.ttf",  64) or
+            ImageFont.load_default()
+        )
+        text = "J"
+        bbox = draw.textbbox((0, 0), text, font=f)
+        tw, th = bbox[2] - bbox[0], bbox[3] - bbox[1]
+        draw.text(((SZ - tw) // 2 - bbox[0], (SZ - th) // 2 - bbox[1]),
+                  text, font=f, fill=(244, 244, 239, 255))
+
+        # Save ICO with multiple sizes (Pillow resizes from the base image)
+        img.save("favicon.ico", format="ICO", sizes=[(16, 16), (32, 32), (48, 48)])
+        return True
+    except Exception as e:
+        print(f"   ⚠️  favicon.ico no generado: {e}")
+        return False
+
+
 def _build_og_image():
     """Generate og.png (1200×630) for Open Graph social sharing."""
     try:
@@ -117,6 +151,7 @@ body{{background:#050505;color:#f4f4ef;font-family:'Space Mono',monospace;displa
 def build():
     blog_items = build_blog_pages()
 
+    _build_favicon()
     _build_og_image()
     _build_404()
 
@@ -126,7 +161,8 @@ def build():
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{NOMBRE}</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐈‍⬛</text></svg>">
+<link rel="icon" href="favicon.ico" sizes="32x32">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐈‍⬛</text></svg>" type="image/svg+xml">
 <meta name="description" content="{C.TITULO} en {C.CIUDAD}. {_strip_html(C.BIO_EN[0]).replace(chr(34), '&quot;')}">
 <meta property="og:title" content="{NOMBRE} — {C.TITULO}">
 <meta property="og:description" content="{C.TITULO} en {C.CIUDAD}. Estudiante de Ingeniería en Sistemas, Universidad Nacional de Colombia.">
@@ -194,7 +230,7 @@ def build():
     print(f"   Proyectos: {len(C.PROYECTOS)}")
     print(f"   Blog     : {len(blog_items)} artículo(s)")
     print(f"   Arte     : {len(C.ARTE)} pieza(s)")
-    print("   robots.txt, sitemap.xml, og.png y 404.html generados.")
+    print("   robots.txt, sitemap.xml, og.png, favicon.ico y 404.html generados.")
 
 
 if __name__ == "__main__":

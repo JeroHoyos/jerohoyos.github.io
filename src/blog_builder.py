@@ -31,6 +31,7 @@ artículos escritos a mano.
 import re
 import html as _html
 from pathlib import Path
+from urllib.parse import quote as _urlquote
 
 
 def _e(s):
@@ -345,6 +346,34 @@ def _blog_template(meta, body_html, series_nav="", toc_html="", series_chapters=
 
     slug = _e(meta.get("slug", ""))
 
+    # Share buttons
+    _post_url = _urlquote(f"{SITE_URL}/blog/{meta.get('slug','')}.html")
+    _title_enc = _urlquote(meta.get("title_es", ""))
+    share_html = (
+        f'<div class="share-row">'
+        f'<span class="share-label" data-es="Compartir" data-en="Share">Compartir</span>'
+        f'<a href="https://twitter.com/intent/tweet?url={_post_url}&text={_title_enc}"'
+        f' target="_blank" rel="noopener noreferrer" class="share-btn">Twitter / X</a>'
+        f'<a href="https://www.linkedin.com/sharing/share-offsite/?url={_post_url}"'
+        f' target="_blank" rel="noopener noreferrer" class="share-btn">LinkedIn</a>'
+        f'</div>'
+    )
+
+    # Mobile TOC (collapsible, shown <900px)
+    if toc_html:
+        _mob_en = f'<div id="toc-mob-en" style="display:none">{toc_html_en}</div>' if toc_html_en else ''
+        mobile_toc_html = (
+            f'<div class="toc-mob">'
+            f'<details>'
+            f'<summary class="toc-mob-sum" data-es="Contenido" data-en="Contents">'
+            f'Contenido <span class="toc-mob-arr">&#9660;</span></summary>'
+            f'<div class="toc-mob-body"><div id="toc-mob-es">{toc_html}</div>{_mob_en}</div>'
+            f'</details>'
+            f'</div>'
+        )
+    else:
+        mobile_toc_html = ""
+
     return f"""<!DOCTYPE html>
 <html lang="es">
 <head>
@@ -361,6 +390,7 @@ def _blog_template(meta, body_html, series_nav="", toc_html="", series_chapters=
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="{OG_IMAGE}">
+<link rel="canonical" href="{SITE_URL}/blog/{slug}.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="{FONTS}" rel="stylesheet">
@@ -479,6 +509,33 @@ body>nav{{position:sticky;top:0;z-index:200;background:rgba(250,250,248,.97);bac
   .article-hero{{padding:2.5rem 1.2rem 2.5rem}}
   .article-outer{{padding:2.5rem 1.2rem 4rem}}
 }}
+/* Copy button */
+.article-wrap pre{{position:relative}}
+.copy-btn{{position:absolute;top:.5rem;right:.5rem;font-family:'Space Mono',monospace;font-size:.38rem;letter-spacing:1.5px;text-transform:uppercase;padding:.28rem .58rem;background:rgba(250,250,248,.94);border:1px solid var(--rule);color:var(--soft);cursor:pointer;transition:all .18s;opacity:0;pointer-events:none}}
+.article-wrap pre:hover .copy-btn{{opacity:1;pointer-events:auto}}
+.copy-btn.copied{{color:var(--ink);border-color:var(--ink)}}
+/* Mobile TOC */
+.toc-mob{{display:none;border:1px solid var(--rule);border-left:3px solid var(--ink);margin-bottom:2.5rem}}
+@media(max-width:900px){{.toc-mob{{display:block}}}}
+.toc-mob details>summary{{list-style:none;cursor:pointer;padding:.85rem 1.2rem;font-size:.46rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--soft);display:flex;align-items:center;justify-content:space-between;user-select:none}}
+.toc-mob details>summary::-webkit-details-marker{{display:none}}
+.toc-mob-arr{{transition:transform .2s;display:inline-block;margin-left:.4rem;font-size:.6rem}}
+.toc-mob details[open] .toc-mob-arr{{transform:rotate(180deg)}}
+.toc-mob-body{{padding:.5rem .8rem 1rem;border-top:1px solid var(--rule)}}
+/* Share */
+.share-row{{display:flex;align-items:center;flex-wrap:wrap;gap:.6rem;padding:1.6rem 5vw 0;max-width:1280px;margin:0 auto}}
+.share-label{{font-size:.42rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--faint)}}
+.share-btn{{font-size:.42rem;letter-spacing:2px;text-transform:uppercase;color:var(--soft);text-decoration:none;border:1px solid var(--rule);padding:.38rem .85rem;transition:all .18s}}
+.share-btn:hover{{color:var(--ink);border-color:var(--soft)}}
+/* Print */
+@media print{{
+  #progress,body>nav,.toc-sidebar,.toc-mob,.series-nav,.article-footer,.lang-toggle,.share-row{{display:none!important}}
+  body{{font-size:11pt;color:#000;background:#fff}}
+  .article-hero{{padding:1.2rem 0;border-bottom:1.5pt solid #000}}
+  .article-hero h1{{font-size:1.8rem;color:#000}}
+  .article-outer{{display:block;padding:1.2rem 0}}
+  .article-wrap pre{{white-space:pre-wrap;word-break:break-all;border:1pt solid #ccc}}
+}}
 </style>
 </head>
 <body>
@@ -502,11 +559,13 @@ body>nav{{position:sticky;top:0;z-index:200;background:rgba(250,250,248,.97);bac
 </div>
 <div class="article-outer">
 <article class="article-wrap">
+{mobile_toc_html}
 {series_nav}
 {body_divs}
 </article>
 {toc_sidebar_html}
 </div>
+{share_html}
 <script>
 /* ── Language toggle ── */
 function setLang(lang){{
@@ -527,6 +586,10 @@ function setLang(lang){{
     if(tEs) tEs.style.display=lang==='en'?'none':'';
     if(tEn) tEn.style.display=lang==='en'?'':'none';
   }}
+  var tmEs=document.getElementById('toc-mob-es');
+  var tmEn=document.getElementById('toc-mob-en');
+  if(tmEs) tmEs.style.display=lang==='en'?'none':'';
+  if(tmEn) tmEn.style.display=lang==='en'?'':'none';
   try{{localStorage.setItem('lang',lang);}}catch(e){{}}
 }}
 document.querySelectorAll('.lang-btn').forEach(function(btn){{
@@ -558,6 +621,30 @@ document.querySelectorAll('.lang-btn').forEach(function(btn){{
     }},{{rootMargin:'-5% 0px -80% 0px'}});
     document.querySelectorAll('.article-wrap h2[id],.article-wrap h3[id]').forEach(function(h){{obs.observe(h)}});
   }}
+}})();
+/* ── Copy code ── */
+(function(){{
+  document.querySelectorAll('.article-wrap pre').forEach(function(pre){{
+    var btn=document.createElement('button');
+    btn.className='copy-btn';
+    btn.setAttribute('data-es','copiar');
+    btn.setAttribute('data-en','copy');
+    btn.textContent='copiar';
+    btn.addEventListener('click',function(){{
+      var code=pre.querySelector('code');
+      var text=code?code.innerText:pre.innerText;
+      navigator.clipboard.writeText(text).then(function(){{
+        var lang=document.documentElement.lang||'es';
+        btn.textContent=lang==='en'?'✓ copied':'✓ copiado';
+        btn.classList.add('copied');
+        setTimeout(function(){{
+          btn.textContent=document.documentElement.lang==='en'?'copy':'copiar';
+          btn.classList.remove('copied');
+        }},2000);
+      }});
+    }});
+    pre.appendChild(btn);
+  }});
 }})();
 </script>
 {footer_html}
@@ -642,6 +729,7 @@ def _series_landing_template(series_slug, all_metas, has_content_set):
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="{OG_IMAGE}">
+<link rel="canonical" href="{SITE_URL}/blog/{series_slug}.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="{FONTS}" rel="stylesheet">

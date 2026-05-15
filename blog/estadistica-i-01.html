@@ -14,6 +14,7 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://jerohoyos.github.io/og.png">
+<link rel="canonical" href="https://jerohoyos.github.io/blog/estadistica-i-01.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
@@ -132,6 +133,33 @@ body>nav{position:sticky;top:0;z-index:200;background:rgba(250,250,248,.97);back
   .article-hero{padding:2.5rem 1.2rem 2.5rem}
   .article-outer{padding:2.5rem 1.2rem 4rem}
 }
+/* Copy button */
+.article-wrap pre{position:relative}
+.copy-btn{position:absolute;top:.5rem;right:.5rem;font-family:'Space Mono',monospace;font-size:.38rem;letter-spacing:1.5px;text-transform:uppercase;padding:.28rem .58rem;background:rgba(250,250,248,.94);border:1px solid var(--rule);color:var(--soft);cursor:pointer;transition:all .18s;opacity:0;pointer-events:none}
+.article-wrap pre:hover .copy-btn{opacity:1;pointer-events:auto}
+.copy-btn.copied{color:var(--ink);border-color:var(--ink)}
+/* Mobile TOC */
+.toc-mob{display:none;border:1px solid var(--rule);border-left:3px solid var(--ink);margin-bottom:2.5rem}
+@media(max-width:900px){.toc-mob{display:block}}
+.toc-mob details>summary{list-style:none;cursor:pointer;padding:.85rem 1.2rem;font-size:.46rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--soft);display:flex;align-items:center;justify-content:space-between;user-select:none}
+.toc-mob details>summary::-webkit-details-marker{display:none}
+.toc-mob-arr{transition:transform .2s;display:inline-block;margin-left:.4rem;font-size:.6rem}
+.toc-mob details[open] .toc-mob-arr{transform:rotate(180deg)}
+.toc-mob-body{padding:.5rem .8rem 1rem;border-top:1px solid var(--rule)}
+/* Share */
+.share-row{display:flex;align-items:center;flex-wrap:wrap;gap:.6rem;padding:1.6rem 5vw 0;max-width:1280px;margin:0 auto}
+.share-label{font-size:.42rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--faint)}
+.share-btn{font-size:.42rem;letter-spacing:2px;text-transform:uppercase;color:var(--soft);text-decoration:none;border:1px solid var(--rule);padding:.38rem .85rem;transition:all .18s}
+.share-btn:hover{color:var(--ink);border-color:var(--soft)}
+/* Print */
+@media print{
+  #progress,body>nav,.toc-sidebar,.toc-mob,.series-nav,.article-footer,.lang-toggle,.share-row{display:none!important}
+  body{font-size:11pt;color:#000;background:#fff}
+  .article-hero{padding:1.2rem 0;border-bottom:1.5pt solid #000}
+  .article-hero h1{font-size:1.8rem;color:#000}
+  .article-outer{display:block;padding:1.2rem 0}
+  .article-wrap pre{white-space:pre-wrap;word-break:break-all;border:1pt solid #ccc}
+}
 </style>
 </head>
 <body>
@@ -155,6 +183,19 @@ body>nav{position:sticky;top:0;z-index:200;background:rgba(250,250,248,.97);back
 </div>
 <div class="article-outer">
 <article class="article-wrap">
+<div class="toc-mob"><details><summary class="toc-mob-sum" data-es="Contenido" data-en="Contents">Contenido <span class="toc-mob-arr">&#9660;</span></summary><div class="toc-mob-body"><div id="toc-mob-es"><div class="toc-kicker">Contenido</div><nav class="toc-nav">
+<a href="#espacio-muestral-y-probabilidad" class="toc-link">Espacio muestral y probabilidad</a>
+<a href="#probabilidad-condicional" class="toc-link toc-h3">Probabilidad condicional</a>
+<a href="#variables-aleatorias" class="toc-link">Variables aleatorias</a>
+<a href="#esperanza-y-varianza" class="toc-link toc-h3">Esperanza y varianza</a>
+<a href="#distribución-normal" class="toc-link">Distribución Normal</a>
+</nav></div><div id="toc-mob-en" style="display:none"><div class="toc-kicker">Contents</div><nav class="toc-nav">
+<a href="#en-sample-space-and-probability" class="toc-link">Sample Space and Probability</a>
+<a href="#en-conditional-probability" class="toc-link toc-h3">Conditional Probability</a>
+<a href="#en-random-variables" class="toc-link">Random Variables</a>
+<a href="#en-expected-value-and-variance" class="toc-link toc-h3">Expected Value and Variance</a>
+<a href="#en-normal-distribution" class="toc-link">Normal Distribution</a>
+</nav></div></div></details></div>
 <div class="series-nav"><div class="sn-header"><span class="sn-kicker" data-es="Serie" data-en="Series">Serie</span><span class="sn-name" data-es="Estadística I" data-en="Statistics I">Estadística I</span></div><div class="sn-chapters"><div class="sn-ch sn-ch--active"><span class="sn-num">01</span><span class="sn-info"><span class="sn-title" data-es="Probabilidad y Variables Aleatorias" data-en="Probability and Random Variables">Probabilidad y Variables Aleatorias</span><span class="sn-date" data-es="Mayo 2025" data-en="May 2025">Mayo 2025</span></span></div><a href="estadistica-i-02.html" class="sn-ch"><span class="sn-num">02</span><span class="sn-info"><span class="sn-title" data-es="Distribuciones de Probabilidad" data-en="Probability Distributions">Distribuciones de Probabilidad</span><span class="sn-date" data-es="Mayo 2025" data-en="May 2025">Mayo 2025</span></span></a><a href="estadistica-i-03.html" class="sn-ch"><span class="sn-num">03</span><span class="sn-info"><span class="sn-title" data-es="Estimación e Intervalos de Confianza" data-en="Estimation and Confidence Intervals">Estimación e Intervalos de Confianza</span><span class="sn-date" data-es="Mayo 2025" data-en="May 2025">Mayo 2025</span></span></a><a href="estadistica-i-04.html" class="sn-ch"><span class="sn-num">04</span><span class="sn-info"><span class="sn-title" data-es="Pruebas de Hipótesis" data-en="Hypothesis Testing">Pruebas de Hipótesis</span><span class="sn-date" data-es="Mayo 2025" data-en="May 2025">Mayo 2025</span></span></a></div></div>
 <div id="body-es"><h2 id="espacio-muestral-y-probabilidad">Espacio muestral y probabilidad</h2>
 <p>Un <strong>espacio muestral</strong> $\Omega$ es el conjunto de todos los posibles resultados de un experimento aleatorio. Un <strong>evento</strong> $A$ es cualquier subconjunto de $\Omega$.</p>
@@ -229,6 +270,7 @@ print(X.ppf(0.95))             # 95th percentile
 <a href="#en-normal-distribution" class="toc-link">Normal Distribution</a>
 </nav></div></aside>
 </div>
+<div class="share-row"><span class="share-label" data-es="Compartir" data-en="Share">Compartir</span><a href="https://twitter.com/intent/tweet?url=https%3A//jerohoyos.github.io/blog/estadistica-i-01.html&text=Probabilidad%20y%20Variables%20Aleatorias" target="_blank" rel="noopener noreferrer" class="share-btn">Twitter / X</a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//jerohoyos.github.io/blog/estadistica-i-01.html" target="_blank" rel="noopener noreferrer" class="share-btn">LinkedIn</a></div>
 <script>
 /* ── Language toggle ── */
 function setLang(lang){
@@ -249,6 +291,10 @@ function setLang(lang){
     if(tEs) tEs.style.display=lang==='en'?'none':'';
     if(tEn) tEn.style.display=lang==='en'?'':'none';
   }
+  var tmEs=document.getElementById('toc-mob-es');
+  var tmEn=document.getElementById('toc-mob-en');
+  if(tmEs) tmEs.style.display=lang==='en'?'none':'';
+  if(tmEn) tmEn.style.display=lang==='en'?'':'none';
   try{localStorage.setItem('lang',lang);}catch(e){}
 }
 document.querySelectorAll('.lang-btn').forEach(function(btn){
@@ -280,6 +326,30 @@ document.querySelectorAll('.lang-btn').forEach(function(btn){
     },{rootMargin:'-5% 0px -80% 0px'});
     document.querySelectorAll('.article-wrap h2[id],.article-wrap h3[id]').forEach(function(h){obs.observe(h)});
   }
+})();
+/* ── Copy code ── */
+(function(){
+  document.querySelectorAll('.article-wrap pre').forEach(function(pre){
+    var btn=document.createElement('button');
+    btn.className='copy-btn';
+    btn.setAttribute('data-es','copiar');
+    btn.setAttribute('data-en','copy');
+    btn.textContent='copiar';
+    btn.addEventListener('click',function(){
+      var code=pre.querySelector('code');
+      var text=code?code.innerText:pre.innerText;
+      navigator.clipboard.writeText(text).then(function(){
+        var lang=document.documentElement.lang||'es';
+        btn.textContent=lang==='en'?'✓ copied':'✓ copiado';
+        btn.classList.add('copied');
+        setTimeout(function(){
+          btn.textContent=document.documentElement.lang==='en'?'copy':'copiar';
+          btn.classList.remove('copied');
+        },2000);
+      });
+    });
+    pre.appendChild(btn);
+  });
 })();
 </script>
 <footer class="article-footer"><div class="af-nav"><div></div><a href="estadistica-i-02.html" class="af-ch af-ch--next"><span class="af-dir" data-es="Siguiente capítulo →" data-en="Next chapter →">Siguiente capítulo →</span><span class="af-ch-title" data-es="Distribuciones de Probabilidad" data-en="Probability Distributions">Distribuciones de Probabilidad</span><span class="af-ch-num">Cap. 02</span></a></div><a href="../index.html#blog" class="af-back" data-es="← Volver al blog" data-en="← Back to blog">← Volver al blog</a></footer>
