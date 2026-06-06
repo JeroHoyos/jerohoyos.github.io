@@ -1,6 +1,6 @@
-import content as C
-from src.icons import ICON_GITHUB, ICON_LINKEDIN, ICON_KAGGLE, ICON_EMAIL, ICON_LOCATION
-from src.badges import badge_style
+from . import content as C
+from .icons import ICON_GITHUB, ICON_LINKEDIN, ICON_KAGGLE, ICON_EMAIL, ICON_LOCATION
+from .badges import badge_style
 
 
 def build_hero():

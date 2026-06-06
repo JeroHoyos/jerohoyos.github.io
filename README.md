@@ -11,30 +11,31 @@ py build.py
 ## Estructura del proyecto
 
 ```
-├── content.py              ← Toda la info personal (bio, proyectos, stack, etc.)
 ├── build.py                ← Script de generación — corre esto para publicar
 ├── requirements.txt        ← Dependencias Python (markdown, Pillow)
-├── oneko.js / oneko.gif    ← Gato animado que sigue el cursor
-├── _headers                ← Cabeceras de seguridad HTTP
-├── blog/
-│   ├── posts/              ← Fuente de los posts (.md) — editá aquí
-│   └── *.html              ← Generados automáticamente por build.py
-├── dibujos/                ← Imágenes para la sección Arte (.webp)
-├── src/
+├── generator/
+│   ├── content.py          ← Toda la info personal (bio, proyectos, stack, etc.)
 │   ├── html.py             ← Estructura HTML de cada sección del portafolio
 │   ├── css.py              ← Estilos del sitio principal
 │   ├── js.py               ← Animaciones y lógica de la página
 │   ├── blog_builder.py     ← Template y generador de posts y series
 │   ├── badges.py           ← Colores de los chips de tecnologías
 │   └── icons.py            ← SVGs de redes sociales
-└── index.html              ← Generado automáticamente (no editar)
+├── blog/
+│   └── posts/              ← Fuente de los posts (.md) — editá aquí
+└── docs/                   ← GitHub Pages sirve desde aquí (no editar)
+    ├── index.html, 404.html, favicon.ico, og.png, robots.txt, sitemap.xml
+    ├── _headers, .nojekyll
+    ├── static/             ← Gato animado (oneko.js / .gif)
+    ├── dibujos/            ← Imágenes para la sección Arte (.webp)
+    └── blog/               ← Posts HTML generados
 ```
 
 ---
 
 ## Editar información personal
 
-Todo está en **`content.py`**.
+Todo está en **`generator/content.py`**.
 
 ### Datos básicos
 

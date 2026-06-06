@@ -865,7 +865,7 @@ def build_blog_pages():
     entries = []
     for _, meta, content in post_data:
         slug = meta["slug"]
-        output_path = Path("blog") / f"{slug}.html"
+        output_path = Path("docs/blog") / f"{slug}.html"
 
         if content:
             has_content_set.add(slug)
@@ -891,7 +891,7 @@ def build_blog_pages():
             _blog_template(meta, body_html, series_nav, toc_html, s_chapters, body_html_en, toc_html_en),
             encoding="utf-8",
         )
-        print(f"   📝 Generado: blog/{slug}.html")
+        print(f"   📝 Generado: docs/blog/{slug}.html")
 
         tags = [t.strip() for t in meta.get("tags", "").split(",") if t.strip()]
         entries.append({
@@ -914,11 +914,11 @@ def build_blog_pages():
 
     # Generar páginas de presentación para cada serie
     for s, chapters in series_map.items():
-        landing_path = Path("blog") / f"{s}.html"
+        landing_path = Path("docs/blog") / f"{s}.html"
         landing_path.write_text(
             _series_landing_template(s, chapters, has_content_set),
             encoding="utf-8",
         )
-        print(f"   📚 Serie:    blog/{s}.html")
+        print(f"   📚 Serie:    docs/blog/{s}.html")
 
     return entries
