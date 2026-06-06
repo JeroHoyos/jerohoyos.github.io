@@ -5,8 +5,8 @@
 
 # ── IDENTIDAD ────────────────────────────────────────────────────────
 NOMBRE      = "Jerónimo<br>Hoyos Botero"
-TITULO      = "Data Scientist"
-TITULO_EN   = "Data Scientist"
+TITULO      = "Data Scientist · ML Engineer"
+TITULO_EN   = "Data Scientist · ML Engineer"
 EMAIL       = "jerohoyos1@gmail.com"
 CIUDAD      = "Medellín"
 PAIS        = "Colombia"
@@ -48,37 +48,37 @@ STACK = [
         "label_es": "Lenguajes",
         "label_en": "Languages",
         "chip_class": "chip-lang",
-        "items": ["Python","R","SQL", "C++"],
+        "items": ["Python", "R", "SQL", "C", "Rust"],
     },
     {
-        "label_es": "Datos & Feature Engineering",
-        "label_en": "Data & Feature Engineering",
+        "label_es": "Data Science",
+        "label_en": "Data Science",
         "chip_class": "chip-data",
-        "items": ["NumPy", "Pandas", "Polars", "DuckDB", "Apache Spark"],
+        "items": ["NumPy", "Pandas", "Polars", "scikit-learn", "XGBoost", "Statsmodels"],
     },
     {
-        "label_es": "Visualización",
-        "label_en": "Visualization",
-        "chip_class": "chip-viz",
-        "items": ["Matplotlib", "Plotly", "Seaborn", "Streamlit"],
-    },
-    {
-        "label_es": "Machine Learning",
-        "label_en": "Machine Learning",
+        "label_es": "Deep Learning & IA",
+        "label_en": "Deep Learning & AI",
         "chip_class": "chip-ml",
-        "items": ["PyTorch", "scikit-learn", "XGBoost", "LightGBM", "Transformers", "Foundation Models"],
+        "items": ["PyTorch", "Transformers", "LangGraph", "Ollama", "Foundation Models"],
     },
     {
-        "label_es": "MLOps",
-        "label_en": "MLOps",
-        "chip_class": "chip-ops",
-        "items": ["Docker", "FastAPI", "Git", "Linux", "Jupyter", "MLflow"],
-    },
-    {
-        "label_es": "Aceleración GPU",
-        "label_en": "GPU Acceleration",
+        "label_es": "GPU Computing",
+        "label_en": "GPU Computing",
         "chip_class": "chip-gpu",
-        "items": ["CUDA", "cuDF", "cuML", "cuGraph", "RAPIDS", "TensorRT", "NVIDIA NIM"],
+        "items": ["CUDA", "cuBLAS", "cuDF", "cuML", "RAPIDS", "TensorRT"],
+    },
+    {
+        "label_es": "Visualización & Apps",
+        "label_en": "Visualization & Apps",
+        "chip_class": "chip-viz",
+        "items": ["Matplotlib", "Plotly", "Seaborn", "Streamlit", "FastAPI", "Power BI"],
+    },
+    {
+        "label_es": "Dev & Herramientas",
+        "label_en": "Dev & Tools",
+        "chip_class": "chip-ops",
+        "items": ["Git", "Linux", "Docker", "Jupyter", "VS Code", "Excel"],
     },
 ]
 
@@ -88,71 +88,63 @@ PROYECTOS = [
     {
         "featured": True,
         "url": "https://github.com/JeroHoyos/Molinete-AI",
+        "img": "proyectos/molinete.png",
         "lang": "Python · Rust",
         "title": "Molinete-AI",
-        "body_es": "Modelo de lenguaje tipo GPT-2 implementado desde cero. Arquitectura transformer completa: multi-head attention, positional encoding, feed-forward layers y tokenizador BPE propio. Sin frameworks de alto nivel — matemáticas puras traducidas a código eficiente en Rust.",
-        "body_en": "A GPT-2–style language model built from scratch. Full transformer architecture: multi-head attention, positional encoding, feed-forward layers and a custom BPE tokenizer. No high-level frameworks — pure math translated into efficient Rust.",
-        "badges": ["Transformer", "Self-Attention", "Autoregressive LM", "BPE Tokenizer"],
+        "body_es": "Transformer desarrollado desde cero en Rust, enfocado en implementación eficiente de arquitecturas de deep learning y operaciones tensoriales. Presentado en la comunidad Medellín IA en la oficina de EPAM Medellín.",
+        "body_en": "Transformer built from scratch in Rust, focused on efficient implementation of deep learning architectures and tensor operations. Presented at the Medellín IA community at EPAM Medellín's office.",
+        "badges": ["Transformer", "Rust", "Deep Learning", "Tensors"],
         "stats_es": [
-            ("Arquitectura", "GPT-2"),
+            ("Arquitectura", "Transformer"),
             ("Lenguajes", "Python + Rust"),
-            ("GitHub Stars", "★ 4"),
+            ("Presentado en", "Medellín IA"),
             ("Enfoque", "Desde cero"),
         ],
         "stats_en": [
-            ("Architecture", "GPT-2"),
+            ("Architecture", "Transformer"),
             ("Languages", "Python + Rust"),
-            ("GitHub Stars", "★ 4"),
+            ("Presented at", "Medellín IA"),
             ("Approach", "From scratch"),
         ],
     },
     {
         "featured": False,
-        "url": "https://github.com/JeroHoyos/Expected-Growth-of-the-Country-s-Companies-by-Sector",
-        "lang": "Jupyter Notebook",
-        "title_es": "Crecimiento Esperado por Sector",
-        "title_en": "Expected Growth by Sector",
-        "desc_es": "Análisis estadístico del crecimiento proyectado de empresas colombianas por sector. Regresión múltiple, intervalos de confianza, bootstrapping y visualizaciones comparativas por industria.",
-        "desc_en": "Statistical analysis of projected growth of Colombian companies by sector. Multiple regression, confidence intervals, bootstrapping and comparative visualizations by industry.",
-        "badges": ["Regresión", "Pandas", "Matplotlib", "statsmodels"],
-        "meta_es": "★ 2 · 1 fork · Dataset empresas CO",
-        "meta_en": "★ 2 · 1 fork · Colombian companies dataset",
+        "url": "https://github.com/SudoerJteheran/ResearchAgent-DataHack2026",
+        "img": "proyectos/investigia.png",
+        "lang": "Python · LangGraph",
+        "title_es": "InvestigIA",
+        "title_en": "InvestigIA",
+        "desc_es": "Asistente autónomo para investigación científica construido con LangGraph y Ollama. Análisis de literatura académica con inferencia completamente local. Tercer lugar en DataHack 2026.",
+        "desc_en": "Autonomous scientific research assistant built with LangGraph and Ollama. Academic literature analysis with fully local inference. Third place at DataHack 2026.",
+        "badges": ["LangGraph", "Ollama", "Agents", "RAG"],
+        "meta_es": "3er lugar · DataHack 2026",
+        "meta_en": "3rd place · DataHack 2026",
     },
     {
         "featured": False,
-        "url": "https://github.com/JeroHoyos/Analisis-stats-y-tipos-pokemon",
-        "lang": "Jupyter Notebook",
-        "title_es": "Análisis Pokémon",
-        "title_en": "Pokémon Analysis",
-        "desc_es": "EDA completo presentado en Turing Box EAFIT. Clustering K-Means y jerárquico, análisis de correlación, reducción con PCA y visualizaciones interactivas sobre 800+ registros.",
-        "desc_en": "Full EDA presented at Turing Box EAFIT. K-Means and hierarchical clustering, correlation analysis, PCA reduction and interactive visualizations over 800+ records.",
-        "badges": ["EDA", "Clustering", "PCA", "scikit-learn"],
-        "meta_es": "Turing Box · EAFIT · 800+ registros",
-        "meta_en": "Turing Box · EAFIT · 800+ records",
+        "url": "https://www.kaggle.com/code/scratchbox/analysis-and-modeling-of-smoking",
+        "img": "proyectos/smoking.png",
+        "lang": "Python · Jupyter",
+        "title_es": "Analysis and Modeling of Smoking",
+        "title_en": "Analysis and Modeling of Smoking",
+        "desc_es": "Análisis exploratorio y modelado de machine learning sobre el dataset Body Signals of Smoking para predecir hábitos de tabaquismo a partir de señales fisiológicas.",
+        "desc_en": "Exploratory analysis and ML modeling on the Body Signals of Smoking dataset to predict smoking habits from physiological signals.",
+        "badges": ["EDA", "scikit-learn", "Pandas", "Kaggle"],
+        "meta_es": "Kaggle · Body Signals of Smoking",
+        "meta_en": "Kaggle · Body Signals of Smoking",
     },
     {
         "featured": False,
-        "url": "https://github.com/JeroHoyos/Operacion_Desgastar_al_Rival-Retro_Game",
-        "lang": "Python",
-        "title_es": "Operación Desgastar al Rival",
-        "title_en": "Operation Wear Down the Rival",
-        "desc_es": "Juego retro con motor de física 2D e IA de enemigos como máquina de estados finitos. Arquitectura modular orientada a componentes con patrón Entity-Component-System.",
-        "desc_en": "Retro game with 2D physics engine and finite state machine enemy AI. Modular component-oriented architecture using the Entity-Component-System pattern.",
-        "badges": ["Pygame", "State Machine", "Game AI", "ECS"],
-        "meta_es": "★ 2 · FSM-based AI",
-        "meta_en": "★ 2 · FSM-based AI",
-    },
-    {
-        "featured": False,
-        "url": "https://github.com/JeroHoyos/clase-teoria-de-grafos",
-        "lang": "Jupyter Notebook",
-        "title_es": "Teoría de Grafos",
-        "title_en": "Graph Theory",
-        "desc_es": "Notebooks educativos con implementación desde cero de BFS, DFS, Dijkstra, Bellman-Ford, flujo máximo Ford-Fulkerson y detección de componentes conexas con visualizaciones.",
-        "desc_en": "Educational notebooks implementing BFS, DFS, Dijkstra, Bellman-Ford, Ford-Fulkerson max flow and connected components detection from scratch with visualizations.",
-        "badges": ["BFS/DFS", "Dijkstra", "Max Flow", "NetworkX"],
-        "meta_es": "Graph Theory · 5+ algoritmos",
-        "meta_en": "Graph Theory · 5+ algorithms",
+        "url": "https://github.com/JeroHoyos/Efficient-Krylov-Sequence-Computation-in-GPU",
+        "img": "proyectos/krylov.png",
+        "lang": "CUDA · Python",
+        "title_es": "Cómputo Eficiente de Krylov en GPU",
+        "title_en": "Efficient Krylov Sequence Computation on GPU",
+        "desc_es": "Benchmarking y optimización en CUDA para generación de subespacios de Krylov, comparando CPU y GPU mediante estrategias como tiled, coalesced y cuBLAS.",
+        "desc_en": "CUDA benchmarking and optimization for Krylov subspace generation, comparing CPU and GPU implementations using tiled, coalesced and cuBLAS strategies.",
+        "badges": ["CUDA", "cuBLAS", "HPC", "GPU"],
+        "meta_es": "CUDA · cuBLAS · Benchmarking",
+        "meta_en": "CUDA · cuBLAS · Benchmarking",
     },
 ]
 
@@ -165,6 +157,7 @@ BLOG = []
 # Agrega imágenes con: {"tipo": "imagen", "url": "dibujos/archivo.jpg",
 #                        "titulo_es": "Título", "titulo_en": "Title"}
 ARTE = [
+    {"tipo": "imagen", "url": "dibujos/bomb.jpg",     "titulo_es": "Bomb",     "titulo_en": "Bomb"},
     {"tipo": "imagen", "url": "dibujos/pokemon.webp", "titulo_es": "Pokémon",  "titulo_en": "Pokémon"},
     {"tipo": "imagen", "url": "dibujos/cato.webp",    "titulo_es": "Cato",     "titulo_en": "Cato"},
     {"tipo": "imagen", "url": "dibujos/foxy.webp",    "titulo_es": "Foxy",     "titulo_en": "Foxy"},
@@ -179,8 +172,8 @@ IDIOMAS = [
 ]
 
 # ── PROYECTOS ─────────────────────────────────────────────────────────
-PROYECTOS_SUB_ES = "Código que construye, modela y explora — de transformers desde cero hasta juegos retro."
-PROYECTOS_SUB_EN = "Code that builds, models and explores — from scratch transformers to retro games."
+PROYECTOS_SUB_ES = "Transformers desde cero, agentes de IA, GPU computing y machine learning aplicado."
+PROYECTOS_SUB_EN = "From-scratch transformers, AI agents, GPU computing and applied machine learning."
 
 # ── BLOG ──────────────────────────────────────────────────────────────
 BLOG_SUB_ES = "Notas sobre matemáticas, modelos y todo lo que me parece interesante pensar en voz alta."

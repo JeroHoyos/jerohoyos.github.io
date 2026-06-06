@@ -6,9 +6,9 @@
 <title>Jerónimo Hoyos Botero</title>
 <link rel="icon" href="favicon.ico" sizes="32x32">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐈‍⬛</text></svg>" type="image/svg+xml">
-<meta name="description" content="Data Scientist en Medellín. I'm Jerónimo Hoyos, a Systems and Computer Engineering student at Universidad Nacional de Colombia, obsessed with understanding problems before solving them.">
-<meta property="og:title" content="Jerónimo Hoyos Botero — Data Scientist">
-<meta property="og:description" content="Data Scientist en Medellín. Estudiante de Ingeniería en Sistemas, Universidad Nacional de Colombia.">
+<meta name="description" content="Data Scientist · ML Engineer en Medellín. I'm Jerónimo Hoyos, a Systems and Computer Engineering student at Universidad Nacional de Colombia, obsessed with understanding problems before solving them.">
+<meta property="og:title" content="Jerónimo Hoyos Botero — Data Scientist · ML Engineer">
+<meta property="og:description" content="Data Scientist · ML Engineer en Medellín. Estudiante de Ingeniería en Sistemas, Universidad Nacional de Colombia.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://jerohoyos.github.io/">
 <meta property="og:image" content="https://jerohoyos.github.io/og.png">
@@ -65,13 +65,13 @@ body{background:#f4f4ef;color:var(--black);font-family:'Space Mono',monospace;ov
 .light-panel{background:rgba(244,244,239,0.62);color:var(--black);padding:5rem 4rem 6rem}
 .sec-label{font-size:.52rem;letter-spacing:4px;text-transform:uppercase;color:var(--gray);margin-bottom:.8rem}
 .sec-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,7vw,7rem);letter-spacing:1px;line-height:.9;margin-bottom:.8rem}
-.sec-sub{font-size:.65rem;color:#666;max-width:52rem;line-height:1.9;margin-bottom:3rem}
+.sec-sub{font-size:.85rem;color:#2a2a2a;max-width:52rem;line-height:2.4;margin-bottom:3rem}
 #panel-projects .panel-content{background:rgba(244,244,239,0.38)}
 #panel-projects .sec-title,#panel-blog .sec-title,#panel-arte .sec-title{text-align:center}
 #panel-projects .sec-sub,#panel-blog .sec-sub,#panel-arte .sec-sub{text-align:center;margin-left:auto;margin-right:auto}
 
 /* ABOUT */
-.about-layout{display:grid;grid-template-columns:1fr 1.15fr;gap:1.5rem 5rem;align-items:start}
+.about-layout{display:grid;grid-template-columns:1fr 1.35fr;gap:1.5rem 5rem;align-items:start}
 .about-bottom{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:3rem;padding-top:1.2rem;border-top:2px solid #999;align-items:start}
 .idioma-item{display:flex;justify-content:space-between;align-items:baseline;padding:.45rem 0;border-bottom:1px solid #eee}
 .idioma-item:last-child{border-bottom:none}
@@ -92,16 +92,20 @@ body{background:#f4f4ef;color:var(--black);font-family:'Space Mono',monospace;ov
 .ac-val{font-size:.46rem;color:#888;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .ac-arrow{font-size:.85rem;color:#ccc;margin-top:auto;padding-top:.9rem;transition:color .2s}
 .ac-card:hover .ac-arrow{color:#111}
-.about-sub-label{font-size:.7rem;letter-spacing:4px;text-transform:uppercase;color:#555;margin-bottom:1.4rem}
+.about-sub-label{font-size:.85rem;letter-spacing:4px;text-transform:uppercase;color:#111;margin-bottom:1.4rem;font-weight:700}
 .about-bio p{font-size:.85rem;line-height:2.4;color:#2a2a2a;margin-bottom:1.2rem}
 .about-bio strong{color:var(--black)}
+.bio-talk{margin-top:2rem;border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.08)}
+.bio-talk img{width:100%;height:auto;display:block}
+.bio-talk figcaption{font-size:.5rem;letter-spacing:1.5px;color:#888;padding:.7rem 1rem;text-align:center;background:#fafaf8}
 
 /* STACK */
-.stack-tier{margin-bottom:1.8rem}
-.stack-tier-label{font-size:.5rem;letter-spacing:3px;text-transform:uppercase;color:#888;margin-bottom:.8rem;display:flex;align-items:center;gap:.5rem}
-.stack-tier-label span{flex:1;height:1px;background:#ddd}
-.stack-chips{display:flex;flex-wrap:wrap;gap:.4rem}
-.chip{font-size:.52rem;letter-spacing:1.5px;text-transform:uppercase;padding:.35rem .85rem;border:1px solid;transition:background .2s;cursor:default}
+.stack-tier{margin-bottom:2.2rem}
+.stack-tier-label{font-size:.65rem;letter-spacing:2.5px;text-transform:uppercase;color:#333;margin-bottom:.9rem;font-weight:700;display:flex;align-items:center;gap:.6rem}
+.stack-tier-label span{flex:1;height:1px;background:#ccc}
+.stack-chips{display:flex;flex-wrap:wrap;gap:.55rem}
+.chip{font-size:.6rem;letter-spacing:1.5px;text-transform:uppercase;padding:.45rem 1.05rem;border:1px solid;transition:background .2s,transform .15s;cursor:default}
+.chip:hover{transform:translateY(-1px)}
 .chip-gpu{border-color:#76b900;color:#4a7a00;background:rgba(118,185,0,.06)}.chip-gpu:hover{background:rgba(118,185,0,.15)}
 .chip-ml{border-color:#5588cc;color:#2255aa;background:rgba(85,136,204,.06)}.chip-ml:hover{background:rgba(85,136,204,.15)}
 .chip-data{border-color:#cc7700;color:#995500;background:rgba(204,119,0,.06)}.chip-data:hover{background:rgba(204,119,0,.15)}
@@ -122,14 +126,17 @@ body{background:#f4f4ef;color:var(--black);font-family:'Space Mono',monospace;ov
 .explore-btn span,.explore-btn{position:relative;z-index:1}
 
 /* PROJECTS */
-.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+.proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem}
 .proj-card{display:flex;flex-direction:column;gap:.5rem;padding:1.3rem 1.5rem;border:1px solid #ddd;text-decoration:none;color:inherit;transition:border-color .2s,background .2s}
 #panel-projects .proj-card{border-color:#ccc;background:rgba(232,232,228,0.72)}
 #panel-projects .proj-c-name{color:#000}
 #panel-projects .proj-c-desc{color:#1a1a1a}
 #panel-projects .proj-c-cta{color:#333;border-color:#aaa}
-.proj-card--featured{grid-column:span 2}
+.proj-card--featured{grid-column:span 1}
 .proj-card:hover{border-color:#999;background:rgba(0,0,0,.025)}
+.proj-c-img{margin:-1.3rem -1.5rem 1rem;height:550px;background:#e8e8e5;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.proj-c-img img{width:100%;height:100%;object-fit:contain;display:block;transition:transform .35s}
+.proj-card:hover .proj-c-img img{transform:scale(1.02)}
 .proj-c-name{font-family:'DM Serif Display',serif;font-size:1.3rem;color:#111;line-height:1.2}
 .proj-card--featured .proj-c-name{font-size:1.55rem}
 .proj-c-desc{font-size:.63rem;color:#555;line-height:1.85;flex:1}
@@ -226,7 +233,7 @@ footer{padding:1.2rem 4rem;border-top:1px solid #e5e5e5;display:flex;justify-con
   .about-bottom{grid-template-columns:1fr 1fr}
   .apm-row{grid-template-columns:1fr 1fr}
   .proj-grid{grid-template-columns:1fr 1fr}
-  .proj-card--featured{grid-column:span 2}
+  .proj-card--featured{grid-column:span 1}
   .bc-entry{padding:1.5rem 1.6rem}
   .bc-title{font-size:1.38rem}
   .bc-series-title{font-size:1.6rem}
@@ -287,7 +294,7 @@ footer{padding:1.2rem 4rem;border-top:1px solid #e5e5e5;display:flex;justify-con
   <canvas id="c-conway"></canvas>
   <div class="hero-inner">
     <div class="hero-name" style="letter-spacing:-2px;">Jerónimo<br>Hoyos Botero</div>
-    <div class="hero-sub" data-es="Data Scientist" data-en="Data Scientist">Data Scientist</div>
+    <div class="hero-sub" data-es="Data Scientist · ML Engineer" data-en="Data Scientist · ML Engineer">Data Scientist · ML Engineer</div>
   </div>
   <div class="hero-bottom">
     <div class="hero-socials">
@@ -323,6 +330,10 @@ footer{padding:1.2rem 4rem;border-top:1px solid #e5e5e5;display:flex;justify-con
         <div>
           <div class="about-sub-label" data-es="Quién soy" data-en="Who I am">Quién soy</div>
           <div class="about-bio" data-es="<p>Soy <strong>Jerónimo Hoyos</strong>, estudiante de Ingeniería en Sistemas e Informática en la Universidad Nacional de Colombia con una obsesión por entender los problemas antes de resolverlos.</p><p>Trabajo en la intersección de la <strong>estadística</strong>, el <strong>álgebra lineal</strong> y el <strong>aprendizaje automático</strong>. Lo que me motiva no es solo que un modelo funcione, sino comprender por qué funciona y qué dice sobre la estructura del problema.</p><p>Me mantengo al día con el estado del arte en IA y aplico <strong>GPU-accelerated computing</strong> cuando la escala lo exige. Fuera del código me encuentras leyendo, con mis gatos o pensando en matemáticas.</p>" data-en="<p>I'm <strong>Jerónimo Hoyos</strong>, a Systems and Computer Engineering student at Universidad Nacional de Colombia, obsessed with understanding problems before solving them.</p><p>I work at the intersection of <strong>statistics</strong>, <strong>linear algebra</strong>, and <strong>machine learning</strong>. What drives me isn't just building models that work — it's understanding why they work and what they reveal about the problem's structure.</p><p>I keep up with the AI state of the art and apply <strong>GPU-accelerated computing</strong> when scale demands it. Outside of code you'll find me reading, with my cats, or thinking about math.</p>"><p>Soy <strong>Jerónimo Hoyos</strong>, estudiante de Ingeniería en Sistemas e Informática en la Universidad Nacional de Colombia con una obsesión por entender los problemas antes de resolverlos.</p><p>Trabajo en la intersección de la <strong>estadística</strong>, el <strong>álgebra lineal</strong> y el <strong>aprendizaje automático</strong>. Lo que me motiva no es solo que un modelo funcione, sino comprender por qué funciona y qué dice sobre la estructura del problema.</p><p>Me mantengo al día con el estado del arte en IA y aplico <strong>GPU-accelerated computing</strong> cuando la escala lo exige. Fuera del código me encuentras leyendo, con mis gatos o pensando en matemáticas.</p></div>
+          <figure class="bio-talk">
+            <img src="static/epam-talk.jpg" alt="Jerónimo presentando en Medellín IA" loading="lazy">
+            <figcaption data-es="Presentando &ldquo;How to build a transformer from scratch&rdquo; en Medellín IA community · EPAM Medellín" data-en="Presenting &ldquo;How to build a transformer from scratch&rdquo; at Medellín IA community · EPAM Medellín">Presentando &ldquo;How to build a transformer from scratch&rdquo; en Medellín IA community · EPAM Medellín</figcaption>
+          </figure>
         </div>
 
         <div>
@@ -330,27 +341,27 @@ footer{padding:1.2rem 4rem;border-top:1px solid #e5e5e5;display:flex;justify-con
           
       <div class="stack-tier">
         <div class="stack-tier-label" data-es="Lenguajes" data-en="Languages">Lenguajes <span></span></div>
-        <div class="stack-chips"><span class="chip chip-lang">Python</span><span class="chip chip-lang">R</span><span class="chip chip-lang">SQL</span><span class="chip chip-lang">C++</span></div>
+        <div class="stack-chips"><span class="chip chip-lang">Python</span><span class="chip chip-lang">R</span><span class="chip chip-lang">SQL</span><span class="chip chip-lang">C</span><span class="chip chip-lang">Rust</span></div>
       </div>
       <div class="stack-tier">
-        <div class="stack-tier-label" data-es="Datos & Feature Engineering" data-en="Data & Feature Engineering">Datos & Feature Engineering <span></span></div>
-        <div class="stack-chips"><span class="chip chip-data">NumPy</span><span class="chip chip-data">Pandas</span><span class="chip chip-data">Polars</span><span class="chip chip-data">DuckDB</span><span class="chip chip-data">Apache Spark</span></div>
+        <div class="stack-tier-label" data-es="Data Science" data-en="Data Science">Data Science <span></span></div>
+        <div class="stack-chips"><span class="chip chip-data">NumPy</span><span class="chip chip-data">Pandas</span><span class="chip chip-data">Polars</span><span class="chip chip-data">scikit-learn</span><span class="chip chip-data">XGBoost</span><span class="chip chip-data">Statsmodels</span></div>
       </div>
       <div class="stack-tier">
-        <div class="stack-tier-label" data-es="Visualización" data-en="Visualization">Visualización <span></span></div>
-        <div class="stack-chips"><span class="chip chip-viz">Matplotlib</span><span class="chip chip-viz">Plotly</span><span class="chip chip-viz">Seaborn</span><span class="chip chip-viz">Streamlit</span></div>
+        <div class="stack-tier-label" data-es="Deep Learning & IA" data-en="Deep Learning & AI">Deep Learning & IA <span></span></div>
+        <div class="stack-chips"><span class="chip chip-ml">PyTorch</span><span class="chip chip-ml">Transformers</span><span class="chip chip-ml">LangGraph</span><span class="chip chip-ml">Ollama</span><span class="chip chip-ml">Foundation Models</span></div>
       </div>
       <div class="stack-tier">
-        <div class="stack-tier-label" data-es="Machine Learning" data-en="Machine Learning">Machine Learning <span></span></div>
-        <div class="stack-chips"><span class="chip chip-ml">PyTorch</span><span class="chip chip-ml">scikit-learn</span><span class="chip chip-ml">XGBoost</span><span class="chip chip-ml">LightGBM</span><span class="chip chip-ml">Transformers</span><span class="chip chip-ml">Foundation Models</span></div>
+        <div class="stack-tier-label" data-es="GPU Computing" data-en="GPU Computing">GPU Computing <span></span></div>
+        <div class="stack-chips"><span class="chip chip-gpu">CUDA</span><span class="chip chip-gpu">cuBLAS</span><span class="chip chip-gpu">cuDF</span><span class="chip chip-gpu">cuML</span><span class="chip chip-gpu">RAPIDS</span><span class="chip chip-gpu">TensorRT</span></div>
       </div>
       <div class="stack-tier">
-        <div class="stack-tier-label" data-es="MLOps" data-en="MLOps">MLOps <span></span></div>
-        <div class="stack-chips"><span class="chip chip-ops">Docker</span><span class="chip chip-ops">FastAPI</span><span class="chip chip-ops">Git</span><span class="chip chip-ops">Linux</span><span class="chip chip-ops">Jupyter</span><span class="chip chip-ops">MLflow</span></div>
+        <div class="stack-tier-label" data-es="Visualización & Apps" data-en="Visualization & Apps">Visualización & Apps <span></span></div>
+        <div class="stack-chips"><span class="chip chip-viz">Matplotlib</span><span class="chip chip-viz">Plotly</span><span class="chip chip-viz">Seaborn</span><span class="chip chip-viz">Streamlit</span><span class="chip chip-viz">FastAPI</span><span class="chip chip-viz">Power BI</span></div>
       </div>
       <div class="stack-tier">
-        <div class="stack-tier-label" data-es="Aceleración GPU" data-en="GPU Acceleration">Aceleración GPU <span></span></div>
-        <div class="stack-chips"><span class="chip chip-gpu">CUDA</span><span class="chip chip-gpu">cuDF</span><span class="chip chip-gpu">cuML</span><span class="chip chip-gpu">cuGraph</span><span class="chip chip-gpu">RAPIDS</span><span class="chip chip-gpu">TensorRT</span><span class="chip chip-gpu">NVIDIA NIM</span></div>
+        <div class="stack-tier-label" data-es="Dev & Herramientas" data-en="Dev & Tools">Dev & Herramientas <span></span></div>
+        <div class="stack-chips"><span class="chip chip-ops">Git</span><span class="chip chip-ops">Linux</span><span class="chip chip-ops">Docker</span><span class="chip chip-ops">Jupyter</span><span class="chip chip-ops">VS Code</span><span class="chip chip-ops">Excel</span></div>
       </div>
         </div>
 
@@ -382,21 +393,31 @@ footer{padding:1.2rem 4rem;border-top:1px solid #e5e5e5;display:flex;justify-con
           <div class="about-sub-label" data-es="Proyectos" data-en="Projects">Proyectos</div>
           <div class="apm-row">
           <a href="https://github.com/JeroHoyos/Molinete-AI" target="_blank" rel="noopener noreferrer" class="proj-card proj-card--featured">
+            
             <div class="proj-c-name" data-es="Molinete-AI" data-en="Molinete-AI">Molinete-AI</div>
-            <div class="proj-c-desc" data-es="Modelo de lenguaje tipo GPT-2 implementado desde cero. Arquitectura transformer completa: multi-head attention, positional encoding, feed-forward layers y tokenizador BPE propio. Sin frameworks de alto nivel — matemáticas puras traducidas a código eficiente en Rust." data-en="A GPT-2–style language model built from scratch. Full transformer architecture: multi-head attention, positional encoding, feed-forward layers and a custom BPE tokenizer. No high-level frameworks — pure math translated into efficient Rust.">Modelo de lenguaje tipo GPT-2 implementado desde cero. Arquitectura transformer completa: multi-head attention, positional encoding, feed-forward layers y tokenizador BPE propio. Sin frameworks de alto nivel — matemáticas puras traducidas a código eficiente en Rust.</div>
-            <div class="proj-c-tags"><span class="proj-c-tag" style="border-color:#222;color:#222">Transformer</span><span class="proj-c-tag" style="border-color:#222;color:#222">Self-Attention</span><span class="proj-c-tag" style="border-color:#222;color:#222">Autoregressive LM</span><span class="proj-c-tag" style="border-color:#222;color:#222">BPE Tokenizer</span></div>
+            <div class="proj-c-desc" data-es="Transformer desarrollado desde cero en Rust, enfocado en implementación eficiente de arquitecturas de deep learning y operaciones tensoriales. Presentado en la comunidad Medellín IA en la oficina de EPAM Medellín." data-en="Transformer built from scratch in Rust, focused on efficient implementation of deep learning architectures and tensor operations. Presented at the Medellín IA community at EPAM Medellín's office.">Transformer desarrollado desde cero en Rust, enfocado en implementación eficiente de arquitecturas de deep learning y operaciones tensoriales. Presentado en la comunidad Medellín IA en la oficina de EPAM Medellín.</div>
+            <div class="proj-c-tags"><span class="proj-c-tag" style="border-color:#222;color:#222">Transformer</span><span class="proj-c-tag" style="border-color:#222;color:#222">Rust</span><span class="proj-c-tag" style="border-color:#222;color:#222">Deep Learning</span><span class="proj-c-tag" style="border-color:#222;color:#222">Tensors</span></div>
             <div class="proj-c-cta" data-es="Ver repositorio ↗" data-en="View repository ↗">Ver repositorio ↗</div>
           </a>
-          <a href="https://github.com/JeroHoyos/Expected-Growth-of-the-Country-s-Companies-by-Sector" target="_blank" rel="noopener noreferrer" class="proj-card">
-            <div class="proj-c-name" data-es="Crecimiento Esperado por Sector" data-en="Expected Growth by Sector">Crecimiento Esperado por Sector</div>
-            <div class="proj-c-desc" data-es="Análisis estadístico del crecimiento proyectado de empresas colombianas por sector. Regresión múltiple, intervalos de confianza, bootstrapping y visualizaciones comparativas por industria." data-en="Statistical analysis of projected growth of Colombian companies by sector. Multiple regression, confidence intervals, bootstrapping and comparative visualizations by industry.">Análisis estadístico del crecimiento proyectado de empresas colombianas por sector. Regresión múltiple, intervalos de confianza, bootstrapping y visualizaciones comparativas por industria.</div>
-            <div class="proj-c-tags"><span class="proj-c-tag" style="border-color:#222;color:#222">Regresión</span><span class="proj-c-tag" style="border-color:#222;color:#222">Pandas</span><span class="proj-c-tag" style="border-color:#222;color:#222">Matplotlib</span><span class="proj-c-tag" style="border-color:#222;color:#222">statsmodels</span></div>
+          <a href="https://github.com/SudoerJteheran/ResearchAgent-DataHack2026" target="_blank" rel="noopener noreferrer" class="proj-card">
+            
+            <div class="proj-c-name" data-es="InvestigIA" data-en="InvestigIA">InvestigIA</div>
+            <div class="proj-c-desc" data-es="Asistente autónomo para investigación científica construido con LangGraph y Ollama. Análisis de literatura académica con inferencia completamente local. Tercer lugar en DataHack 2026." data-en="Autonomous scientific research assistant built with LangGraph and Ollama. Academic literature analysis with fully local inference. Third place at DataHack 2026.">Asistente autónomo para investigación científica construido con LangGraph y Ollama. Análisis de literatura académica con inferencia completamente local. Tercer lugar en DataHack 2026.</div>
+            <div class="proj-c-tags"><span class="proj-c-tag" style="border-color:#222;color:#222">LangGraph</span><span class="proj-c-tag" style="border-color:#222;color:#222">Ollama</span><span class="proj-c-tag" style="border-color:#222;color:#222">Agents</span><span class="proj-c-tag" style="border-color:#222;color:#222">RAG</span></div>
             <div class="proj-c-cta" data-es="Ver repositorio ↗" data-en="View repository ↗">Ver repositorio ↗</div>
           </a>
-          <a href="https://github.com/JeroHoyos/Analisis-stats-y-tipos-pokemon" target="_blank" rel="noopener noreferrer" class="proj-card">
-            <div class="proj-c-name" data-es="Análisis Pokémon" data-en="Pokémon Analysis">Análisis Pokémon</div>
-            <div class="proj-c-desc" data-es="EDA completo presentado en Turing Box EAFIT. Clustering K-Means y jerárquico, análisis de correlación, reducción con PCA y visualizaciones interactivas sobre 800+ registros." data-en="Full EDA presented at Turing Box EAFIT. K-Means and hierarchical clustering, correlation analysis, PCA reduction and interactive visualizations over 800+ records.">EDA completo presentado en Turing Box EAFIT. Clustering K-Means y jerárquico, análisis de correlación, reducción con PCA y visualizaciones interactivas sobre 800+ registros.</div>
-            <div class="proj-c-tags"><span class="proj-c-tag" style="border-color:#222;color:#222">EDA</span><span class="proj-c-tag" style="border-color:#222;color:#222">Clustering</span><span class="proj-c-tag" style="border-color:#222;color:#222">PCA</span><span class="proj-c-tag" style="border-color:#222;color:#222">scikit-learn</span></div>
+          <a href="https://www.kaggle.com/code/scratchbox/analysis-and-modeling-of-smoking" target="_blank" rel="noopener noreferrer" class="proj-card">
+            
+            <div class="proj-c-name" data-es="Analysis and Modeling of Smoking" data-en="Analysis and Modeling of Smoking">Analysis and Modeling of Smoking</div>
+            <div class="proj-c-desc" data-es="Análisis exploratorio y modelado de machine learning sobre el dataset Body Signals of Smoking para predecir hábitos de tabaquismo a partir de señales fisiológicas." data-en="Exploratory analysis and ML modeling on the Body Signals of Smoking dataset to predict smoking habits from physiological signals.">Análisis exploratorio y modelado de machine learning sobre el dataset Body Signals of Smoking para predecir hábitos de tabaquismo a partir de señales fisiológicas.</div>
+            <div class="proj-c-tags"><span class="proj-c-tag" style="border-color:#222;color:#222">EDA</span><span class="proj-c-tag" style="border-color:#222;color:#222">scikit-learn</span><span class="proj-c-tag" style="border-color:#222;color:#222">Pandas</span><span class="proj-c-tag" style="border-color:#222;color:#222">Kaggle</span></div>
+            <div class="proj-c-cta" data-es="Ver repositorio ↗" data-en="View repository ↗">Ver repositorio ↗</div>
+          </a>
+          <a href="https://github.com/JeroHoyos/Efficient-Krylov-Sequence-Computation-in-GPU" target="_blank" rel="noopener noreferrer" class="proj-card">
+            
+            <div class="proj-c-name" data-es="Cómputo Eficiente de Krylov en GPU" data-en="Efficient Krylov Sequence Computation on GPU">Cómputo Eficiente de Krylov en GPU</div>
+            <div class="proj-c-desc" data-es="Benchmarking y optimización en CUDA para generación de subespacios de Krylov, comparando CPU y GPU mediante estrategias como tiled, coalesced y cuBLAS." data-en="CUDA benchmarking and optimization for Krylov subspace generation, comparing CPU and GPU implementations using tiled, coalesced and cuBLAS strategies.">Benchmarking y optimización en CUDA para generación de subespacios de Krylov, comparando CPU y GPU mediante estrategias como tiled, coalesced y cuBLAS.</div>
+            <div class="proj-c-tags"><span class="proj-c-tag" style="border-color:#222;color:#222">CUDA</span><span class="proj-c-tag" style="border-color:#222;color:#222">cuBLAS</span><span class="proj-c-tag" style="border-color:#222;color:#222">HPC</span><span class="proj-c-tag" style="border-color:#222;color:#222">GPU</span></div>
             <div class="proj-c-cta" data-es="Ver repositorio ↗" data-en="View repository ↗">Ver repositorio ↗</div>
           </a>
           </div>
@@ -431,36 +452,34 @@ footer{padding:1.2rem 4rem;border-top:1px solid #e5e5e5;display:flex;justify-con
     <canvas id="c-flow" aria-hidden="true"></canvas>
     <div class="panel-content light-panel">
       <div class="sec-title" data-es="PROYECTOS" data-en="PROJECTS">PROYECTOS</div>
-      <div class="sec-sub" data-es="Código que construye, modela y explora — de transformers desde cero hasta juegos retro." data-en="Code that builds, models and explores — from scratch transformers to retro games.">Código que construye, modela y explora — de transformers desde cero hasta juegos retro.</div>
+      <div class="sec-sub" data-es="Transformers desde cero, agentes de IA, GPU computing y machine learning aplicado." data-en="From-scratch transformers, AI agents, GPU computing and applied machine learning.">Transformers desde cero, agentes de IA, GPU computing y machine learning aplicado.</div>
       <div class="proj-grid">
           <a href="https://github.com/JeroHoyos/Molinete-AI" target="_blank" rel="noopener noreferrer" class="proj-card proj-card--featured">
+            <div class="proj-c-img"><img src="proyectos/molinete.png" alt="Molinete-AI" loading="lazy"></div>
             <div class="proj-c-name" data-es="Molinete-AI" data-en="Molinete-AI">Molinete-AI</div>
-            <div class="proj-c-desc" data-es="Modelo de lenguaje tipo GPT-2 implementado desde cero. Arquitectura transformer completa: multi-head attention, positional encoding, feed-forward layers y tokenizador BPE propio. Sin frameworks de alto nivel — matemáticas puras traducidas a código eficiente en Rust." data-en="A GPT-2–style language model built from scratch. Full transformer architecture: multi-head attention, positional encoding, feed-forward layers and a custom BPE tokenizer. No high-level frameworks — pure math translated into efficient Rust.">Modelo de lenguaje tipo GPT-2 implementado desde cero. Arquitectura transformer completa: multi-head attention, positional encoding, feed-forward layers y tokenizador BPE propio. Sin frameworks de alto nivel — matemáticas puras traducidas a código eficiente en Rust.</div>
-            <div class="proj-c-tags"><span class="proj-c-tag" style="border-color:#222;color:#222">Transformer</span><span class="proj-c-tag" style="border-color:#222;color:#222">Self-Attention</span><span class="proj-c-tag" style="border-color:#222;color:#222">Autoregressive LM</span><span class="proj-c-tag" style="border-color:#222;color:#222">BPE Tokenizer</span></div>
+            <div class="proj-c-desc" data-es="Transformer desarrollado desde cero en Rust, enfocado en implementación eficiente de arquitecturas de deep learning y operaciones tensoriales. Presentado en la comunidad Medellín IA en la oficina de EPAM Medellín." data-en="Transformer built from scratch in Rust, focused on efficient implementation of deep learning architectures and tensor operations. Presented at the Medellín IA community at EPAM Medellín's office.">Transformer desarrollado desde cero en Rust, enfocado en implementación eficiente de arquitecturas de deep learning y operaciones tensoriales. Presentado en la comunidad Medellín IA en la oficina de EPAM Medellín.</div>
+            <div class="proj-c-tags"><span class="proj-c-tag" style="border-color:#222;color:#222">Transformer</span><span class="proj-c-tag" style="border-color:#222;color:#222">Rust</span><span class="proj-c-tag" style="border-color:#222;color:#222">Deep Learning</span><span class="proj-c-tag" style="border-color:#222;color:#222">Tensors</span></div>
             <div class="proj-c-cta" data-es="Ver repositorio ↗" data-en="View repository ↗">Ver repositorio ↗</div>
           </a>
-          <a href="https://github.com/JeroHoyos/Expected-Growth-of-the-Country-s-Companies-by-Sector" target="_blank" rel="noopener noreferrer" class="proj-card">
-            <div class="proj-c-name" data-es="Crecimiento Esperado por Sector" data-en="Expected Growth by Sector">Crecimiento Esperado por Sector</div>
-            <div class="proj-c-desc" data-es="Análisis estadístico del crecimiento proyectado de empresas colombianas por sector. Regresión múltiple, intervalos de confianza, bootstrapping y visualizaciones comparativas por industria." data-en="Statistical analysis of projected growth of Colombian companies by sector. Multiple regression, confidence intervals, bootstrapping and comparative visualizations by industry.">Análisis estadístico del crecimiento proyectado de empresas colombianas por sector. Regresión múltiple, intervalos de confianza, bootstrapping y visualizaciones comparativas por industria.</div>
-            <div class="proj-c-tags"><span class="proj-c-tag" style="border-color:#222;color:#222">Regresión</span><span class="proj-c-tag" style="border-color:#222;color:#222">Pandas</span><span class="proj-c-tag" style="border-color:#222;color:#222">Matplotlib</span><span class="proj-c-tag" style="border-color:#222;color:#222">statsmodels</span></div>
+          <a href="https://github.com/SudoerJteheran/ResearchAgent-DataHack2026" target="_blank" rel="noopener noreferrer" class="proj-card">
+            <div class="proj-c-img"><img src="proyectos/investigia.png" alt="InvestigIA" loading="lazy"></div>
+            <div class="proj-c-name" data-es="InvestigIA" data-en="InvestigIA">InvestigIA</div>
+            <div class="proj-c-desc" data-es="Asistente autónomo para investigación científica construido con LangGraph y Ollama. Análisis de literatura académica con inferencia completamente local. Tercer lugar en DataHack 2026." data-en="Autonomous scientific research assistant built with LangGraph and Ollama. Academic literature analysis with fully local inference. Third place at DataHack 2026.">Asistente autónomo para investigación científica construido con LangGraph y Ollama. Análisis de literatura académica con inferencia completamente local. Tercer lugar en DataHack 2026.</div>
+            <div class="proj-c-tags"><span class="proj-c-tag" style="border-color:#222;color:#222">LangGraph</span><span class="proj-c-tag" style="border-color:#222;color:#222">Ollama</span><span class="proj-c-tag" style="border-color:#222;color:#222">Agents</span><span class="proj-c-tag" style="border-color:#222;color:#222">RAG</span></div>
             <div class="proj-c-cta" data-es="Ver repositorio ↗" data-en="View repository ↗">Ver repositorio ↗</div>
           </a>
-          <a href="https://github.com/JeroHoyos/Analisis-stats-y-tipos-pokemon" target="_blank" rel="noopener noreferrer" class="proj-card">
-            <div class="proj-c-name" data-es="Análisis Pokémon" data-en="Pokémon Analysis">Análisis Pokémon</div>
-            <div class="proj-c-desc" data-es="EDA completo presentado en Turing Box EAFIT. Clustering K-Means y jerárquico, análisis de correlación, reducción con PCA y visualizaciones interactivas sobre 800+ registros." data-en="Full EDA presented at Turing Box EAFIT. K-Means and hierarchical clustering, correlation analysis, PCA reduction and interactive visualizations over 800+ records.">EDA completo presentado en Turing Box EAFIT. Clustering K-Means y jerárquico, análisis de correlación, reducción con PCA y visualizaciones interactivas sobre 800+ registros.</div>
-            <div class="proj-c-tags"><span class="proj-c-tag" style="border-color:#222;color:#222">EDA</span><span class="proj-c-tag" style="border-color:#222;color:#222">Clustering</span><span class="proj-c-tag" style="border-color:#222;color:#222">PCA</span><span class="proj-c-tag" style="border-color:#222;color:#222">scikit-learn</span></div>
+          <a href="https://www.kaggle.com/code/scratchbox/analysis-and-modeling-of-smoking" target="_blank" rel="noopener noreferrer" class="proj-card">
+            <div class="proj-c-img"><img src="proyectos/smoking.png" alt="Analysis and Modeling of Smoking" loading="lazy"></div>
+            <div class="proj-c-name" data-es="Analysis and Modeling of Smoking" data-en="Analysis and Modeling of Smoking">Analysis and Modeling of Smoking</div>
+            <div class="proj-c-desc" data-es="Análisis exploratorio y modelado de machine learning sobre el dataset Body Signals of Smoking para predecir hábitos de tabaquismo a partir de señales fisiológicas." data-en="Exploratory analysis and ML modeling on the Body Signals of Smoking dataset to predict smoking habits from physiological signals.">Análisis exploratorio y modelado de machine learning sobre el dataset Body Signals of Smoking para predecir hábitos de tabaquismo a partir de señales fisiológicas.</div>
+            <div class="proj-c-tags"><span class="proj-c-tag" style="border-color:#222;color:#222">EDA</span><span class="proj-c-tag" style="border-color:#222;color:#222">scikit-learn</span><span class="proj-c-tag" style="border-color:#222;color:#222">Pandas</span><span class="proj-c-tag" style="border-color:#222;color:#222">Kaggle</span></div>
             <div class="proj-c-cta" data-es="Ver repositorio ↗" data-en="View repository ↗">Ver repositorio ↗</div>
           </a>
-          <a href="https://github.com/JeroHoyos/Operacion_Desgastar_al_Rival-Retro_Game" target="_blank" rel="noopener noreferrer" class="proj-card">
-            <div class="proj-c-name" data-es="Operación Desgastar al Rival" data-en="Operation Wear Down the Rival">Operación Desgastar al Rival</div>
-            <div class="proj-c-desc" data-es="Juego retro con motor de física 2D e IA de enemigos como máquina de estados finitos. Arquitectura modular orientada a componentes con patrón Entity-Component-System." data-en="Retro game with 2D physics engine and finite state machine enemy AI. Modular component-oriented architecture using the Entity-Component-System pattern.">Juego retro con motor de física 2D e IA de enemigos como máquina de estados finitos. Arquitectura modular orientada a componentes con patrón Entity-Component-System.</div>
-            <div class="proj-c-tags"><span class="proj-c-tag" style="border-color:#222;color:#222">Pygame</span><span class="proj-c-tag" style="border-color:#222;color:#222">State Machine</span><span class="proj-c-tag" style="border-color:#222;color:#222">Game AI</span><span class="proj-c-tag" style="border-color:#222;color:#222">ECS</span></div>
-            <div class="proj-c-cta" data-es="Ver repositorio ↗" data-en="View repository ↗">Ver repositorio ↗</div>
-          </a>
-          <a href="https://github.com/JeroHoyos/clase-teoria-de-grafos" target="_blank" rel="noopener noreferrer" class="proj-card">
-            <div class="proj-c-name" data-es="Teoría de Grafos" data-en="Graph Theory">Teoría de Grafos</div>
-            <div class="proj-c-desc" data-es="Notebooks educativos con implementación desde cero de BFS, DFS, Dijkstra, Bellman-Ford, flujo máximo Ford-Fulkerson y detección de componentes conexas con visualizaciones." data-en="Educational notebooks implementing BFS, DFS, Dijkstra, Bellman-Ford, Ford-Fulkerson max flow and connected components detection from scratch with visualizations.">Notebooks educativos con implementación desde cero de BFS, DFS, Dijkstra, Bellman-Ford, flujo máximo Ford-Fulkerson y detección de componentes conexas con visualizaciones.</div>
-            <div class="proj-c-tags"><span class="proj-c-tag" style="border-color:#222;color:#222">BFS/DFS</span><span class="proj-c-tag" style="border-color:#222;color:#222">Dijkstra</span><span class="proj-c-tag" style="border-color:#222;color:#222">Max Flow</span><span class="proj-c-tag" style="border-color:#222;color:#222">NetworkX</span></div>
+          <a href="https://github.com/JeroHoyos/Efficient-Krylov-Sequence-Computation-in-GPU" target="_blank" rel="noopener noreferrer" class="proj-card">
+            <div class="proj-c-img"><img src="proyectos/krylov.png" alt="Cómputo Eficiente de Krylov en GPU" loading="lazy"></div>
+            <div class="proj-c-name" data-es="Cómputo Eficiente de Krylov en GPU" data-en="Efficient Krylov Sequence Computation on GPU">Cómputo Eficiente de Krylov en GPU</div>
+            <div class="proj-c-desc" data-es="Benchmarking y optimización en CUDA para generación de subespacios de Krylov, comparando CPU y GPU mediante estrategias como tiled, coalesced y cuBLAS." data-en="CUDA benchmarking and optimization for Krylov subspace generation, comparing CPU and GPU implementations using tiled, coalesced and cuBLAS strategies.">Benchmarking y optimización en CUDA para generación de subespacios de Krylov, comparando CPU y GPU mediante estrategias como tiled, coalesced y cuBLAS.</div>
+            <div class="proj-c-tags"><span class="proj-c-tag" style="border-color:#222;color:#222">CUDA</span><span class="proj-c-tag" style="border-color:#222;color:#222">cuBLAS</span><span class="proj-c-tag" style="border-color:#222;color:#222">HPC</span><span class="proj-c-tag" style="border-color:#222;color:#222">GPU</span></div>
             <div class="proj-c-cta" data-es="Ver repositorio ↗" data-en="View repository ↗">Ver repositorio ↗</div>
           </a>
       </div>
@@ -474,132 +493,26 @@ footer{padding:1.2rem 4rem;border-top:1px solid #e5e5e5;display:flex;justify-con
       <div class="sec-title">BLOG</div>
       <div class="sec-sub" data-es="Notas sobre matemáticas, modelos y todo lo que me parece interesante pensar en voz alta." data-en="Notes on math, models and everything I find interesting to think out loud about.">Notas sobre matemáticas, modelos y todo lo que me parece interesante pensar en voz alta.</div>
       <div class="blog-list">
-        <div class="bc-entry bc-entry--series bc-entry--new">
+        <a href="blog/work-in-progress.html" class="bc-entry bc-entry--new">
           <div class="bc-new"><span class="bc-new-dot"></span><span data-es="Nuevo" data-en="New">Nuevo</span></div>
-          <div class="bc-series-title" data-es="Estadística I" data-en="Statistics I">Estadística I</div>
-          <p class="bc-excerpt" data-es="Probabilidad, variables aleatorias y las distribuciones más importantes del curso." data-en="Probability, random variables, and the most important distributions of the course.">Probabilidad, variables aleatorias y las distribuciones más importantes del curso.</p>
-          <div class="bc-scroll-wrap">
-            <div class="bc-scroll-vp" id="svp-estadistica-i">
-              <div class="bc-scroll-list" id="sl-estadistica-i">
-              <div class="bc-scroll-row">
-                <div class="bc-scroll-inner"><span class="bc-ch-num">01</span><span class="bc-ch-title" data-es="Probabilidad y Variables Aleatorias" data-en="Probability and Random Variables">Probabilidad y Variables Aleatorias</span></div>
-                <span class="bc-ch-date" data-es="Mayo 2025" data-en="May 2025">Mayo 2025</span>
-              </div>
-              <div class="bc-scroll-row">
-                <div class="bc-scroll-inner"><span class="bc-ch-num">02</span><span class="bc-ch-title" data-es="Distribuciones de Probabilidad" data-en="Probability Distributions">Distribuciones de Probabilidad</span></div>
-                <span class="bc-ch-date" data-es="Mayo 2025" data-en="May 2025">Mayo 2025</span>
-              </div>
-              <div class="bc-scroll-row">
-                <div class="bc-scroll-inner"><span class="bc-ch-num">03</span><span class="bc-ch-title" data-es="Estimación e Intervalos de Confianza" data-en="Estimation and Confidence Intervals">Estimación e Intervalos de Confianza</span></div>
-                <span class="bc-ch-date" data-es="Mayo 2025" data-en="May 2025">Mayo 2025</span>
-              </div>
-              <div class="bc-scroll-row">
-                <div class="bc-scroll-inner"><span class="bc-ch-num">04</span><span class="bc-ch-title" data-es="Pruebas de Hipótesis" data-en="Hypothesis Testing">Pruebas de Hipótesis</span></div>
-                <span class="bc-ch-date" data-es="Mayo 2025" data-en="May 2025">Mayo 2025</span>
-              </div>
-              </div>
-            </div>
-          </div>
-          <div class="bc-scroll-ctrl">
-            <div class="bc-scroll-btns">
-              <button class="bc-scroll-btn" id="sbp-estadistica-i" onclick="bcScroll('estadistica-i',-1)" disabled>↑</button>
-              <button class="bc-scroll-btn bc-scroll-btn--on" id="sbn-estadistica-i" onclick="bcScroll('estadistica-i',1)">↓</button>
-            </div>
-            <span class="bc-scroll-counter" id="sc-estadistica-i">1–3 / 4</span>
-          </div>
+          <div class="bc-title" data-es="Work in progress" data-en="Work in progress">Work in progress</div>
+          <p class="bc-excerpt" data-es="El blog está en construcción. Pronto habrá artículos sobre matemáticas, modelos y todo lo que encuentro interesante pensar en voz alta." data-en="The blog is under construction. Soon there will be articles on math, models and everything I find interesting to think out loud about.">El blog está en construcción. Pronto habrá artículos sobre matemáticas, modelos y todo lo que encuentro interesante pensar en voz alta.</p>
           <div class="bc-foot">
-            <div class="bc-meta"><span data-es="4 capítulos" data-en="4 chapters">4 capítulos</span></div>
-            <a href="blog/estadistica-i.html" class="bc-arrow" data-es="Ver serie →" data-en="View series →">Ver serie →</a>
+            <div class="bc-meta">
+              <span data-es="Próximamente" data-en="Coming soon">Próximamente</span>
+            </div>
+            <span class="bc-arrow" data-es="Próximamente →" data-en="Coming soon →">Próximamente →</span>
           </div>
-        </div>
+        </a>
         <div class="blog-cols">
           <div class="bc-col">
-        <a href="blog/sistemas-inteligentes.html" class="bc-entry">
-          <div class="bc-title" data-es="Sistemas Inteligentes" data-en="Intelligent Systems">Sistemas Inteligentes</div>
-          <p class="bc-excerpt" data-es="Fundamentos de inteligencia artificial: agentes inteligentes, búsqueda, aprendizaje automático y redes neuronales." data-en="Foundations of artificial intelligence: intelligent agents, search, machine learning, and neural networks.">Fundamentos de inteligencia artificial: agentes inteligentes, búsqueda, aprendizaje automático y redes neuronales.</p>
-          <div class="bc-foot">
-            <div class="bc-meta">
-              <span data-es="2025" data-en="2025">2025</span>
-            </div>
-            <span class="bc-arrow" data-es="Leer artículo →" data-en="Read article →">Leer artículo →</span>
-          </div>
-        </a>
-        <a href="blog/matematicas-discretas.html" class="bc-entry">
-          <div class="bc-title" data-es="Matemáticas Discretas" data-en="Discrete Mathematics">Matemáticas Discretas</div>
-          <p class="bc-excerpt" data-es="Lógica proposicional, teoría de grafos, combinatoria, relaciones y fundamentos de la computación discreta." data-en="Propositional logic, graph theory, combinatorics, relations, and foundations of discrete computation.">Lógica proposicional, teoría de grafos, combinatoria, relaciones y fundamentos de la computación discreta.</p>
-          <div class="bc-foot">
-            <div class="bc-meta">
-              <span data-es="2025" data-en="2025">2025</span>
-            </div>
-            <span class="bc-arrow" data-es="Leer artículo →" data-en="Read article →">Leer artículo →</span>
-          </div>
-        </a>
-        <a href="blog/base-de-datos-i.html" class="bc-entry">
-          <div class="bc-title" data-es="Base de Datos I" data-en="Database Systems I">Base de Datos I</div>
-          <p class="bc-excerpt" data-es="Fundamentos de bases de datos relacionales, modelado entidad-relación, álgebra relacional y SQL." data-en="Foundations of relational databases, entity-relationship modeling, relational algebra and SQL.">Fundamentos de bases de datos relacionales, modelado entidad-relación, álgebra relacional y SQL.</p>
-          <div class="bc-foot">
-            <div class="bc-meta">
-              <span data-es="2025" data-en="2025">2025</span>
-            </div>
-            <span class="bc-arrow" data-es="Leer artículo →" data-en="Read article →">Leer artículo →</span>
-          </div>
-        </a>
           </div>
           <div class="bc-col">
-        <a href="blog/mineria-de-datos.html" class="bc-entry">
-          <div class="bc-title" data-es="Introducción a la Minería de Datos" data-en="Introduction to Data Mining">Introducción a la Minería de Datos</div>
-          <p class="bc-excerpt" data-es="Técnicas y algoritmos para extraer conocimiento de grandes conjuntos de datos: clustering, clasificación y asociación." data-en="Techniques and algorithms for extracting knowledge from large datasets: clustering, classification, and association rules.">Técnicas y algoritmos para extraer conocimiento de grandes conjuntos de datos: clustering, clasificación y asociación.</p>
-          <div class="bc-foot">
-            <div class="bc-meta">
-              <span data-es="2025" data-en="2025">2025</span>
-            </div>
-            <span class="bc-arrow" data-es="Leer artículo →" data-en="Read article →">Leer artículo →</span>
-          </div>
-        </a>
-        <a href="blog/investigacion-de-operaciones-i.html" class="bc-entry">
-          <div class="bc-title" data-es="Investigación de Operaciones I" data-en="Operations Research I">Investigación de Operaciones I</div>
-          <p class="bc-excerpt" data-es="Modelos de optimización, programación lineal, método simplex y aplicaciones a problemas de decisión." data-en="Optimization models, linear programming, the simplex method, and applications to decision-making problems.">Modelos de optimización, programación lineal, método simplex y aplicaciones a problemas de decisión.</p>
-          <div class="bc-foot">
-            <div class="bc-meta">
-              <span data-es="2025" data-en="2025">2025</span>
-            </div>
-            <span class="bc-arrow" data-es="Leer artículo →" data-en="Read article →">Leer artículo →</span>
-          </div>
-        </a>
-        <a href="blog/arquitectura-computadores.html" class="bc-entry">
-          <div class="bc-title" data-es="Introducción a la Arquitectura de Computadores" data-en="Introduction to Computer Architecture">Introducción a la Arquitectura de Computadores</div>
-          <p class="bc-excerpt" data-es="Organización y arquitectura de computadores: jerarquía de memoria, ciclo de instrucción, procesadores y sistemas de E/S." data-en="Computer organization and architecture: memory hierarchy, instruction cycle, processors, and I/O systems.">Organización y arquitectura de computadores: jerarquía de memoria, ciclo de instrucción, procesadores y sistemas de E/S.</p>
-          <div class="bc-foot">
-            <div class="bc-meta">
-              <span data-es="2025" data-en="2025">2025</span>
-            </div>
-            <span class="bc-arrow" data-es="Leer artículo →" data-en="Read article →">Leer artículo →</span>
-          </div>
-        </a>
           </div>
         </div>
       </div>
     </div>
   </div>
-<script>
-(function(){
-  var _s = {};
-  window.bcScroll = function(id, dir) {
-    var s = _s[id]; if (!s) return;
-    s.c = Math.max(0, Math.min(s.m, s.c + dir));
-    document.getElementById('sl-' + id).style.transform = 'translateY(-' + (s.c * 48) + 'px)';
-    var bp = document.getElementById('sbp-' + id);
-    var bn = document.getElementById('sbn-' + id);
-    var sc = document.getElementById('sc-' + id);
-    bp.disabled = s.c === 0;
-    bp.className = 'bc-scroll-btn' + (s.c > 0 ? ' bc-scroll-btn--on' : '');
-    bn.disabled = s.c >= s.m;
-    bn.className = 'bc-scroll-btn' + (s.c < s.m ? ' bc-scroll-btn--on' : '');
-    sc.textContent = (s.c + 1) + '–' + Math.min(s.c + 3, s.t) + ' / ' + s.t;
-  };
-  _s['estadistica-i']={c:0,m:1,t:4};
-}());
-</script>
 
   <!-- ARTE -->
   <div class="tab-panel" id="panel-arte" role="tabpanel">
@@ -608,6 +521,11 @@ footer{padding:1.2rem 4rem;border-top:1px solid #e5e5e5;display:flex;justify-con
       <div class="sec-title" data-es="ARTE" data-en="ART">ARTE</div>
       <div class="sec-sub" data-es="Dibujos digitales hechos en ratos libres. Personajes, criaturas y lo que salga." data-en="Digital drawings made in my spare time. Characters, creatures and whatever comes out.">Dibujos digitales hechos en ratos libres. Personajes, criaturas y lo que salga.</div>
       <div class="arte-grid"><div class="arte-piece">
+        <div class="arte-img-wrap">
+          <img src="dibujos/bomb.jpg" alt="Bomb" loading="lazy" data-full="dibujos/bomb.jpg" class="lb-trigger">
+        </div>
+      </div>
+      <div class="arte-piece">
         <div class="arte-img-wrap">
           <img src="dibujos/pokemon.webp" alt="Pokémon" loading="lazy" data-full="dibujos/pokemon.webp" class="lb-trigger">
         </div>
@@ -701,7 +619,7 @@ document.querySelectorAll('.lang-btn').forEach(btn => {
   btn.addEventListener('click', () => setLang(btn.dataset.lang));
 });
 (function() {
-  try { const s = localStorage.getItem('lang'); if (s && s !== 'es') setLang(s); } catch(e) {}
+  try { const s = localStorage.getItem('lang'); setLang(s || 'en'); } catch(e) { setLang('en'); }
 })();
 /* Email copy button */
 (function() {

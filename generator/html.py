@@ -93,7 +93,7 @@ def _idiomas():
     return items
 
 
-def _proj_card_light(p):
+def _proj_card_light(p, show_img=False):
     name_es = p["title"] if p.get("featured") else p.get("title_es", p.get("title", ""))
     name_en = p["title"] if p.get("featured") else p.get("title_en", name_es)
     desc_es = p.get("body_es", p.get("desc_es", ""))
@@ -102,8 +102,10 @@ def _proj_card_light(p):
     cls = "proj-card" + (" proj-card--featured" if p.get("featured") else "")
     cta_es = "Ver repositorio ↗"
     cta_en = "View repository ↗"
+    img_html = f'<div class="proj-c-img"><img src="{p["img"]}" alt="{name_es}" loading="lazy"></div>' if (show_img and p.get("img")) else ""
     return f"""
           <a href="{p['url']}" target="_blank" rel="noopener noreferrer" class="{cls}">
+            {img_html}
             <div class="proj-c-name" data-es="{name_es}" data-en="{name_en}">{name_es}</div>
             <div class="proj-c-desc" data-es="{desc_es}" data-en="{desc_en}">{desc_es}</div>
             <div class="proj-c-tags">{tags}</div>
@@ -116,7 +118,7 @@ def _about_proj_mini(p, idx):
 
 
 def build_panel_about(blog_items=None):
-    proj_minis = "".join(_about_proj_mini(p, i + 1) for i, p in enumerate(C.PROYECTOS[:3]))
+    proj_minis = "".join(_about_proj_mini(p, i + 1) for i, p in enumerate(C.PROYECTOS[:4]))
 
     return f"""
   <!-- ABOUT -->
@@ -129,6 +131,10 @@ def build_panel_about(blog_items=None):
         <div>
           <div class="about-sub-label" data-es="Quién soy" data-en="Who I am">Quién soy</div>
           {_bio_paragraphs()}
+          <figure class="bio-talk">
+            <img src="static/epam-talk.jpg" alt="Jerónimo presentando en Medellín IA" loading="lazy">
+            <figcaption data-es="Presentando &ldquo;How to build a transformer from scratch&rdquo; en Medellín IA community · EPAM Medellín" data-en="Presenting &ldquo;How to build a transformer from scratch&rdquo; at Medellín IA community · EPAM Medellín">Presentando &ldquo;How to build a transformer from scratch&rdquo; en Medellín IA community · EPAM Medellín</figcaption>
+          </figure>
         </div>
 
         <div>
@@ -179,7 +185,7 @@ def build_panel_about(blog_items=None):
 
 
 def _project_card(p, idx):
-    return _proj_card_light(p)
+    return _proj_card_light(p, show_img=True)
 
 
 def build_panel_projects():

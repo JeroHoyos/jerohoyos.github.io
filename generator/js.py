@@ -26,7 +26,7 @@ document.querySelectorAll('.lang-btn').forEach(btn => {
   btn.addEventListener('click', () => setLang(btn.dataset.lang));
 });
 (function() {
-  try { const s = localStorage.getItem('lang'); if (s && s !== 'es') setLang(s); } catch(e) {}
+  try { const s = localStorage.getItem('lang'); setLang(s || 'en'); } catch(e) { setLang('en'); }
 })();
 /* Email copy button */
 (function() {

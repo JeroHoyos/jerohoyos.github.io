@@ -611,7 +611,7 @@ function setLang(lang){{
 document.querySelectorAll('.lang-btn').forEach(function(btn){{
   btn.addEventListener('click',function(){{setLang(btn.dataset.lang);}});
 }});
-(function(){{try{{var s=localStorage.getItem('lang');if(s&&s!=='es')setLang(s);}}catch(e){{}}}}());
+(function(){{try{{var s=localStorage.getItem('lang');setLang(s||'en');}}catch(e){{setLang('en');}}}}());
 /* ── Scroll progress + nav title ── */
 (function(){{
   const bar=document.getElementById('progress');
@@ -824,7 +824,7 @@ function setLang(lang){{
 document.querySelectorAll('.lang-btn').forEach(function(btn){{
   btn.addEventListener('click',function(){{setLang(btn.dataset.lang);}});
 }});
-(function(){{try{{var s=localStorage.getItem('lang');if(s&&s!=='es')setLang(s);}}catch(e){{}}}}());
+(function(){{try{{var s=localStorage.getItem('lang');setLang(s||'en');}}catch(e){{setLang('en');}}}}());
 </script>
 </body>
 </html>"""
