@@ -255,14 +255,15 @@ def _chladni():
 
 def _particles():
     return """
-/* ═══ ARTE — Campo de partículas con atractores ═══ */
-(function(){
-  const cv=document.getElementById('c-dp'),cx=cv.getContext('2d');
+/* ═══ Campo de partículas con atractores · reutilizable (Arte + Blog) ═══ */
+function particleField(cvId, panelId){
+  const cv=document.getElementById(cvId); if(!cv) return;
+  const cx=cv.getContext('2d'), panel=()=>document.getElementById(panelId);
   let W,H,active=false,initialized=false,t=0,pts=[];
   const N=_mob?200:900;
 
   function init(){
-    const p=document.getElementById('panel-arte');
+    const p=panel();
     W=p.offsetWidth||window.innerWidth;H=p.offsetHeight||window.innerHeight;
     cv.width=W;cv.height=H;
     pts=Array.from({length:N},()=>({
@@ -321,174 +322,12 @@ def _particles():
 
   let _cw=window.innerWidth;
   init(); initialized=true;
-  new MutationObserver(()=>{const on=document.getElementById('panel-arte').classList.contains('active');if(on&&!active){if(!initialized){init();initialized=true;}active=true;}else if(!on)active=false;}).observe(document.getElementById('panel-arte'),{attributes:true,attributeFilter:['class']});
+  new MutationObserver(()=>{const on=panel().classList.contains('active');if(on&&!active){if(!initialized){init();initialized=true;}active=true;}else if(!on)active=false;}).observe(panel(),{attributes:true,attributeFilter:['class']});
   window.addEventListener('resize',()=>{if(active&&Math.abs(window.innerWidth-_cw)>30){_cw=window.innerWidth;init();}});
-})();"""
-
-
-def _euler_helix():
-    return """
-/* ═══ BLOG — Lorenz Attractor (estilo Manim, fondo negro) ═══ */
-(function() {
-  const cv=document.getElementById('c-scatter'), cx=cv.getContext('2d');
-  let W,H,active=false,initialized=false,animId=null;
-
-  // Parámetros clásicos de Lorenz
-  const SIGMA=10, RHO=28, BETA=8/3;
-  const DT=0.006;
-  // Vista 3D fija — ángulo similar al del video (desde arriba-derecha)
-  const ROT_Y=2.42, ROT_X=0.38;
-
-  // Dos trayectorias con condiciones iniciales casi idénticas
-  const TRAILS=2, MAX_PTS=_mob?500:1800;
-  const inits=[[0.1,0.1,20],[0.1+0.001,0.1,20]];
-  let states, histories;
-
-  function lorenz(x,y,z){
-    return [SIGMA*(y-x), x*(RHO-z)-y, x*y-BETA*z];
-  }
-  function rk4(x,y,z){
-    const [k1x,k1y,k1z]=lorenz(x,y,z);
-    const [k2x,k2y,k2z]=lorenz(x+k1x*DT/2,y+k1y*DT/2,z+k1z*DT/2);
-    const [k3x,k3y,k3z]=lorenz(x+k2x*DT/2,y+k2y*DT/2,z+k2z*DT/2);
-    const [k4x,k4y,k4z]=lorenz(x+k3x*DT,y+k3y*DT,z+k3z*DT);
-    return [
-      x+(k1x+2*k2x+2*k3x+k4x)*DT/6,
-      y+(k1y+2*k2y+2*k3y+k4y)*DT/6,
-      z+(k1z+2*k2z+2*k3z+k4z)*DT/6
-    ];
-  }
-
-  // Proyección 3D → 2D con rotación fija
-  function proj(x,y,z){
-    // Centrar en el atractor (~0,0,25)
-    const cx0=0, cy0=0, cz0=25;
-    const rx=x-cx0, ry=y-cy0, rz=z-cz0;
-    // Rotación Y
-    const cosY=Math.cos(ROT_Y), sinY=Math.sin(ROT_Y);
-    const x1=rx*cosY+rz*sinY, z1=-rx*sinY+rz*cosY;
-    // Rotación X
-    const cosX=Math.cos(ROT_X), sinX=Math.sin(ROT_X);
-    const y2=ry*cosX-z1*sinX, z2=ry*sinX+z1*cosX;
-    const sc=W*0.014, d=8/(8+z2*0.04);
-    return [W/2+x1*sc*d, H/2-y2*sc*d];
-  }
-
-  function colorAt(t){
-    // t ∈ [0,1] — gris claro → gris muy oscuro
-    const v=Math.round(180-t*160);
-    return `rgb(${v},${v},${v})`;
-  }
-
-  function init(){
-    const p=document.getElementById('panel-blog');
-    W=p.offsetWidth||window.innerWidth; H=p.offsetHeight||window.innerHeight;
-    cv.width=W; cv.height=H;
-    states=inits.map(([x,y,z])=>({x,y,z}));
-    histories=inits.map(()=>[]);
-    // Pre-calcular un tramo para que no empiece vacío
-    for(let i=0;i<400;i++){
-      states.forEach((s,idx)=>{
-        const [nx,ny,nz]=rk4(s.x,s.y,s.z);
-        s.x=nx;s.y=ny;s.z=nz;
-        histories[idx].push([nx,ny,nz]);
-        if(histories[idx].length>MAX_PTS) histories[idx].shift();
-      });
-    }
-  }
-
-  // Dibuja ejes tenues estilo Manim
-  function drawAxes(){
-    const axLen=22;
-    const axes=[
-      [[-axLen,0,25],[axLen,0,25]],
-      [[0,-axLen,25],[0,axLen,25]],
-      [[0,0,25-axLen],[0,0,25+axLen]],
-    ];
-    axes.forEach(([a,b])=>{
-      const [x0,y0]=proj(...a),[x1,y1]=proj(...b);
-      cx.beginPath(); cx.moveTo(x0,y0); cx.lineTo(x1,y1);
-      cx.strokeStyle='rgba(10,10,10,0.20)'; cx.lineWidth=0.8;
-      cx.setLineDash([4,8]); cx.stroke(); cx.setLineDash([]);
-    });
-    // Marcas de tick
-    for(let v=-20;v<=20;v+=10){
-      [[[v,0,25],[v,0.6,25]],[[0,v,25],[0.6,v,25]]].forEach(([a,b])=>{
-        const [x0,y0]=proj(...a),[x1,y1]=proj(...b);
-        cx.beginPath();cx.moveTo(x0,y0);cx.lineTo(x1,y1);
-        cx.strokeStyle='rgba(10,10,10,0.25)';cx.lineWidth=0.7;cx.stroke();
-      });
-    }
-  }
-
-  function frame(){
-    if(!active||document.hidden){animId=null;return;}
-
-    // Avanzar pasos por frame
-    for(let s=0;s<(_mob?1:4);s++){
-      states.forEach((st,idx)=>{
-        const [nx,ny,nz]=rk4(st.x,st.y,st.z);
-        st.x=nx;st.y=ny;st.z=nz;
-        histories[idx].push([nx,ny,nz]);
-        if(histories[idx].length>MAX_PTS) histories[idx].shift();
-      });
-    }
-
-    // Fondo del sitio
-    cx.fillStyle='#f4f4ef'; cx.fillRect(0,0,W,H);
-
-    drawAxes();
-
-    // Dibujar cada trayectoria
-    histories.forEach((hist,ti)=>{
-      const n=hist.length;
-      if(n<2) return;
-      for(let i=1;i<n;i++){
-        const age=i/n;
-        const t=ti===0?age:1-age; // segunda trayectoria va en dirección inversa del gradiente
-        cx.beginPath();
-        const [x0,y0]=proj(...hist[i-1]);
-        const [x1,y1]=proj(...hist[i]);
-        cx.moveTo(x0,y0); cx.lineTo(x1,y1);
-        // Opacidad crece hacia el extremo reciente
-        const alpha=(0.08+age*0.92).toFixed(3);
-        const col=colorAt(t);
-        cx.strokeStyle=col.replace('rgb(','rgba(').replace(')',`,${alpha})`);
-        cx.lineWidth=0.5+age*1.8; cx.stroke();
-      }
-    });
-
-    // Puntos brillantes (GlowDot)
-    states.forEach((st,ti)=>{
-      const [px,py]=proj(st.x,st.y,st.z);
-      const col=ti===0?'rgba(30,30,30,':'rgba(90,90,90,';
-      // Halo exterior
-      cx.beginPath(); cx.arc(px,py,9,0,Math.PI*2);
-      cx.fillStyle=col+'0.12)'; cx.fill();
-      cx.beginPath(); cx.arc(px,py,5.5,0,Math.PI*2);
-      cx.fillStyle=col+'0.35)'; cx.fill();
-      // Núcleo
-      cx.beginPath(); cx.arc(px,py,3,0,Math.PI*2);
-      cx.fillStyle=col+'1)'; cx.fill();
-    });
-
-    animId=requestAnimationFrame(frame);
-  }
-
-  let _cw=window.innerWidth;
-  init(); initialized=true;
-  new MutationObserver(()=>{
-    const on=document.getElementById('panel-blog').classList.contains('active');
-    if(on&&!active){if(!initialized){init();initialized=true;} active=true; if(!animId) frame();}
-    else if(!on) active=false;
-  }).observe(document.getElementById('panel-blog'),{attributes:true,attributeFilter:['class']});
-  document.addEventListener('visibilitychange',()=>{ if(!document.hidden&&active&&!animId) frame(); });
-  window.addEventListener('resize',()=>{if(active&&Math.abs(window.innerWidth-_cw)>30){_cw=window.innerWidth;init();}});
-  // Arrancar si el panel ya estaba activo cuando se registró el observer (e.g. index.html#blog)
-  if(document.getElementById('panel-blog').classList.contains('active')){active=true;if(!animId)frame();}
-  // Restaurar loop tras bfcache (document.hidden=true puede haber roto el loop antes de salir)
-  window.addEventListener('pageshow',e=>{ if(e.persisted&&active&&!animId) frame(); });
-})();"""
+}
+particleField('c-dp','panel-arte');
+particleField('c-blog','panel-blog');
+"""
 
 
 def _lightbox():
@@ -520,7 +359,6 @@ def build_js():
         + _delaunay()
         + _flow()
         + _chladni()
-        + _euler_helix()
         + _particles()
         + _lightbox()
         + "\n</script>"

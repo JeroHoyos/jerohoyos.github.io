@@ -4,6 +4,9 @@
 # ╚══════════════════════════════════════════════════════════════════╝
 
 import re
+import shutil
+import subprocess
+import sys
 from pathlib import Path
 import generator.content as C
 
@@ -17,10 +20,13 @@ from generator.html         import (
     build_panel_contact, build_footer,
 )
 from generator.js           import build_js
-from generator.blog_builder import build_blog_pages
 
-FONTS    = "https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&display=swap"
+FONTS    = "https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=Rye&family=Special+Elite&family=Nosifer&family=EB+Garamond:ital,wght@0,500;1,500&family=Caveat:wght@600;700&display=swap"
 SITE_URL = "https://jerohoyos.github.io"
+DIARY_SRC = Path("blog")                 # blog source (The ML Diarys) → docs/blog/
+# Runtime files the diary needs once deployed (everything else is source/tooling)
+DIARY_RUNTIME = ["index.html", "blog.js", "diagrams.js", "books-data.js", ".nojekyll"]
+DIARY_RUNTIME_DIRS = ["assets"]
 NOMBRE   = C.NOMBRE.replace("<br>", " ")
 OG_IMAGE = f"{SITE_URL}/og.png"
 
@@ -148,9 +154,43 @@ body{{background:#050505;color:#f4f4ef;font-family:'Space Mono',monospace;displa
     Path("docs/404.html").write_text(html, encoding="utf-8")
 
 
+def _deploy_diary():
+    """Build 'The ML Diarys' and copy its runtime into docs/blog/ (the blog)."""
+    if not DIARY_SRC.exists():
+        print(f"   ⚠️  {DIARY_SRC}/ no encontrado — blog no desplegado.")
+        return False
+
+    # 1. Regenerate books-data.js from the Markdown diaries.
+    try:
+        subprocess.run([sys.executable, "build.py"], cwd=DIARY_SRC, check=True,
+                       capture_output=True, text=True)
+    except (subprocess.CalledProcessError, OSError) as e:
+        print(f"   ⚠️  No se pudo correr {DIARY_SRC}/build.py: {e}")
+        # keep going — an existing books-data.js may already be present
+
+    # 2. Replace docs/blog/ with the diary's runtime files.
+    dest = Path("docs/blog")
+    if dest.exists():
+        shutil.rmtree(dest)
+    dest.mkdir(parents=True, exist_ok=True)
+
+    for name in DIARY_RUNTIME:
+        src = DIARY_SRC / name
+        if src.exists():
+            shutil.copy2(src, dest / name)
+        else:
+            print(f"   ⚠️  {src} no existe — omitido.")
+    for d in DIARY_RUNTIME_DIRS:
+        src = DIARY_SRC / d
+        if src.exists():
+            shutil.copytree(src, dest / d)
+
+    print("   📖 Blog (The ML Diarys) desplegado en docs/blog/")
+    return True
+
+
 def build():
-    Path("docs/blog").mkdir(parents=True, exist_ok=True)
-    blog_items = build_blog_pages()
+    _deploy_diary()
 
     _build_favicon()
     _build_og_image()
@@ -183,9 +223,9 @@ def build():
 <body>
 {build_hero()}
 {build_tab_bar()}
-{build_panel_about(blog_items)}
+{build_panel_about()}
 {build_panel_projects()}
-{build_panel_blog(blog_items)}
+{build_panel_blog()}
 {build_panel_arte()}
 {build_panel_contact()}
 {build_footer()}
@@ -204,14 +244,10 @@ def build():
     )
 
     # sitemap.xml
-    urls = [{"loc": f"{SITE_URL}/", "priority": "1.0"}]
-    series_seen = set()
-    for item in blog_items:
-        s = item.get("series")
-        if s and s not in series_seen:
-            series_seen.add(s)
-            urls.append({"loc": f"{SITE_URL}/blog/{s}.html", "priority": "0.8"})
-        urls.append({"loc": f"{SITE_URL}/{item['url']}", "priority": "0.7"})
+    urls = [
+        {"loc": f"{SITE_URL}/", "priority": "1.0"},
+        {"loc": f"{SITE_URL}/blog/", "priority": "0.8"},   # The ML Diarys
+    ]
     xml_urls = "\n".join(
         f'  <url><loc>{u["loc"]}</loc><priority>{u["priority"]}</priority></url>'
         for u in urls
@@ -229,7 +265,7 @@ def build():
     print(f"   Email    : {C.EMAIL}")
     print(f"   GitHub   : {C.GITHUB}")
     print(f"   Proyectos: {len(C.PROYECTOS)}")
-    print(f"   Blog     : {len(blog_items)} artículo(s)")
+    print(f"   Blog     : The ML Diarys → docs/blog/")
     print(f"   Arte     : {len(C.ARTE)} pieza(s)")
     print("   docs/robots.txt, sitemap.xml, og.png, favicon.ico y 404.html generados.")
 

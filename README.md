@@ -13,23 +13,28 @@ py build.py
 ```
 ├── build.py                ← Script de generación — corre esto para publicar
 ├── requirements.txt        ← Dependencias Python (markdown, Pillow)
-├── generator/
+├── generator/              ← FUENTE DEL PORTAFOLIO
 │   ├── content.py          ← Toda la info personal (bio, proyectos, stack, etc.)
 │   ├── html.py             ← Estructura HTML de cada sección del portafolio
 │   ├── css.py              ← Estilos del sitio principal
 │   ├── js.py               ← Animaciones y lógica de la página
-│   ├── blog_builder.py     ← Template y generador de posts y series
 │   ├── badges.py           ← Colores de los chips de tecnologías
 │   └── icons.py            ← SVGs de redes sociales
-├── blog/
-│   └── posts/              ← Fuente de los posts (.md) — editá aquí
-└── docs/                   ← GitHub Pages sirve desde aquí (no editar)
+├── blog/                   ← FUENTE DEL BLOG (The ML Diarys, estética propia)
+│   ├── posts/*.md          ← Los diarios — editá aquí (ver su README.md)
+│   ├── build.py            ← Compila los .md en books-data.js
+│   └── index.html, blog.js, diagrams.js, assets/
+└── docs/                   ← SALIDA · GitHub Pages sirve desde aquí (no editar)
     ├── index.html, 404.html, favicon.ico, og.png, robots.txt, sitemap.xml
     ├── _headers, .nojekyll
     ├── static/             ← Gato animado (oneko.js / .gif)
     ├── dibujos/            ← Imágenes para la sección Arte (.webp)
-    └── blog/               ← Posts HTML generados
+    └── blog/               ← The ML Diarys desplegado (copiado por build.py)
 ```
+
+> El `build.py` raíz compila The ML Diarys y copia su salida a `docs/blog/`, así que
+> con correr `py build.py` se publica todo. La pestaña **Blog** del portafolio es un
+> portal que entra al grimorio en `/blog/`.
 
 ---
 
@@ -133,120 +138,20 @@ ARTE = [
 
 ---
 
-## Escribir posts del blog
+## Escribir en el blog (The ML Diarys)
 
-Los posts se crean como archivos `.md` en `blog/posts/`. Al correr `build.py` se generan las páginas HTML automáticamente.
+El blog es **The ML Diarys**, un sitio-grimorio inmersivo que vive en la carpeta
+`blog/` con su propia estética, build y documentación. La pestaña **Blog** del
+portafolio es solo el portal que entra a él (`/blog/`).
 
-### Frontmatter
+Para escribir un diario nuevo:
 
-```markdown
----
-slug: mi-articulo              ← nombre del archivo HTML de salida
-title_es: Título en español
-title_en: Title in English
-date_es: Enero 2025
-date_en: January 2025
-tags: Python, ML, Estadística
-excerpt_es: Resumen corto que aparece en el listing del blog.
-excerpt_en: Short summary shown in the blog listing.
-read_time: 10 min             ← opcional
----
+1. Creá o editá un `.md` en `blog/posts/` (formato completo en `blog/README.md` —
+   frontmatter del tomo, páginas, diagramas, fórmulas LaTeX, código y ES/EN).
+2. Publicá desde la raíz con `py build.py`: compila los diarios (`blog/build.py` →
+   `blog/books-data.js`) y copia el grimorio a `docs/blog/` automáticamente.
 
-## Primera sección
-
-Contenido en Markdown...
-```
-
-### Markdown soportado
-
-| Sintaxis | Resultado |
-|---|---|
-| `## Título` | Sección h2 (aparece en el TOC) |
-| `### Subtítulo` | Subsección h3 |
-| `**negrita**` | **negrita** |
-| `*cursiva*` | *cursiva* |
-| `` `código` `` | código inline |
-| ` ```python ... ``` ` | bloque de código |
-| `- item` | lista con viñetas |
-| `1. item` | lista numerada |
-| `> texto` | blockquote |
-| `[texto](url)` | enlace |
-| `\| col \| col \|` | tabla |
-| `$formula$` | LaTeX inline (KaTeX) |
-| `$$formula$$` | LaTeX en bloque (KaTeX) |
-
-### Posts bilingües
-
-Escribí el contenido en español, luego agregá `<!-- EN -->` y repetí en inglés:
-
-```markdown
-## Sección en español
-
-Contenido...
-
-<!-- EN -->
-
-## Section in English
-
-Content...
-```
-
-### Post stub (sin contenido aún)
-
-Si solo querés registrar un post en el listing sin tener el contenido listo, dejá el cuerpo vacío (solo frontmatter). El builder genera el HTML con un mensaje "Próximamente".
-
----
-
-## Series de posts
-
-Una serie agrupa varios capítulos bajo una **página de presentación** (`blog/{serie-slug}.html`) que muestra todos los capítulos con botones de navegación. Los capítulos sin contenido aparecen como "Próximamente".
-
-### Estructura de archivos
-
-```text
-blog/posts/
-├── mi-serie-01.md   ← capítulo 1 (con contenido)
-├── mi-serie-02.md   ← capítulo 2 (con contenido)
-└── mi-serie-03.md   ← capítulo 3 (stub, "Próximamente")
-```
-
-`build.py` genera automáticamente:
-
-- `blog/mi-serie.html` — landing page de la serie
-- `blog/mi-serie-01.html`, `02.html`, `03.html` — páginas de cada capítulo
-
-### Frontmatter de un capítulo
-
-```markdown
----
-slug: mi-serie-01
-title_es: Título del capítulo
-title_en: Chapter Title
-date_es: Enero 2025
-date_en: January 2025
-tags: ML, Python
-excerpt_es: Descripción del capítulo.
-excerpt_en: Chapter description.
-read_time: 15 min
-series:    mi-serie            ← slug de la serie (= nombre del archivo landing)
-series_es: Nombre de la Serie  ← nombre visible en español
-series_en: Series Name         ← nombre visible en inglés
-chapter:   1                   ← número de capítulo (entero)
----
-
-## Contenido...
-```
-
-### Campos opcionales del capítulo 1 (aparecen en la landing de la serie)
-
-```markdown
-series_desc_es: Tagline corto de la serie.
-series_desc_en: Short series tagline.
-series_about_es: Párrafo 1 sobre la serie. || Párrafo 2 sobre la serie.
-series_about_en: Paragraph 1 about the series. || Paragraph 2 about the series.
-```
-
-> Los párrafos en `series_about_es` se separan con `||`.
+> No edités `docs/blog/` a mano: se regenera en cada build a partir de `blog/`.
 
 ---
 

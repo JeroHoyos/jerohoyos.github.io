@@ -24,7 +24,7 @@ BIO_ES = [
     "Me mantengo al día con el estado del arte en IA y aplico <strong>GPU-accelerated computing</strong> cuando la escala lo exige. Fuera del código me encuentras leyendo, con mis gatos o pensando en matemáticas.",
 ]
 BIO_EN = [
-    "I'm <strong>Jerónimo Hoyos</strong>, a Systems and Computer Engineering student at Universidad Nacional de Colombia, obsessed with understanding problems before solving them.",
+    "I'm <strong>Jerónimo Hoyos</strong>, a Computer Software Engineering student at Universidad Nacional de Colombia, obsessed with understanding problems before solving them.",
     "I work at the intersection of <strong>statistics</strong>, <strong>linear algebra</strong>, and <strong>machine learning</strong>. What drives me isn't just building models that work — it's understanding why they work and what they reveal about the problem's structure.",
     "I keep up with the AI state of the art and apply <strong>GPU-accelerated computing</strong> when scale demands it. Outside of code you'll find me reading, with my cats, or thinking about math.",
 ]
@@ -36,7 +36,7 @@ EDUCACION = [
         "year_es": "2024 - Actualidad",
         "year_en": "2024 - Present",
         "name_es": "Ingeniería en Sistemas e Informática",
-        "name_en": "Systems and Computer Engineering",
+        "name_en": "Computer Software Engineering",
         "institution": "Universidad Nacional de Colombia",
     },
 ]
@@ -149,8 +149,9 @@ PROYECTOS = [
 ]
 
 # ── BLOG ──────────────────────────────────────────────────────────────
-# Los artículos se gestionan desde blog/posts/*.md
-# build.py los escanea automáticamente — no editar esta lista.
+# El blog es "The ML Diarys" — un sitio inmersivo aparte que vive en la carpeta
+# blog/ y se despliega en docs/blog/ desde build.py. Los diarios se
+# escriben en blog/posts/*.md. Esta lista quedó obsoleta.
 BLOG = []
 
 # ── ARTE ──────────────────────────────────────────────────────────────
@@ -176,8 +177,8 @@ PROYECTOS_SUB_ES = "Transformers desde cero, agentes de IA, GPU computing y mach
 PROYECTOS_SUB_EN = "From-scratch transformers, AI agents, GPU computing and applied machine learning."
 
 # ── BLOG ──────────────────────────────────────────────────────────────
-BLOG_SUB_ES = "Notas sobre matemáticas, modelos y todo lo que me parece interesante pensar en voz alta."
-BLOG_SUB_EN = "Notes on math, models and everything I find interesting to think out loud about."
+BLOG_SUB_ES = "Un grimorio de campo sobre Machine Learning: tomos de cuero, notas a mano y diagramas dibujados. Abrí el archivo… si te atreves."
+BLOG_SUB_EN = "A field grimoire about Machine Learning: leather tomes, handwritten notes and drawn diagrams. Open the archive… if you dare."
 
 # ── ARTE ──────────────────────────────────────────────────────────────
 ARTE_SUB_ES = "Dibujos digitales hechos en ratos libres. Personajes, criaturas y lo que salga."
