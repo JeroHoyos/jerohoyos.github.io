@@ -1035,8 +1035,10 @@
     .entry.flip .tome{ order:1; }
     .entry.flip .scrap{ order:2; }
     .archive .thread{ display:none; }
-    .book{ grid-template-columns:1fr; height:auto; max-height:88vh; overflow:auto; }
-    .pg.right{ display:block; }
+    /* reader is a single page here (blog.js renders one .pg.solo per turn) */
+    .book{ grid-template-columns:1fr; height:min(800px,86vh); }
+    .reader .spine2{ display:none; }
+    .pg.solo{ width:100%; height:100%; }
   }
   /* ---- phones: tighten the layout so nothing overflows ---- */
   @media (max-width:640px){
@@ -1081,7 +1083,9 @@
     .pg .fig{ max-width:100%; }
     .reader .readernav{ gap:8px; bottom:12px; max-width:98vw; }
     .reader .arrow{ width:44px; height:44px; font-size:22px; }
-    .reader .pageind{ padding:7px 13px; }
+    .reader .pageind{ padding:7px 14px; }
+    /* one page per turn means lots of dots — keep just the count + "leaves left" */
+    .reader .pageind .inddots, .reader .pageind .inddiv{ display:none; }
   }
 
   /* ---- phones: cut the always-on effects that make the page lag ---- */

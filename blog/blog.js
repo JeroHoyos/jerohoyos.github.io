@@ -105,19 +105,28 @@
       catch(e){ el.textContent = tex; }
     });
   }
-  function spreadCount(){ return Math.max(1, Math.ceil(L(BOOKS[current]).pages.length / 2)); }
+  /* phones show ONE page at a time (the two-page spread looks cramped there);
+     desktop keeps the open-book spread. PP = pages shown per "turn". */
+  const onePageMq = matchMedia("(max-width: 880px)");
+  function pagesPerSpread(){ return onePageMq.matches ? 1 : 2; }
+  function spreadCount(){ return Math.max(1, Math.ceil(L(BOOKS[current]).pages.length / pagesPerSpread())); }
 
   function renderSpread(){
     const d = L(BOOKS[current]);
     const ps = d.pages;
-    const sc = Math.max(1, Math.ceil(ps.length / 2));
+    const pp = pagesPerSpread();
+    const sc = Math.max(1, Math.ceil(ps.length / pp));
     if(spread > sc-1) spread = sc-1;
     if(spread < 0) spread = 0;
-    const Lp = ps[spread*2], Rp = ps[spread*2+1];
-    bookEl.innerHTML = `<div class="spine2"></div>
-      <div class="pg left">${Lp.html}<div class="folio">${Lp.folio}</div></div>
-      ${ Rp ? `<div class="pg right">${Rp.html}<div class="folio">${Rp.folio}</div></div>`
-            : '<div class="pg right blankpage" aria-hidden="true"></div>' }`;
+    const Lp = ps[spread*pp], Rp = pp === 2 ? ps[spread*pp+1] : null;
+    if(pp === 1){
+      bookEl.innerHTML = `<div class="pg solo">${Lp.html}<div class="folio">${Lp.folio}</div></div>`;
+    } else {
+      bookEl.innerHTML = `<div class="spine2"></div>
+        <div class="pg left">${Lp.html}<div class="folio">${Lp.folio}</div></div>
+        ${ Rp ? `<div class="pg right">${Rp.html}<div class="folio">${Rp.folio}</div></div>`
+              : '<div class="pg right blankpage" aria-hidden="true"></div>' }`;
+    }
     fillDiagrams(bookEl);
     renderMath(bookEl);
     const chap = (Rp && Rp.chapter) || Lp.chapter;
@@ -175,6 +184,13 @@
     }
     hideReader();
   }
+  /* crossing the phone/desktop breakpoint flips 1↔2 pages per turn — keep the
+     reader on roughly the same page instead of jumping to a random spread */
+  onePageMq.addEventListener("change", e=>{
+    const newPP = e.matches ? 1 : 2, oldPP = e.matches ? 2 : 1;
+    spread = Math.floor((spread * oldPP) / newPP);
+    if(reader.classList.contains("open")) renderSpread();
+  });
   window.addEventListener("popstate", syncFromHash);
   document.getElementById("closeReader").addEventListener("click", ()=>closeReader());
   prevBtn.addEventListener("click", ()=>turn(-1));
