@@ -23,6 +23,16 @@ into the site's data. No npm, no frameworks, no external Python packages.
 
 ## The workflow (this is the part you'll use)
 
+0. **New diary, the comfy way** — scaffold one with the title you want:
+
+   ```powershell
+   py blog/new.py "Mi Título"          # → blog/posts/NN-mi-titulo.md
+   py blog/new.py "My Topic" --kind Bestiary --date "Jun 20, 2026"
+   ```
+
+   It writes a ready-to-edit bilingual template with the frontmatter filled in and
+   examples of every block (chapters, math, `@chart`, `@fig`, code). Then just
+   rewrite the content.
 1. Edit a file in `blog/posts/`, or copy one to start a new diary.
 2. Build:
 
@@ -128,10 +138,12 @@ Separate every element with a **blank line**. Start a new page with `<!-- page -
 | `@date Oct 3rd, 2025` | Handwritten date |
 | plain text | A handwritten paragraph |
 | `@type ...` | Typewriter / technical note |
+| `@math TeX` | A display LaTeX formula (KaTeX). Inline math anywhere: `$a^2+b^2=c^2$` |
 | `> ...` | Bordered ⚠ warning box |
 | `! ...` | Red handwritten note |
 | `- item` (lines) | A bullet list |
-| `@fig NAME \| caption` | Inserts a diagram (`NAME` = `net`, `descent`, `attn`, `overfit`, `backprop`, `halluc`, `outlier`, `boxplot`) |
+| `@fig NAME \| caption` | A hand-drawn diagram. Names live in `diagrams.js` (`net`, `curse`, `corrmatrix`, `varimp`, `featsel`, `pca`, `scree`, `tree`, `iv`, `scaling`, `binning`, `skew`, `entropy`, `onehot`, …) |
+| `@chart TYPE \| data \| caption` | A **data-driven** chart in the sketch style (`bars`, `line`, `scatter`) — no SVG needed, see below |
 | triple-backtick fences | A code block (verbatim; `<`, `>`, `&` are escaped, nothing inside is interpreted) |
 
 A code block looks like this in the Markdown:
@@ -163,6 +175,20 @@ Inline marks (work inside any text):
 
 Plain HTML is allowed too (that's how `<br>` works), so you can drop in anything
 the CSS already styles.
+
+### `@chart` — data-driven charts (no SVG)
+
+Write the **data** and the chart draws itself in the grimoire style. Three kinds:
+
+| Kind | Data format | Example |
+|------|-------------|---------|
+| `bars` | `label: value, label: value, …` | `@chart bars \| Displacement: 62, Weight: 46, MPG: 30 \| fig. 1` |
+| `line` | `x: a b c ; Name: v v v ; Name2: v v v` (the `x:` segment is optional) | `@chart line \| x: e10 e11 e12 ; cuBLAS: 40 55 68 ; CPU: 8 12 15 \| fig. 2` |
+| `scatter` | `x,y  x,y  x,y` | `@chart scatter \| 1,2  2,3.5  3,3  4,5 \| fig. 3` |
+
+`line` series cycle through ink → blood → teal. Add a new chart kind by adding a
+function to the `CHART` map in `diagrams.js` (it gets the raw data string and
+returns an `<svg>`).
 
 ### Adding a brand-new diagram
 

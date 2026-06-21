@@ -91,6 +91,10 @@
       const fn = FIGS[el.getAttribute("data-fig")];
       el.innerHTML = fn ? fn() : "";
     });
+    scope.querySelectorAll(".figbody[data-chart]").forEach(el=>{
+      const fn = (typeof CHART !== "undefined") && CHART[el.getAttribute("data-chart")];
+      el.innerHTML = fn ? fn(el.getAttribute("data-cdata")) : "";
+    });
   }
   function renderMath(scope){
     if(!window.katex) return;

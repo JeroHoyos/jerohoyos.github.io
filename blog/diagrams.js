@@ -450,3 +450,89 @@ function tomeEmblem(key){
     ${symbols[i % symbols.length]}
   </svg>`;
 }
+
+
+/* ===== Chart toolkit — data-driven figures in the current sketch style =====
+   Write charts straight from a diary (.md), no hand-coded SVG needed:
+
+     @chart bars    | Displacement: 62, Weight: 46, MPG: 30        | fig. 1 — …
+     @chart line    | x: e10 e11 e12 e13 ; cuBLAS: 40 55 68 82 ; CPU: 8 12 15 18 | …
+     @chart scatter | 1,2  2,3.5  3,3  4,5  5,4.5                  | …
+
+   To add a new kind, add a function to the CHART map below; it receives the
+   raw data string and returns an <svg>. Reuse the .sk / .sk-r / .sk-t / .lbl
+   classes so it matches the grimoire diagrams. */
+const _CW = 460, _CH = 300;
+const _chartSvg = inner => '<svg viewBox="0 0 ' + _CW + ' ' + _CH + '">' + inner + '</svg>';
+const _SERIES = [["sk", "sk-fill", ""], ["sk-r", "sk-fr", " lbl-r"], ["sk-t", "sk-fill", ""]];
+
+const CHART = {
+  /* horizontal labelled bars:  "label: value, label: value, …" */
+  bars(data){
+    const items = String(data).split(",").map(s => {
+      const i = s.indexOf(":");
+      return [s.slice(0, i).trim(), parseFloat(s.slice(i + 1))];
+    }).filter(d => d[0] && !isNaN(d[1]));
+    if(!items.length) return _chartSvg("");
+    const max = Math.max(...items.map(d => Math.abs(d[1]))) || 1;
+    const x0 = 150, y0 = 30, bw = 250, rowH = Math.min(38, (258 - y0) / items.length);
+    let s = `<line class="sk" x1="${x0}" y1="${y0 - 6}" x2="${x0}" y2="${(y0 + items.length * rowH).toFixed(1)}" stroke-width="1.4"/>`;
+    items.forEach((d, i) => {
+      const w = Math.max(0, d[1]) / max * bw, y = y0 + i * rowH;
+      s += `<rect class="sk" x="${x0}" y="${(y + 3).toFixed(1)}" width="${w.toFixed(1)}" height="${(rowH - 10).toFixed(1)}" rx="3" fill="oklch(0.55 0.09 230 / .5)"/>`;
+      s += `<text class="lbl" x="${x0 - 9}" y="${(y + rowH / 2 + 1).toFixed(1)}" text-anchor="end" font-size="14">${d[0]}</text>`;
+      s += `<text class="lbl" x="${(x0 + w + 7).toFixed(1)}" y="${(y + rowH / 2 + 1).toFixed(1)}" font-size="12">${d[1]}</text>`;
+    });
+    return _chartSvg(s);
+  },
+
+  /* multi-series line chart:  "x: a b c ; Name: v v v ; Name2: v v v" */
+  line(data){
+    const segs = String(data).split(";").map(s => s.trim()).filter(Boolean);
+    let xlabels = null; const series = [];
+    segs.forEach(seg => {
+      const i = seg.indexOf(":"), name = seg.slice(0, i).trim();
+      const vals = seg.slice(i + 1).trim().split(/\s+/);
+      if(name.toLowerCase() === "x") xlabels = vals;
+      else series.push([name, vals.map(parseFloat)]);
+    });
+    if(!series.length) return _chartSvg("");
+    const n = Math.max(...series.map(s => s[1].length));
+    let lo = Infinity, hi = -Infinity;
+    series.forEach(([, v]) => v.forEach(y => { if(y < lo) lo = y; if(y > hi) hi = y; }));
+    if(lo === hi){ hi = lo + 1; lo -= 1; }
+    const x0 = 54, x1 = 410, base = 246, top = 40;
+    const X = i => x0 + (n <= 1 ? 0 : i / (n - 1)) * (x1 - x0);
+    const Y = y => base - (y - lo) / (hi - lo) * (base - top);
+    let s = `<line class="sk" x1="${x0}" y1="${base}" x2="${x1}" y2="${base}" stroke-width="1.4"/>`;
+    s += `<line class="sk" x1="${x0}" y1="${top - 6}" x2="${x0}" y2="${base}" stroke-width="1.4"/>`;
+    if(xlabels) xlabels.forEach((lb, i) => {
+      s += `<text class="lbl" x="${X(i).toFixed(1)}" y="${base + 18}" text-anchor="middle" font-size="11" opacity=".7">${lb}</text>`;
+    });
+    series.forEach(([name, vals], si) => {
+      const [stroke, dot, lblc] = _SERIES[si % _SERIES.length];
+      const pts = vals.map((y, i) => `${X(i).toFixed(1)},${Y(y).toFixed(1)}`).join(" ");
+      s += `<polyline class="${stroke}" points="${pts}" fill="none" stroke-width="2.2"/>`;
+      vals.forEach((y, i) => { s += `<circle class="${dot}" cx="${X(i).toFixed(1)}" cy="${Y(y).toFixed(1)}" r="3"/>`; });
+      s += `<text class="lbl${lblc}" x="${(x1 + 5).toFixed(1)}" y="${(Y(vals[vals.length - 1]) + 3).toFixed(1)}" font-size="11">${name}</text>`;
+    });
+    return _chartSvg(s);
+  },
+
+  /* scatter plot:  "x,y  x,y  x,y" */
+  scatter(data){
+    const pts = String(data).trim().split(/\s+/).map(p => p.split(",").map(parseFloat))
+      .filter(p => p.length === 2 && !isNaN(p[0]) && !isNaN(p[1]));
+    if(!pts.length) return _chartSvg("");
+    let xlo = Infinity, xhi = -Infinity, ylo = Infinity, yhi = -Infinity;
+    pts.forEach(([x, y]) => { if(x < xlo) xlo = x; if(x > xhi) xhi = x; if(y < ylo) ylo = y; if(y > yhi) yhi = y; });
+    if(xlo === xhi){ xhi = xlo + 1; xlo -= 1; } if(ylo === yhi){ yhi = ylo + 1; ylo -= 1; }
+    const x0 = 50, x1 = 430, base = 250, top = 38;
+    const X = x => x0 + (x - xlo) / (xhi - xlo) * (x1 - x0);
+    const Y = y => base - (y - ylo) / (yhi - ylo) * (base - top);
+    let s = `<line class="sk" x1="${x0}" y1="${base}" x2="${x1}" y2="${base}" stroke-width="1.4"/>`;
+    s += `<line class="sk" x1="${x0}" y1="${top - 6}" x2="${x0}" y2="${base}" stroke-width="1.4"/>`;
+    pts.forEach(([x, y]) => { s += `<circle class="sk-fill" cx="${X(x).toFixed(1)}" cy="${Y(y).toFixed(1)}" r="4"/>`; });
+    return _chartSvg(s);
+  },
+};

@@ -135,6 +135,14 @@ def render_block(block):
         name, _, cap = rest.partition("|")
         return ('<div class="fig tape"><div class="figbody" data-fig="{}"></div>'
                 '<div class="cap">{}</div></div>').format(name.strip(), inline(cap.strip()))
+    if first.startswith("@chart"):                   # data-driven chart (CHART toolkit)
+        body = " ".join([first[6:].strip()] + [l.strip() for l in lines[1:]])
+        parts = body.split("|")
+        ctype = parts[0].strip()
+        cdata = parts[1].strip() if len(parts) > 1 else ""
+        cap   = parts[2].strip() if len(parts) > 2 else ""
+        return ('<div class="fig tape"><div class="figbody" data-chart="{}" data-cdata="{}"></div>'
+                '<div class="cap">{}</div></div>').format(ctype, attr_escape(cdata), inline(cap))
     if first.startswith("> "):                        # bordered warning box
         text = " ".join(re.sub(r"^>\s?", "", l) for l in lines)
         return '<span class="warn">{}</span>'.format(inline(text))
