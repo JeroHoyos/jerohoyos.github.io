@@ -783,10 +783,14 @@
     color:var(--ink-faint); max-width:52ch; margin-left:auto; margin-right:auto;
   }
   @media (max-width:640px){
-    .contract{ padding:42px 22px 50px; }
-    .contract .pact-clauses li{ font-size:20px; }
+    .contract{ padding:42px 20px 50px; }
+    /* Nosifer is very wide — shrink it and drop the tilt so it never runs off-screen */
+    .pact-title{ font-size:clamp(19px, 6.2vw, 28px); transform:none; line-height:1.25;
+      overflow-wrap:break-word; }
+    .contract .pact-clauses li{ font-size:19px; }
     .pact-sub{ font-size:18px; }
     .pact-sign .scribble{ font-size:30px; }
+    .soulbtn{ font-size:17px; padding:14px 22px 11px; }
   }
 
   /* ============ READER (open journal overlay) ============ */
@@ -1058,17 +1062,21 @@
     .descend .scrawl{ font-size:26px; }
     .footer-glyphs{ font-size:12px; letter-spacing:.12em; }
 
-    /* archive */
-    .archive{ padding:88px 14px 36px; }
-    .arc-head{ margin-bottom:70px; }
+    /* archive — each diary reads as one tidy, centered unit */
+    .archive{ padding:84px 16px 32px; }
+    .arc-head{ margin-bottom:60px; }
     .arc-head .arc-lede{ font-size:18px; }
-    .entry, .entry.flip{ margin-bottom:88px; gap:34px; }
-    .entry::before{ top:-58px; }
-    .tome{ width:280px; height:394px; }
-    .tome::after{ width:228px; }
-    .scrap, .entry.flip .scrap{ padding:28px 22px 26px; transform:none; }   /* no rotation → no side overflow */
-    .scrap h3{ font-size:clamp(26px, 8vw, 36px); }
-    .scrap .teaser{ font-size:21px; }
+    .entry, .entry.flip{ margin-bottom:72px; gap:22px; }   /* book + its card sit close, diaries spaced apart */
+    .entry::before{ top:-46px; }
+    .tome{ width:268px; height:376px; }
+    .tome::after{ width:218px; }
+    /* the excerpt card: centered to line up under the centered book, no rotation */
+    .scrap, .entry.flip .scrap{ padding:26px 22px 24px; transform:none; text-align:center; }
+    .scrap .meta{ justify-content:center; }
+    .scrap h3{ font-size:clamp(24px, 7.5vw, 32px); margin-bottom:12px; }
+    .scrap .teaser{ font-size:20px; margin-bottom:16px; }
+    .scrap .openlink{ border-bottom:0; font-size:14px;
+      border:1.5px solid oklch(0.5 0.18 28 / 0.5); padding:9px 16px; border-radius:3px; }
 
     /* author contract */
     .pact{ padding:18px 12px 100px; }
@@ -1090,12 +1098,26 @@
 
   /* ---- phones: cut the always-on effects that make the page lag ---- */
   @media (max-width:760px){
+    /* stop the never-ending repaints */
     .candle, .hand-glow, .handwrap, .rail span,
     .incantation, .scrollcue, .descend .chevs span,
     .reader .candle2{ animation:none !important; }
     .ritual h2, .pact-title{ filter:none; }        /* drop SVG displacement filter */
     .langtoggle, .backhome, .reader .x,
     .reader .arrow, .reader .pageind{ backdrop-filter:none; }
+
+    /* mix-blend-mode + procedural noise textures are the biggest scroll-jank
+       source on mobile GPUs — drop them, the look barely changes */
+    .scene::before, .page::before, .page::after,
+    .cover::before, .scrap::before, .contract::before,
+    .pg::before, .pg::after{ display:none !important; }
+    .handprint-img{ mix-blend-mode:normal; }
+
+    /* collapse the big multi-layer shadows to one cheap shadow */
+    .scene{ box-shadow:0 20px 40px -20px oklch(0.02 0.01 30 / 0.8); }
+    .scrap{ box-shadow:0 12px 26px -16px oklch(0.06 0.01 30 / 0.5); }
+    .contract{ box-shadow:0 16px 34px -20px oklch(0.06 0.01 30 / 0.55); }
+    .cover{ box-shadow:0 14px 26px -12px oklch(0.04 0.01 30 / 0.7), inset 0 0 0 1px oklch(0.05 0.01 30 / 0.5); }
   }
 
   @media (prefers-reduced-motion:reduce){

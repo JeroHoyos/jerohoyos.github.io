@@ -240,8 +240,10 @@
   /* ---------------- ember canvas (fixed, full page) ---------------- */
   const canvas = document.getElementById("embers");
   const ctx = canvas.getContext("2d");
-  // phones lag on a full-DPR canvas with many particles, so scale both down
+  // the full-screen ember canvas repaints every frame and is the worst offender
+  // for jank on phones, so we switch it off entirely there
   const smallScreen = matchMedia("(max-width: 760px)").matches;
+  if(smallScreen) canvas.style.display = "none";
   let W, H, DPR;
   function resize(){
     DPR = Math.min(window.devicePixelRatio||1, smallScreen ? 1 : 2);
@@ -283,7 +285,7 @@
     }
     requestAnimationFrame(tick);
   }
-  function startEmbers(){ if(!reduced && !running && !document.hidden){ running = true; requestAnimationFrame(tick); } }
+  function startEmbers(){ if(smallScreen || reduced) return; if(!running && !document.hidden){ running = true; requestAnimationFrame(tick); } }
   document.addEventListener("visibilitychange", startEmbers);
   startEmbers();
 })();
