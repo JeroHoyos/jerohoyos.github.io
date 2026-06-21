@@ -224,15 +224,17 @@
   /* ---------------- ember canvas (fixed, full page) ---------------- */
   const canvas = document.getElementById("embers");
   const ctx = canvas.getContext("2d");
+  // phones lag on a full-DPR canvas with many particles, so scale both down
+  const smallScreen = matchMedia("(max-width: 760px)").matches;
   let W, H, DPR;
   function resize(){
-    DPR = Math.min(window.devicePixelRatio||1, 2);
+    DPR = Math.min(window.devicePixelRatio||1, smallScreen ? 1 : 2);
     W = canvas.width = innerWidth*DPR; H = canvas.height = innerHeight*DPR;
     canvas.style.width = innerWidth+"px"; canvas.style.height = innerHeight+"px";
   }
   resize(); addEventListener("resize", resize);
 
-  const N = 44;
+  const N = smallScreen ? 16 : 44;
   const parts = [];
   function spawn(){
     return {
@@ -248,7 +250,9 @@
   for(let i=0;i<N;i++){ const p=spawn(); p.y = Math.random()*H; parts.push(p); }
 
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let running = false;
   function tick(){
+    if(document.hidden){ running = false; return; }   // stop burning CPU in a backgrounded tab
     ctx.clearRect(0,0,W,H);
     ctx.globalCompositeOperation = "lighter";
     for(let i=parts.length-1;i>=0;i--){
@@ -263,5 +267,7 @@
     }
     requestAnimationFrame(tick);
   }
-  if(!reduced) tick();
+  function startEmbers(){ if(!reduced && !running && !document.hidden){ running = true; requestAnimationFrame(tick); } }
+  document.addEventListener("visibilitychange", startEmbers);
+  startEmbers();
 })();

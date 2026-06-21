@@ -783,7 +783,10 @@
     color:var(--ink-faint); max-width:52ch; margin-left:auto; margin-right:auto;
   }
   @media (max-width:640px){
-    .contract{ padding:48px 26px 60px; }
+    .contract{ padding:42px 22px 50px; }
+    .contract .pact-clauses li{ font-size:20px; }
+    .pact-sub{ font-size:18px; }
+    .pact-sign .scribble{ font-size:30px; }
   }
 
   /* ============ READER (open journal overlay) ============ */
@@ -1035,6 +1038,62 @@
     .book{ grid-template-columns:1fr; height:auto; max-height:88vh; overflow:auto; }
     .pg.right{ display:block; }
   }
+  /* ---- phones: tighten the layout so nothing overflows ---- */
+  @media (max-width:640px){
+    /* hero */
+    .stage{ padding:44px 12px 74px; }
+    .scene{ padding:14px; width:94vw; }
+    .page.left{ padding:36px 22px 32px; }
+    .rail{ display:none; }                 /* sigil rail just crowds a narrow screen */
+    .title{ font-size:clamp(46px, 15vw, 70px); }
+    .subtitle{ font-size:17px; margin-bottom:24px; }
+    .ritual{ padding:20px 18px 22px; }
+    .ritual h2{ font-size:30px; margin-bottom:18px; }
+    .ritual li{ white-space:normal; font-size:15px; }   /* steps wrap instead of overflowing */
+    .incantation{ font-size:21px; }
+    .descend{ margin-top:22px; }
+    .descend .scrawl-pre{ font-size:19px; }
+    .descend .scrawl{ font-size:26px; }
+    .footer-glyphs{ font-size:12px; letter-spacing:.12em; }
+
+    /* archive */
+    .archive{ padding:88px 14px 36px; }
+    .arc-head{ margin-bottom:70px; }
+    .arc-head .arc-lede{ font-size:18px; }
+    .entry, .entry.flip{ margin-bottom:88px; gap:34px; }
+    .entry::before{ top:-58px; }
+    .tome{ width:280px; height:394px; }
+    .tome::after{ width:228px; }
+    .scrap, .entry.flip .scrap{ padding:28px 22px 26px; transform:none; }   /* no rotation → no side overflow */
+    .scrap h3{ font-size:clamp(26px, 8vw, 36px); }
+    .scrap .teaser{ font-size:21px; }
+
+    /* author contract */
+    .pact{ padding:18px 12px 100px; }
+
+    /* reader overlay */
+    .reader .booktitle{ font-size:11px; max-width:62vw; text-align:center; line-height:1.3; }
+    .reader .x{ width:40px; height:40px; top:14px; right:14px; font-size:18px; }
+    .pg{ padding:30px 20px 58px; }
+    .pg .date{ font-size:34px; }
+    .pg .head{ font-size:32px; }
+    .pg .hand{ font-size:17.5px; line-height:1.58; }
+    .pg .fig{ max-width:100%; }
+    .reader .readernav{ gap:8px; bottom:12px; max-width:98vw; }
+    .reader .arrow{ width:44px; height:44px; font-size:22px; }
+    .reader .pageind{ padding:7px 13px; }
+  }
+
+  /* ---- phones: cut the always-on effects that make the page lag ---- */
+  @media (max-width:760px){
+    .candle, .hand-glow, .handwrap, .rail span,
+    .incantation, .scrollcue, .descend .chevs span,
+    .reader .candle2{ animation:none !important; }
+    .ritual h2, .pact-title{ filter:none; }        /* drop SVG displacement filter */
+    .langtoggle, .backhome, .reader .x,
+    .reader .arrow, .reader .pageind{ backdrop-filter:none; }
+  }
+
   @media (prefers-reduced-motion:reduce){
     *{ animation:none !important; }
     html{ scroll-behavior:auto; }
