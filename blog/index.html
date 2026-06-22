@@ -1048,7 +1048,8 @@
   @media (max-width:640px){
     /* hero */
     .stage{ padding:44px 12px 74px; }
-    .scene{ padding:14px; width:94vw; }
+    /* fix: width:vw ignores parent padding → use calc so it never overflows */
+    .scene{ padding:14px; width:calc(100vw - 24px); }
     .page.left{ padding:36px 22px 32px; }
     .rail{ display:none; }                 /* sigil rail just crowds a narrow screen */
     .title{ font-size:clamp(46px, 15vw, 70px); }
@@ -1066,7 +1067,10 @@
     .archive{ padding:84px 16px 32px; }
     .arc-head{ margin-bottom:60px; }
     .arc-head .arc-lede{ font-size:18px; }
-    .entry, .entry.flip{ margin-bottom:72px; gap:22px; }   /* book + its card sit close, diaries spaced apart */
+    /* fix arc-warn: reduce letter-spacing & let it break across lines */
+    .arc-head .arc-warn{ display:block; text-align:center; letter-spacing:.06em; font-size:11px; }
+    /* fix: vw ignores 16px*2 archive padding */
+    .entry, .entry.flip{ margin-bottom:72px; gap:22px; width:calc(100vw - 32px); }
     .entry::before{ top:-46px; }
     .tome{ width:268px; height:376px; }
     .tome::after{ width:218px; }
@@ -1080,6 +1084,8 @@
 
     /* author contract */
     .pact{ padding:18px 12px 100px; }
+    /* fix: 94vw ignores 12px*2 pact padding */
+    .contract{ max-width:calc(100vw - 24px); }
 
     /* reader overlay */
     .reader .booktitle{ font-size:11px; max-width:62vw; text-align:center; line-height:1.3; }
