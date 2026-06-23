@@ -46,8 +46,8 @@ body{background:#f4f4ef;color:var(--black);font-family:'Space Mono',monospace;ov
 .sec-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,7vw,7rem);letter-spacing:1px;line-height:.9;margin-bottom:.8rem}
 .sec-sub{font-size:.85rem;color:#2a2a2a;max-width:52rem;line-height:2.4;margin-bottom:3rem}
 #panel-projects .panel-content{background:rgba(244,244,239,0.38)}
-#panel-projects .sec-title,#panel-blog .sec-title,#panel-arte .sec-title{text-align:center}
-#panel-projects .sec-sub,#panel-blog .sec-sub,#panel-arte .sec-sub{text-align:center;margin-left:auto;margin-right:auto}
+#panel-projects .sec-title,#panel-arte .sec-title{text-align:center}
+#panel-projects .sec-sub,#panel-arte .sec-sub{text-align:center;margin-left:auto;margin-right:auto}
 
 /* ABOUT */
 .about-layout{display:grid;grid-template-columns:1fr 1.35fr;gap:1.5rem 5rem;align-items:start}
@@ -147,64 +147,6 @@ body{background:#f4f4ef;color:var(--black);font-family:'Space Mono',monospace;ov
 .proj-c-tag{font-size:.44rem;letter-spacing:1.5px;text-transform:uppercase;padding:.24rem .6rem;border:1px solid;background:transparent;white-space:nowrap}
 .proj-c-cta{margin-top:.3rem;font-size:.48rem;letter-spacing:2.5px;text-transform:uppercase;color:#555;transition:color .2s}
 .proj-card:hover .proj-c-cta{color:#111}
-
-/* BLOG PORTAL → The ML Diarys (clickable summon doorway) */
-#panel-blog .blog-void{background:rgba(244,244,239,0.62)}
-.blog-portal{display:flex;justify-content:center;width:100%}
-/* "venom" corruption: a dark, organic aura that only clings to the book
-   (stacked drop-shadows render outside the clipped book, so the panel stays white) */
-.summon{position:relative;display:grid;grid-template-columns:1.04fr .96fr;width:100%;max-width:62rem;
-  text-decoration:none;color:oklch(0.26 0.030 52);overflow:hidden;
-  background:linear-gradient(150deg,oklch(0.96 0.018 82) 0%,oklch(0.94 0.022 85) 45%,oklch(0.90 0.030 80) 100%);
-  border:14px solid oklch(0.17 0.03 40);border-radius:6px;
-  box-shadow:
-    0 0 18px 1px rgba(8,7,7,.9),
-    0 0 50px 5px rgba(12,9,9,.5),
-    0 20px 52px rgba(0,0,0,.5),
-    inset 0 0 70px oklch(0.62 0.05 55 / 0.25);
-  transition:transform .4s cubic-bezier(.2,.7,.2,1),box-shadow .4s}
-.summon::after{content:"";position:absolute;top:0;bottom:0;left:50%;width:2px;transform:translateX(-50%);
-  background:linear-gradient(180deg,transparent,oklch(0.20 0.03 35 / 0.5) 12%,oklch(0.10 0.02 30 / 0.7) 50%,oklch(0.20 0.03 35 / 0.5) 88%,transparent);pointer-events:none}
-.summon:hover{transform:translateY(-5px);
-  box-shadow:
-    0 0 26px 3px rgba(6,6,6,.98),
-    0 0 72px 12px rgba(14,9,9,.55),
-    0 26px 62px rgba(0,0,0,.55),
-    inset 0 0 70px oklch(0.62 0.05 55 / 0.28)}
-.summon-page{position:relative;display:flex;flex-direction:column;align-items:center;padding:2.8rem 2.4rem}
-.summon-left{justify-content:flex-start}
-.summon-title{font-family:'Rye',serif;font-size:clamp(2.2rem,5vw,3.6rem);line-height:.92;text-align:center;color:oklch(0.27 0.06 48);
-  text-shadow:1px 1px 0 oklch(0.97 0.02 80),2px 3px 0 oklch(0.40 0.170 27),4px 7px 14px oklch(0.20 0.08 30 / 0.38);margin-bottom:.6rem}
-.summon-sub{font-family:'EB Garamond',serif;font-style:italic;font-size:.8rem;line-height:1.45;text-align:center;color:oklch(0.38 0.035 54);max-width:24rem;margin-bottom:1.8rem}
-.summon-ritual{width:100%;max-width:24rem;border:1.5px solid oklch(0.52 0.06 50 / 0.45);padding:1.2rem 1.4rem 1.3rem;
-  background:oklch(0.89 0.028 76 / 0.55);box-shadow:inset 0 0 30px oklch(0.62 0.05 55 / 0.22),0 2px 0 rgba(255,255,255,.3)}
-.summon-h2{display:block;font-family:'Nosifer',system-ui,sans-serif;font-size:1.5rem;line-height:1.18;text-transform:uppercase;text-align:center;color:oklch(0.52 0.205 28);margin-bottom:1rem;transform:rotate(-1.4deg);text-shadow:1px 1px 0 oklch(0.30 0.12 28),3px 4px 6px oklch(0.20 0.10 28 / 0.5)}
-.summon-steps{display:flex;flex-direction:column;gap:.6rem}
-.summon-step{display:grid;grid-template-columns:1.2rem 1fr;gap:.6rem;align-items:baseline;font-size:.72rem;color:oklch(0.38 0.035 54);line-height:1.3}
-.summon-step i{font-family:'EB Garamond',serif;font-style:italic;color:oklch(0.52 0.205 28);font-size:.8rem}
-.summon-incant{display:block;text-align:center;margin-top:1rem;font-family:'Rye',serif;font-size:1.1rem;color:oklch(0.61 0.225 30);
-  text-shadow:0 0 18px oklch(0.55 0.2 32 / 0.45),1px 1px 0 oklch(0.30 0.10 30 / 0.4);animation:summonBreathe 3.8s ease-in-out infinite}
-@keyframes summonBreathe{0%,100%{opacity:.82}50%{opacity:1;text-shadow:0 0 28px oklch(0.6 0.22 34 / 0.6)}}
-.summon-descend{display:flex;flex-direction:column;align-items:center;gap:.15rem;margin-top:1.6rem}
-.summon-pre{font-family:'Caveat',cursive;font-weight:600;font-size:1.05rem;color:oklch(0.38 0.035 54);transform:rotate(-1deg);transition:.25s ease}
-.summon-enter{font-family:'Caveat',cursive;font-weight:700;font-size:1.55rem;line-height:1.1;color:oklch(0.52 0.205 28);transform:rotate(-2deg);transition:.25s ease}
-.summon:hover .summon-enter{color:oklch(0.61 0.225 30);transform:rotate(-2deg) scale(1.05);text-shadow:0 0 14px oklch(0.55 0.2 32 / 0.4)}
-.summon:hover .summon-pre{color:oklch(0.26 0.030 52)}
-.summon-chevs{display:flex;gap:.1rem;margin-top:.4rem;font-size:1.2rem;color:oklch(0.52 0.205 28)}
-.summon-chevs span{animation:summonDrip 1.9s ease-in-out infinite}
-.summon-chevs span:nth-child(2){animation-delay:.22s;opacity:.7}
-.summon-chevs span:nth-child(3){animation-delay:.44s;opacity:.45}
-@keyframes summonDrip{0%,100%{transform:translateX(0);opacity:.35}50%{transform:translateX(4px);opacity:1}}
-.summon-glyphs{margin-top:1.4rem;font-size:.6rem;letter-spacing:.18em;text-align:center;line-height:1.6;color:oklch(0.52 0.04 55 / 0.55);word-break:break-all}
-.summon-right{justify-content:center}
-.summon-glow{position:absolute;width:80%;height:78%;left:50%;top:50%;transform:translate(-50%,-50%);
-  background:radial-gradient(closest-side,oklch(0.42 0.20 27 / 0.4),oklch(0.40 0.18 26 / 0.10) 58%,transparent 74%);
-  filter:blur(10px);mix-blend-mode:multiply;animation:summonBleed 6s ease-in-out infinite}
-@keyframes summonBleed{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.85}50%{transform:translate(-50%,-50%) scale(1.05);opacity:1}}
-.summon-hand{position:relative;z-index:2;width:100%;max-width:22rem;height:auto;object-fit:contain;transform:scaleX(-1);
-  mix-blend-mode:multiply;filter:drop-shadow(2px 6px 5px oklch(0.25 0.12 28 / 0.35)) saturate(1.2) contrast(1.08);
-  animation:summonBreath 6.5s ease-in-out infinite}
-@keyframes summonBreath{0%,100%{transform:scaleX(-1) translateY(0)}50%{transform:scaleX(-1) translateY(-5px)}}
 
 /* ARTE */
 .arte-grid{columns:3 280px;column-gap:1.8rem}

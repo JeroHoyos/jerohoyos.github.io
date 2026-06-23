@@ -148,12 +148,6 @@ PROYECTOS = [
     },
 ]
 
-# ── BLOG ──────────────────────────────────────────────────────────────
-# El blog es "The ML Diarys" — un sitio inmersivo aparte que vive en la carpeta
-# blog/ y se despliega en docs/blog/ desde build.py. Los diarios se
-# escriben en blog/posts/*.md. Esta lista quedó obsoleta.
-BLOG = []
-
 # ── ARTE ──────────────────────────────────────────────────────────────
 # Agrega imágenes con: {"tipo": "imagen", "url": "dibujos/archivo.jpg",
 #                        "titulo_es": "Título", "titulo_en": "Title"}
@@ -175,10 +169,6 @@ IDIOMAS = [
 # ── PROYECTOS ─────────────────────────────────────────────────────────
 PROYECTOS_SUB_ES = "Transformers desde cero, agentes de IA, GPU computing y machine learning aplicado."
 PROYECTOS_SUB_EN = "From-scratch transformers, AI agents, GPU computing and applied machine learning."
-
-# ── BLOG ──────────────────────────────────────────────────────────────
-BLOG_SUB_ES = "Un grimorio de campo sobre Machine Learning: tomos de cuero, notas a mano y diagramas dibujados. Abrí el archivo… si te atreves."
-BLOG_SUB_EN = "A field grimoire about Machine Learning: leather tomes, handwritten notes and drawn diagrams. Open the archive… if you dare."
 
 # ── ARTE ──────────────────────────────────────────────────────────────
 ARTE_SUB_ES = "Dibujos digitales hechos en ratos libres. Personajes, criaturas y lo que salga."

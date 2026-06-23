@@ -38,7 +38,6 @@ def build_tab_bar():
     tabs = [
         ("about",    "Sobre mí",  "About"),
         ("projects", "Proyectos", "Projects"),
-        ("blog",     "Blog",      "Blog"),
         ("arte",     "Arte",      "Art"),
         ("contact",  "Contacto",  "Contact"),
     ]
@@ -117,7 +116,7 @@ def _about_proj_mini(p, idx):
     return _proj_card_light(p, show_img=True)
 
 
-def build_panel_about(blog_items=None):
+def build_panel_about():
     proj_minis = "".join(_about_proj_mini(p, i + 1) for i, p in enumerate(C.PROYECTOS[:2]))
 
     return f"""
@@ -272,48 +271,6 @@ def build_panel_projects():
         </div>
         <div class="proj-feed">{feed_html}
         </div>
-      </div>
-    </div>
-  </div>"""
-
-
-def build_panel_blog(blog_items=None):
-    # The blog is now "The ML Diarys" — an immersive grimoire site deployed at
-    # /blog/ (copied into docs/blog/ by build.py). This panel is just the portal
-    # into it; the diary keeps its own content, build and styles.
-    return f"""
-  <!-- BLOG -->
-  <div class="tab-panel" id="panel-blog" role="tabpanel">
-    <canvas id="c-blog" aria-hidden="true"></canvas>
-    <div class="panel-content light-panel blog-void">
-      <div class="sec-title" data-es="BLOG" data-en="BLOG">BLOG</div>
-      <div class="sec-sub" data-es="{C.BLOG_SUB_ES}" data-en="{C.BLOG_SUB_EN}">{C.BLOG_SUB_ES}</div>
-      <div class="blog-portal">
-        <a class="summon" href="blog/" aria-label="The ML Diarys — entrar al archivo">
-          <span class="summon-page summon-left">
-            <span class="summon-title">THE ML<br>DIARYS</span>
-            <span class="summon-sub" data-es="un blog totalmente normal de cursos y notas sobre machine learning" data-en="a totally normal blog of courses &amp; notes about machine learning">un blog totalmente normal de cursos y notas sobre machine learning</span>
-            <span class="summon-ritual">
-              <span class="summon-h2" data-es="PARA ENTRAR" data-en="TO ENTER">PARA ENTRAR</span>
-              <span class="summon-steps">
-                <span class="summon-step"><i>1)</i><span data-es="Pon tu mano sobre la página derecha" data-en="Place your hand on the right page">Pon tu mano sobre la página derecha</span></span>
-                <span class="summon-step"><i>2)</i><span data-es="Despeja tu mente de dudas" data-en="Clear your mind of doubt">Despeja tu mente de dudas</span></span>
-                <span class="summon-step"><i>3)</i><span data-es="Repite las palabras de abajo" data-en="Repeat the words below">Repite las palabras de abajo</span></span>
-              </span>
-              <span class="summon-incant" data-es="«Hora de Ponerse Raro»" data-en="«Time to Get Weird»">«Hora de Ponerse Raro»</span>
-            </span>
-            <span class="summon-descend">
-              <span class="summon-pre" data-es="¿Dijiste las palabras?" data-en="Said the words?">¿Dijiste las palabras?</span>
-              <span class="summon-enter" data-es="Entra… si te atreves." data-en="Enter… if you dare.">Entra… si te atreves.</span>
-              <span class="summon-chevs" aria-hidden="true"><span>›</span><span>›</span><span>›</span></span>
-            </span>
-            <span class="summon-glyphs" aria-hidden="true">⊕ ⊗ △ ◇ ▦ ✦ ⸸ ☽ ⌖ ◯ ⇌ ⊜ ✶ △ ◇ ▦ ✦ ✕ ⊕ ◯ ◬</span>
-          </span>
-          <span class="summon-page summon-right" aria-hidden="true">
-            <span class="summon-glow"></span>
-            <img class="summon-hand" src="blog/assets/hand.png" alt="" loading="lazy">
-          </span>
-        </a>
       </div>
     </div>
   </div>"""

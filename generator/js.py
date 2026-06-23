@@ -326,7 +326,6 @@ function particleField(cvId, panelId){
   window.addEventListener('resize',()=>{if(active&&Math.abs(window.innerWidth-_cw)>30){_cw=window.innerWidth;init();}});
 }
 particleField('c-dp','panel-arte');
-particleField('c-blog','panel-blog');
 """
 
 
