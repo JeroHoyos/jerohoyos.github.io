@@ -189,22 +189,10 @@ def _proj_tags(p):
 
 
 def _proj_lead(p):
-    """Magazine lead story: large media + headline, deck, data points, tags."""
+    """Magazine lead story: large media + headline, deck, tags."""
     name_es, name_en = _proj_names(p)
     deck_es = p.get("body_es", p.get("desc_es", ""))
     deck_en = p.get("body_en", p.get("desc_en", ""))
-    stats = p.get("stats_es") or []
-    stats_en = p.get("stats_en") or stats
-    data_html = ""
-    if stats:
-        rows = ""
-        for (l_es, v_es), (l_en, v_en) in zip(stats, stats_en):
-            rows += f"""
-            <div class="proj-stat">
-              <span class="proj-stat-val">{v_es}</span>
-              <span class="proj-stat-label" data-es="{l_es}" data-en="{l_en}">{l_es}</span>
-            </div>"""
-        data_html = f'<div class="proj-lead-stats">{rows}\n          </div>'
     img_html = (f'<a href="{p["url"]}" target="_blank" rel="noopener noreferrer" '
                 f'class="proj-lead-media"><img src="{p["img"]}" alt="{name_es}" loading="lazy"></a>'
                 if p.get("img") else "")
@@ -213,10 +201,9 @@ def _proj_lead(p):
         <article class="proj-lead">
           {img_html}
           <div class="proj-lead-body">
-            {_proj_kicker(p, lead=True)}
+            <div class="proj-lead-badge" data-es="★ Destacado" data-en="★ Featured">★ Destacado</div>
             <a href="{p['url']}" target="_blank" rel="noopener noreferrer" class="proj-lead-title" data-es="{name_es}" data-en="{name_en}">{name_es}</a>
             <p class="proj-lead-deck" data-es="{deck_es}" data-en="{deck_en}">{deck_es}</p>
-            {data_html}
             {_proj_tags(p)}
             <a href="{p['url']}" target="_blank" rel="noopener noreferrer" class="proj-readmore" data-es="{cta_es}" data-en="{cta_en}">{cta_es}</a>
           </div>
@@ -228,23 +215,19 @@ def _proj_post(p):
     name_es, name_en = _proj_names(p)
     desc_es = p.get("desc_es", p.get("body_es", ""))
     desc_en = p.get("desc_en", p.get("body_en", ""))
-    meta_es = p.get("meta_es", "")
-    meta_en = p.get("meta_en", meta_es)
     img_html = (f'<div class="proj-post-media"><img src="{p["img"]}" alt="{name_es}" loading="lazy"></div>'
                 if p.get("img") else "")
-    meta_html = (f'<span class="proj-byline" data-es="{meta_es}" data-en="{meta_en}">{meta_es}</span>'
-                 if meta_es else "")
+    cta_es, cta_en = "Ver repositorio ↗", "View repository ↗"
     return f"""
           <a href="{p['url']}" target="_blank" rel="noopener noreferrer" class="proj-post">
             {img_html}
             <div class="proj-post-body">
-              {_proj_kicker(p)}
               <div class="proj-post-title" data-es="{name_es}" data-en="{name_en}">{name_es}</div>
               <p class="proj-post-excerpt" data-es="{desc_es}" data-en="{desc_en}">{desc_es}</p>
               <div class="proj-post-foot">
-                {meta_html}
                 {_proj_tags(p)}
               </div>
+              <span class="proj-readmore proj-post-cta" data-es="{cta_es}" data-en="{cta_en}">{cta_es}</span>
             </div>
           </a>"""
 

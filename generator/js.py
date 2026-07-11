@@ -168,41 +168,47 @@ def _delaunay():
 })();"""
 
 
-def _flow():
+def _attractor():
     return """
-/* ═══ PROJECTS — Flow Field ═══ */
+/* ═══ PROJECTS — de Jong strange attractor (morphing fractal cloud) ═══ */
 (function() {
   const cv=document.getElementById('c-flow'), cx=cv.getContext('2d');
-  let W,H,particles=[],t=0,active=false,initialized=false;
-  const NP=_mob?200:900;
-  function noise(x,y,t) { return _mob ? Math.sin(x*.009+t)*Math.cos(y*.007+t*.9)+Math.sin((x+y)*.005+t) : Math.sin(x*.009+t)*Math.cos(y*.007+t*.9)+Math.sin(x*.018-t*.7)*Math.cos(y*.013+t*.4)+Math.sin((x+y)*.005+t)+Math.sin(x*.004-y*.006+t*.3)*0.5; }
-  function init() {
-    const panel=document.getElementById('panel-projects');
-    W=panel.offsetWidth||window.innerWidth; H=panel.offsetHeight||window.innerHeight;
+  let W,H,active=false,initialized=false,t=0,tiles=[];
+  const PF=_mob?2000:4800;
+  function build() {
+    const p=document.getElementById('panel-projects');
+    W=p.offsetWidth||window.innerWidth; H=p.offsetHeight||window.innerHeight;
     cv.width=W; cv.height=H;
-    particles=Array.from({length:NP}, () => ({x:Math.random()*W,y:Math.random()*H,life:Math.random()*120,maxLife:80+Math.random()*120,w:0.6+Math.random()*1.4}));
+    const th=_mob?520:660, nT=Math.max(1,Math.round(H/th)), TH=H/nT;
+    tiles=[];
+    for(let i=0;i<nT;i++) tiles.push({cy:TH*(i+0.5), sx:W*0.225, sy:TH*0.235, x:Math.random()*2-1, y:Math.random()*2-1, ph:i*2.3});
     cx.fillStyle='#f4f4ef'; cx.fillRect(0,0,W,H);
   }
   (function loop() {
     requestAnimationFrame(loop);
     if (!active || document.hidden) return;
-    cx.fillStyle='rgba(244,244,239,0.018)'; cx.fillRect(0,0,W,H);
-    particles.forEach(p => {
-      const angle=noise(p.x,p.y,t)*Math.PI*2, speed=2.2;
-      const nx=p.x+Math.cos(angle)*speed, ny=p.y+Math.sin(angle)*speed;
-      const a=p.life/p.maxLife, fade=a<.08?a/.08:a>.85?(1-a)/.15:1;
-      cx.beginPath(); cx.strokeStyle=`rgba(5,5,5,${(0.3*fade).toFixed(3)})`; cx.lineWidth=p.w;
-      cx.moveTo(p.x,p.y); cx.lineTo(nx,ny); cx.stroke();
-      p.x=nx; p.y=ny; p.life++;
-      if (p.life>p.maxLife||p.x<-5||p.x>W+5||p.y<-5||p.y>H+5) { p.x=Math.random()*W; p.y=Math.random()*H; p.life=0; p.maxLife=80+Math.random()*120; }
-    });
-    t+=0.004;
+    t+=0.02;
+    cx.fillStyle='rgba(244,244,239,0.016)'; cx.fillRect(0,0,W,H);
+    cx.fillStyle='rgba(5,5,5,0.26)';
+    const per=Math.floor(PF/tiles.length);
+    for(const tl of tiles){
+      const T=t+tl.ph;
+      const a=-1.7+0.45*Math.sin(T*0.11), b=1.7+0.35*Math.cos(T*0.13),
+            c=-1.8+0.40*Math.sin(T*0.09+1), d=-1.9+0.35*Math.cos(T*0.15+2);
+      let x=tl.x, y=tl.y;
+      for(let k=0;k<per;k++){
+        const nx=Math.sin(a*y)-Math.cos(b*x);
+        y=Math.sin(c*x)-Math.cos(d*y); x=nx;
+        cx.fillRect(W*0.5+x*tl.sx, tl.cy+y*tl.sy, 1, 1);
+      }
+      tl.x=x; tl.y=y;
+    }
   })();
   let _cw=window.innerWidth;
-  init(); initialized=true;
-  new MutationObserver(() => { const on=document.getElementById('panel-projects').classList.contains('active'); if(on&&!active){if(!initialized){init();initialized=true;}active=true;}else if(!on) active=false; })
+  build(); initialized=true;
+  new MutationObserver(() => { const on=document.getElementById('panel-projects').classList.contains('active'); if(on&&!active){if(!initialized){build();initialized=true;}active=true;}else if(!on) active=false; })
     .observe(document.getElementById('panel-projects'),{attributes:true,attributeFilter:['class']});
-  window.addEventListener('resize',()=>{ if(active&&Math.abs(window.innerWidth-_cw)>30){_cw=window.innerWidth;init();} });
+  window.addEventListener('resize',()=>{ if(active&&Math.abs(window.innerWidth-_cw)>30){_cw=window.innerWidth;build();} });
 })();"""
 
 def _chladni():
@@ -356,7 +362,7 @@ def build_js():
         + _tabs()
         + _conway()
         + _delaunay()
-        + _flow()
+        + _attractor()
         + _chladni()
         + _particles()
         + _lightbox()

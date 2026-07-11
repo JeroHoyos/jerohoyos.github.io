@@ -65,8 +65,5 @@ DEFAULT_COLOR = "#555"
 
 
 def badge_style(name: str) -> str:
-    """Return inline CSS for a technology badge, using BADGE_MAP colours."""
-    if name in BADGE_MAP:
-        bg, fg = BADGE_MAP[name]
-        return f"background:{bg};color:{fg};border-color:{bg}"
-    return f"border-color:{DEFAULT_COLOR};color:{DEFAULT_COLOR}"
+    """Return inline CSS for a technology badge — neutral, colourless pill."""
+    return "background:#ececea;color:#555;border-color:#e0e0da"

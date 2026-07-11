@@ -14,7 +14,7 @@ AÑO         = "2025"
 
 # ── REDES ─────────────────────────────────────────────────────────────
 GITHUB    = "https://github.com/JeroHoyos"
-LINKEDIN  = "https://www.linkedin.com/in/jerónimo-hoyos-botero-8b692928b/"
+LINKEDIN  = "https://www.linkedin.com/in/jeronimo-hoyos-botero/"
 KAGGLE    = "https://www.kaggle.com/scratchbox"
 
 # ── BIO (párrafos en ES y EN) ─────────────────────────────────────────
@@ -63,10 +63,10 @@ STACK = [
         "items": ["PyTorch", "Transformers", "LangGraph", "Ollama", "Foundation Models"],
     },
     {
-        "label_es": "GPU Computing",
-        "label_en": "GPU Computing",
-        "chip_class": "chip-gpu",
-        "items": ["CUDA", "cuBLAS", "cuDF", "cuML", "RAPIDS", "TensorRT"],
+    "label_es": "High Performance Computing",
+    "label_en": "High Performance Computing",
+    "chip_class": "chip-hpc",
+    "items": ["CUDA", "cuBLAS", "RAPIDS", "Polars", "Spark"],
     },
     {
         "label_es": "Visualización & Apps",
@@ -145,6 +145,19 @@ PROYECTOS = [
         "badges": ["CUDA", "cuBLAS", "HPC", "GPU"],
         "meta_es": "CUDA · cuBLAS · Benchmarking",
         "meta_en": "CUDA · cuBLAS · Benchmarking",
+    },
+    {
+        "featured": False,
+        "url": "https://github.com/HacklabMLMedellin/Sanghelios",
+        "img": "proyectos/sanghelios.png",
+        "lang": "Python · JavaScript",
+        "title_es": "Sanghelios: Inteligencia Predictiva para Bancos de Sangre",
+        "title_en": "Sanghelios: Predictive Intelligence for Blood Banks",
+        "desc_es": "Sistema que anticipa la escasez de sangre del Hospital General de Medellín con 14 días de anticipación mediante un modelo XGBoost, y convierte esa señal en campañas de donación diseñadas con IA, desplegadas en un dashboard y mapa 3D.",
+        "desc_en": "System that predicts blood shortages at Hospital General de Medellín 14 days in advance using an XGBoost model, turning that signal into AI-designed donation campaigns deployed through a dashboard and 3D map.",
+        "badges": ["Python", "FastAPI", "XGBoost", "AI Agents"],
+        "meta_es": "FastAPI · XGBoost · AI Agents",
+        "meta_en": "FastAPI · XGBoost · AI Agents",
     },
 ]
 
