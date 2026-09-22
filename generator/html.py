@@ -5,31 +5,15 @@ from .badges import badge_style
 
 def build_hero():
     return f"""
-<!-- LANGUAGE TOGGLE -->
 <div class="lang-toggle">
   <button class="lang-btn active" data-lang="es">ES</button>
   <button class="lang-btn" data-lang="en">EN</button>
 </div>
 
-<!-- HERO -->
 <section id="hero">
   <canvas id="c-conway"></canvas>
   <div class="hero-inner">
     <div class="hero-name" style="letter-spacing:-2px;">{C.NOMBRE}</div>
-    <div class="hero-sub" data-es="{C.TITULO}" data-en="{C.TITULO_EN}">{C.TITULO}</div>
-  </div>
-  <div class="hero-bottom">
-    <div class="hero-socials">
-      <a href="{C.GITHUB}" target="_blank" rel="noopener noreferrer">
-        {ICON_GITHUB}<span>GitHub</span>
-      </a>
-      <a href="{C.LINKEDIN}" target="_blank" rel="noopener noreferrer">
-        {ICON_LINKEDIN}<span>LinkedIn</span>
-      </a>
-      <a href="{C.KAGGLE}" target="_blank" rel="noopener noreferrer">
-        {ICON_KAGGLE}<span>Kaggle</span>
-      </a>
-    </div>
   </div>
 </section>"""
 
@@ -55,18 +39,6 @@ def _bio_paragraphs():
     es_html = "".join(f"<p>{p}</p>" for p in C.BIO_ES)
     en_html = "".join(f"<p>{p}</p>" for p in C.BIO_EN)
     return f'<div class="about-bio" data-es="{es_html.replace(chr(34), "&quot;")}" data-en="{en_html.replace(chr(34), "&quot;")}">{es_html}</div>'
-
-
-def _stack():
-    tiers = ""
-    for tier in C.STACK:
-        chips = "".join(f'<span class="chip {tier["chip_class"]}">{item}</span>' for item in tier["items"])
-        tiers += f"""
-      <div class="stack-tier">
-        <div class="stack-tier-label" data-es="{tier['label_es']}" data-en="{tier['label_en']}">{tier['label_es']} <span></span></div>
-        <div class="stack-chips">{chips}</div>
-      </div>"""
-    return tiers
 
 
 def _education():
@@ -120,7 +92,6 @@ def build_panel_about():
     proj_minis = "".join(_about_proj_mini(p, i + 1) for i, p in enumerate(C.PROYECTOS[:2]))
 
     return f"""
-  <!-- ABOUT -->
   <div class="tab-panel active" id="panel-about" role="tabpanel">
     <canvas id="c-delaunay" aria-hidden="true"></canvas>
     <div class="panel-content light-panel">
@@ -130,16 +101,12 @@ def build_panel_about():
         <div>
           <div class="about-sub-label" data-es="Quién soy" data-en="Who I am">Quién soy</div>
           {_bio_paragraphs()}
-          <figure class="bio-talk">
-            <img src="static/epam-talk.jpg" alt="Jerónimo presentando en Medellín IA" loading="lazy">
-            <figcaption data-es="Presentando &ldquo;How to build a transformer from scratch&rdquo; en Medellín IA community · EPAM Medellín" data-en="Presenting &ldquo;How to build a transformer from scratch&rdquo; at Medellín IA community · EPAM Medellín">Presentando &ldquo;How to build a transformer from scratch&rdquo; en Medellín IA community · EPAM Medellín</figcaption>
-          </figure>
         </div>
 
-        <div>
-          <div class="about-sub-label" data-es="Stack tecnológico" data-en="Tech stack">Stack tecnológico</div>
-          {_stack()}
-        </div>
+        <figure class="bio-talk">
+          <img src="static/epam-talk.jpg" alt="Jerónimo presentando en Medellín IA" loading="lazy">
+          <figcaption data-es="Presentando &ldquo;How to build a transformer from scratch&rdquo; en Medellín IA community · EPAM Medellín" data-en="Presenting &ldquo;How to build a transformer from scratch&rdquo; at Medellín IA community · EPAM Medellín">Presentando &ldquo;How to build a transformer from scratch&rdquo; en Medellín IA community · EPAM Medellín</figcaption>
+        </figure>
 
         <div class="about-bottom">
           <div>
@@ -165,14 +132,12 @@ def build_panel_about():
 
 
 def _proj_names(p):
-    """(name_es, name_en) honoring both featured (single title) and normal schemas."""
     name_es = p["title"] if p.get("featured") else p.get("title_es", p.get("title", ""))
     name_en = p["title"] if p.get("featured") else p.get("title_en", name_es)
     return name_es, name_en
 
 
 def _proj_kicker(p, lead=False):
-    """Editorial category label (La Silla 'Publicado en …' kicker)."""
     lang = p.get("lang", "")
     if lead:
         es = "Proyecto destacado" + (f" · {lang}" if lang else "")
@@ -189,7 +154,6 @@ def _proj_tags(p):
 
 
 def _proj_lead(p):
-    """Magazine lead story: large media + headline, deck, tags."""
     name_es, name_en = _proj_names(p)
     deck_es = p.get("body_es", p.get("desc_es", ""))
     deck_en = p.get("body_en", p.get("desc_en", ""))
@@ -211,7 +175,6 @@ def _proj_lead(p):
 
 
 def _proj_post(p):
-    """Editorial feed row: thumbnail + kicker, headline, excerpt, byline, tags."""
     name_es, name_en = _proj_names(p)
     desc_es = p.get("desc_es", p.get("body_es", ""))
     desc_en = p.get("desc_en", p.get("body_en", ""))
@@ -240,9 +203,8 @@ def build_panel_projects():
     masthead_es = "Más proyectos"
     masthead_en = "More projects"
     return f"""
-  <!-- PROJECTS -->
   <div class="tab-panel" id="panel-projects" role="tabpanel">
-    <canvas id="c-flow" aria-hidden="true"></canvas>
+    <canvas id="c-lorenz" aria-hidden="true"></canvas>
     <div class="panel-content light-panel">
       <div class="sec-title" data-es="PROYECTOS" data-en="PROJECTS">PROYECTOS</div>
       <div class="sec-sub" data-es="{C.PROYECTOS_SUB_ES}" data-en="{C.PROYECTOS_SUB_EN}">{C.PROYECTOS_SUB_ES}</div>
@@ -287,7 +249,6 @@ def build_panel_arte():
         grid_content = '<div class="arte-empty" data-es="Próximamente" data-en="Coming soon">Próximamente</div>'
 
     return f"""
-  <!-- ARTE -->
   <div class="tab-panel" id="panel-arte" role="tabpanel">
     <canvas id="c-dp" aria-hidden="true"></canvas>
     <div class="panel-content light-panel">
@@ -297,7 +258,6 @@ def build_panel_arte():
       </div>
     </div>
   </div>
-  <!-- LIGHTBOX -->
   <div id="lightbox" role="dialog" aria-modal="true" aria-label="Imagen ampliada">
     <button id="lb-close" aria-label="Cerrar">&#x2715;</button>
     <img id="lb-img" src="" alt="">
@@ -306,7 +266,6 @@ def build_panel_arte():
 
 def build_panel_contact():
     return f"""
-  <!-- CONTACT -->
   <div class="tab-panel" id="panel-contact">
     <canvas id="c-fourier" aria-hidden="true"></canvas>
     <div class="panel-content dark-panel">
@@ -336,7 +295,7 @@ def build_panel_contact():
       </div>
     </div>
   </div>
-</div><!-- /shell -->"""
+</div>"""
 
 
 def build_footer():

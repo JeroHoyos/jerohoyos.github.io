@@ -4,7 +4,6 @@ def _mobile_detect():
 
 def _lang_toggle():
     return """
-/* ═══ LANGUAGE TOGGLE ═══ */
 function setLang(lang) {
   document.documentElement.lang = lang;
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
@@ -28,7 +27,6 @@ document.querySelectorAll('.lang-btn').forEach(btn => {
 (function() {
   try { const s = localStorage.getItem('lang'); setLang(s || 'en'); } catch(e) { setLang('en'); }
 })();
-/* Email copy button */
 (function() {
   const btn = document.getElementById('ct-email-copy');
   if (!btn) return;
@@ -45,7 +43,6 @@ document.querySelectorAll('.lang-btn').forEach(btn => {
 
 def _tabs():
     return """
-/* ═══ TABS ═══ */
 function activateTab(id) {
   const panel = document.getElementById('panel-' + id);
   if (!panel) return;
@@ -70,7 +67,6 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
 
 def _conway():
     return """
-/* ═══ HERO — Conway's Game of Life ═══ */
 (function() {
   const cv = document.getElementById('c-conway'), cx = cv.getContext('2d');
   const SZ = _mob?32:18, STEP=_mob?8:5; let cols, rows, grid, frame = 0;
@@ -108,7 +104,6 @@ def _conway():
 
 def _delaunay():
     return """
-/* ═══ ABOUT — Delaunay Triangulation ═══ */
 (function() {
   const cv = document.getElementById('c-delaunay'), cx = cv.getContext('2d');
   let pts=[], W=0, H=0, initialized=false;
@@ -139,7 +134,7 @@ def _delaunay():
     const r=panel.getBoundingClientRect();
     W=r.width||panel.offsetWidth||window.innerWidth;
     H=r.height||panel.offsetHeight||window.innerHeight;
-    if(W<10||H<10) return; // panel oculto, no reinicializar
+    if(W<10||H<10) return;
     cv.width=W; cv.height=H;
     pts=Array.from({length:_mob?20:48}, () => ({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.55,vy:(Math.random()-.5)*.55}));
   }
@@ -168,52 +163,59 @@ def _delaunay():
 })();"""
 
 
-def _attractor():
+def _lorenz():
     return """
-/* ═══ PROJECTS — de Jong strange attractor (morphing fractal cloud) ═══ */
 (function() {
-  const cv=document.getElementById('c-flow'), cx=cv.getContext('2d');
-  let W,H,active=false,initialized=false,t=0,tiles=[];
-  const PF=_mob?2000:4800;
-  function build() {
-    const p=document.getElementById('panel-projects');
-    W=p.offsetWidth||window.innerWidth; H=p.offsetHeight||window.innerHeight;
+  const cv=document.getElementById('c-lorenz'), cx=cv.getContext('2d'), panel=document.getElementById('panel-projects');
+  const NP=_mob?4:8, L=_mob?300:450, SUB=2, CH=15, DT=0.004;
+  let W=0,H=0,t=0,tiles=[];
+  function step(p) {
+    const dx=10*(p.y-p.x), dy=p.x*(28-p.z)-p.y, dz=p.x*p.y-8/3*p.z;
+    p.x+=dx*DT; p.y+=dy*DT; p.z+=dz*DT;
+  }
+  function trail() {
+    const q={x:Math.random()*2-1, y:Math.random()*2-1, z:20+Math.random()*10}, tr=[];
+    for(let n=0,m=1000+Math.random()*1000;n<m;n++) step(q);
+    for(let n=0;n<L;n++){ step(q); tr.push({x:q.x,y:q.y,z:q.z}); }
+    return {q,tr};
+  }
+  function layout() {
+    W=panel.offsetWidth; H=panel.offsetHeight;
+    if(W<10||H<10) return;
     cv.width=W; cv.height=H;
-    const th=_mob?520:660, nT=Math.max(1,Math.round(H/th)), TH=H/nT;
-    tiles=[];
-    for(let i=0;i<nT;i++) tiles.push({cy:TH*(i+0.5), sx:W*0.225, sy:TH*0.235, x:Math.random()*2-1, y:Math.random()*2-1, ph:i*2.3});
-    cx.fillStyle='#f4f4ef'; cx.fillRect(0,0,W,H);
+    const nT=Math.max(1,Math.round(H/(_mob?520:660))), TH=H/nT, sc=Math.min(W*0.42/30,TH*0.8/50);
+    while(tiles.length<nT) tiles.push({ph:tiles.length*1.9, trails:Array.from({length:NP},trail)});
+    tiles.length=nT;
+    tiles.forEach((tl,i)=>{ tl.cy=TH*(i+0.5); tl.h=TH; tl.sc=sc; });
   }
   (function loop() {
     requestAnimationFrame(loop);
-    if (!active || document.hidden) return;
-    t+=0.02;
-    cx.fillStyle='rgba(244,244,239,0.016)'; cx.fillRect(0,0,W,H);
-    cx.fillStyle='rgba(5,5,5,0.26)';
-    const per=Math.floor(PF/tiles.length);
-    for(const tl of tiles){
-      const T=t+tl.ph;
-      const a=-1.7+0.45*Math.sin(T*0.11), b=1.7+0.35*Math.cos(T*0.13),
-            c=-1.8+0.40*Math.sin(T*0.09+1), d=-1.9+0.35*Math.cos(T*0.15+2);
-      let x=tl.x, y=tl.y;
-      for(let k=0;k<per;k++){
-        const nx=Math.sin(a*y)-Math.cos(b*x);
-        y=Math.sin(c*x)-Math.cos(d*y); x=nx;
-        cx.fillRect(W*0.5+x*tl.sx, tl.cy+y*tl.sy, 1, 1);
+    if (!tiles.length || document.hidden || !panel.classList.contains('active')) return;
+    t+=0.004;
+    for(const tl of tiles) for(const o of tl.trails) for(let k=0;k<SUB;k++){ step(o.q); o.tr.shift(); o.tr.push({x:o.q.x,y:o.q.y,z:o.q.z}); }
+    cx.clearRect(0,0,W,H);
+    cx.lineWidth=0.9;
+    const top=panel.getBoundingClientRect().top, seg=Math.ceil(L/CH);
+    const vis=tiles.filter(tl=>top+tl.cy+tl.h/2>0&&top+tl.cy-tl.h/2<window.innerHeight);
+    for(let c=0;c<CH;c++){
+      const s0=c*seg, s1=Math.min(L-1,s0+seg);
+      cx.beginPath();
+      for(const tl of vis){
+        const co=Math.cos(t+tl.ph), si=Math.sin(t+tl.ph);
+        for(const o of tl.trails) for(let n=s0;n<=s1;n++){
+          const p=o.tr[n], x=W*0.5+(p.x*co-p.y*si)*tl.sc, y=tl.cy+(24-p.z)*tl.sc;
+          n===s0?cx.moveTo(x,y):cx.lineTo(x,y);
+        }
       }
-      tl.x=x; tl.y=y;
+      cx.strokeStyle=`rgba(5,5,5,${(0.5*(c+1)/CH).toFixed(3)})`; cx.stroke();
     }
   })();
-  let _cw=window.innerWidth;
-  build(); initialized=true;
-  new MutationObserver(() => { const on=document.getElementById('panel-projects').classList.contains('active'); if(on&&!active){if(!initialized){build();initialized=true;}active=true;}else if(!on) active=false; })
-    .observe(document.getElementById('panel-projects'),{attributes:true,attributeFilter:['class']});
-  window.addEventListener('resize',()=>{ if(active&&Math.abs(window.innerWidth-_cw)>30){_cw=window.innerWidth;build();} });
+  new ResizeObserver(layout).observe(panel);
 })();"""
+
 
 def _chladni():
     return """
-/* ═══ CONTACT — Chladni Figures ═══ */
 (function() {
   const cv=document.getElementById('c-fourier'), cx=cv.getContext('2d');
   let W,H,active=false,initialized=false,transT=0,pairIdx=0;
@@ -261,7 +263,6 @@ def _chladni():
 
 def _particles():
     return """
-/* ═══ Campo de partículas con atractores · reutilizable (Arte + Blog) ═══ */
 function particleField(cvId, panelId){
   const cv=document.getElementById(cvId); if(!cv) return;
   const cx=cv.getContext('2d'), panel=()=>document.getElementById(panelId);
@@ -337,7 +338,6 @@ particleField('c-dp','panel-arte');
 
 def _lightbox():
     return """
-/* ═══ LIGHTBOX ═══ */
 (function(){
   const lb=document.getElementById('lightbox');
   const lbImg=document.getElementById('lb-img');
@@ -362,7 +362,7 @@ def build_js():
         + _tabs()
         + _conway()
         + _delaunay()
-        + _attractor()
+        + _lorenz()
         + _chladni()
         + _particles()
         + _lightbox()

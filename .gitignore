@@ -1,24 +1,15 @@
-# Python
 __pycache__/
 *.py[cod]
 *.pyo
-
-# Entornos virtuales
 venv/
 env/
 .venv/
-
-# Editores
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
-
-# OS
 .DS_Store
 Thumbs.db
 desktop.ini
-
-# Claude Code
 .claude/

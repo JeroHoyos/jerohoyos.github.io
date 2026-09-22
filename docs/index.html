@@ -6,7 +6,7 @@
 <title>Jerónimo Hoyos Botero</title>
 <link rel="icon" href="favicon.ico" sizes="32x32">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐈‍⬛</text></svg>" type="image/svg+xml">
-<meta name="description" content="Data Scientist · ML Engineer en Medellín. I'm Jerónimo Hoyos, a Computer Software Engineering student at Universidad Nacional de Colombia, obsessed with understanding problems before solving them.">
+<meta name="description" content="Data Scientist · ML Engineer en Medellín. I'm Jerónimo Hoyos, a Computer Software Engineering student at Universidad Nacional de Colombia, obsessed with understanding problems before solving them. I work at the intersection of probability, linear algebra, and computer science.">
 <meta property="og:title" content="Jerónimo Hoyos Botero — Data Scientist · ML Engineer">
 <meta property="og:description" content="Data Scientist · ML Engineer en Medellín. Estudiante de Ingeniería en Sistemas, Universidad Nacional de Colombia.">
 <meta property="og:type" content="website">
@@ -26,31 +26,21 @@ html{font-size:20px;scroll-behavior:smooth;overflow-x:hidden}
 :root{--black:#050505;--white:#f4f4ef;--gray:#666}
 body{background:#f4f4ef;color:var(--black);font-family:'Space Mono',monospace;overflow-x:hidden;-webkit-text-size-adjust:100%}
 
-/* LANG TOGGLE */
 .lang-toggle{position:fixed;top:1.2rem;right:1.5rem;z-index:200;display:flex;gap:.3rem}
 .lang-btn{font-family:'Space Mono',monospace;font-size:.46rem;letter-spacing:2.5px;text-transform:uppercase;padding:.38rem .7rem;background:rgba(30,30,30,0.35);border:1px solid rgba(160,160,160,0.35);color:#888;cursor:pointer;transition:all .2s;backdrop-filter:blur(6px)}
 .lang-btn.active{border-color:rgba(180,180,180,0.65);color:#bbb}
 .lang-btn:hover{border-color:rgba(160,160,160,0.55);color:#aaa}
 
-/* HERO */
 #hero{height:65vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;position:relative;overflow:hidden;background:var(--black)}
 #hero canvas{position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
 .hero-inner{position:relative;z-index:2}
 .hero-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,8vw,8rem);line-height:.88;letter-spacing:-3px;color:var(--white);animation:fadeUp .8s .1s ease both}
-.hero-sub{font-family:'DM Serif Display',serif;font-style:italic;font-size:clamp(1.1rem,3.5vw,1.7rem);color:var(--gray);margin-top:2rem;line-height:1.6;animation:fadeUp .8s .2s ease both}
-.hero-bottom{position:absolute;bottom:2.5rem;left:0;right:0;display:flex;justify-content:space-between;align-items:flex-end;padding:0 4rem;z-index:2;animation:fadeIn 1.2s .5s ease both}
-.hero-socials{display:flex;gap:.8rem;flex-wrap:wrap;justify-content:center}
-.hero-socials a{display:inline-flex;align-items:center;gap:.4rem;font-size:.52rem;letter-spacing:2px;text-transform:uppercase;color:#ccc;text-decoration:none;padding:.55rem 1rem;border:1px solid #333;background:rgba(255,255,255,0.06);backdrop-filter:blur(6px);transition:all .25s;position:relative;overflow:hidden}
-.hero-socials a::before{content:'';position:absolute;inset:0;background:var(--white);transform:scaleX(0);transform-origin:left;transition:transform .3s cubic-bezier(.76,0,.24,1);z-index:0}
-.hero-socials a:hover::before{transform:scaleX(1)}
-.hero-socials a:hover{color:var(--black);border-color:var(--white)}
-.hero-socials a svg,.hero-socials a span{position:relative;z-index:1}
-.hero-socials a svg{width:14px;height:14px;fill:currentColor;flex-shrink:0}
 
-/* SHELL / TABS */
 #shell{display:flex;flex-direction:column}
 #tab-bar{position:sticky;top:0;z-index:50;background:var(--black);border-bottom:1px solid #222;display:flex;align-items:stretch;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 #tab-bar::-webkit-scrollbar{display:none}
+.tab-btn:first-child{margin-left:auto;border-left:1px solid #222}
+.tab-btn:last-child{margin-right:auto}
 .tab-btn{font-family:'Space Mono',monospace;font-size:.75rem;letter-spacing:3px;text-transform:uppercase;padding:1.6rem 2.4rem;background:none;border:none;color:#555;cursor:pointer;border-right:1px solid #222;transition:color .2s;position:relative;white-space:nowrap;flex-shrink:0}
 .tab-btn::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--white);transform:scaleX(0);transition:transform .25s}
 .tab-btn:hover{color:#bbb}
@@ -70,7 +60,6 @@ body{background:#f4f4ef;color:var(--black);font-family:'Space Mono',monospace;ov
 #panel-projects .sec-title,#panel-arte .sec-title{text-align:center}
 #panel-projects .sec-sub,#panel-arte .sec-sub{text-align:center;margin-left:auto;margin-right:auto}
 
-/* ABOUT */
 .about-layout{display:grid;grid-template-columns:1fr 1.35fr;gap:1.5rem 5rem;align-items:start}
 .about-bottom{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:3rem;padding-top:1.2rem;border-top:2px solid #999;align-items:start}
 .idioma-item{display:flex;justify-content:space-between;align-items:baseline;padding:.45rem 0;border-bottom:1px solid #eee}
@@ -86,40 +75,22 @@ body{background:#f4f4ef;color:var(--black);font-family:'Space Mono',monospace;ov
 .about-sub-label{font-size:.85rem;letter-spacing:4px;text-transform:uppercase;color:#111;margin-bottom:1.4rem;font-weight:700}
 .about-bio p{font-size:.85rem;line-height:2.4;color:#2a2a2a;margin-bottom:1.2rem}
 .about-bio strong{color:var(--black)}
-.bio-talk{margin-top:2rem;border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.08)}
+.bio-talk{border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.08)}
 .bio-talk img{width:100%;height:auto;display:block}
 .bio-talk figcaption{font-size:.5rem;letter-spacing:1.5px;color:#888;padding:.7rem 1rem;text-align:center;background:#fafaf8}
 
-/* STACK */
-.stack-tier{margin-bottom:2.2rem}
-.stack-tier-label{font-size:.65rem;letter-spacing:2.5px;text-transform:uppercase;color:#333;margin-bottom:.9rem;font-weight:700;display:flex;align-items:center;gap:.6rem}
-.stack-tier-label span{flex:1;height:1px;background:#ccc}
-.stack-chips{display:flex;flex-wrap:wrap;gap:.55rem}
-.chip{font-size:.6rem;letter-spacing:1.5px;text-transform:uppercase;padding:.45rem 1.05rem;border:1px solid;border-radius:999px;transition:background .2s,transform .15s;cursor:default}
-.chip:hover{transform:translateY(-1px)}
-.chip-gpu{border-color:#76b900;color:#4a7a00;background:rgba(118,185,0,.06)}.chip-gpu:hover{background:rgba(118,185,0,.15)}
-.chip-ml{border-color:#5588cc;color:#2255aa;background:rgba(85,136,204,.06)}.chip-ml:hover{background:rgba(85,136,204,.15)}
-.chip-data{border-color:#cc7700;color:#995500;background:rgba(204,119,0,.06)}.chip-data:hover{background:rgba(204,119,0,.15)}
-.chip-lang{border-color:#555;color:#222}.chip-lang:hover{background:rgba(0,0,0,.05)}
-.chip-viz{border-color:#9955cc;color:#7733aa;background:rgba(153,85,204,.06)}.chip-viz:hover{background:rgba(153,85,204,.15)}
-.chip-ops{border-color:#cc3344;color:#aa2233;background:rgba(204,51,68,.06)}.chip-ops:hover{background:rgba(204,51,68,.15)}
-
-/* EDUCATION */
 .edu-item{margin-bottom:1.5rem}
 .edu-item:last-child{margin-bottom:0}
 .edu-year{font-size:.5rem;letter-spacing:2px;color:#bbb;margin-bottom:.35rem}
 .edu-name{font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--black);margin-bottom:.25rem;line-height:1.3}
 .edu-inst{font-size:.62rem;color:#555}
 
-/* PROJECTS — editorial layout (La Silla Vacía inspired) */
 .proj-paper{max-width:60rem;margin:0 auto;text-align:left}
 
-/* shared editorial bits */
 .proj-kicker{font-size:.46rem;letter-spacing:3px;text-transform:uppercase;color:#666;font-weight:700;margin-bottom:.75rem}
 .proj-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:.4rem}
 .proj-tag{font-size:.44rem;letter-spacing:1.5px;text-transform:uppercase;padding:.32rem .78rem;border:1px solid;border-radius:999px;background:transparent;white-space:nowrap;font-weight:700}
 
-/* lead story */
 .proj-lead{display:grid;grid-template-columns:1.05fr 1fr;gap:2.4rem;align-items:center;padding-bottom:2.6rem;margin-bottom:.5rem;border-bottom:2px solid #1a1a1a}
 .proj-lead-media{display:block;background:#ecece8;border-radius:16px;overflow:hidden;aspect-ratio:4/3;box-shadow:0 12px 34px rgba(0,0,0,.11)}
 .proj-lead-media img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
@@ -139,12 +110,10 @@ body{background:#f4f4ef;color:var(--black);font-family:'Space Mono',monospace;ov
 .proj-post:hover .proj-readmore{background:#1a1a1a;color:#f4f4ef}
 .proj-post-cta{margin-top:1.3rem}
 
-/* feed masthead */
 .proj-feed-head{display:flex;align-items:center;gap:1rem;margin:2.6rem 0 1.4rem}
 .proj-feed-label{font-size:.5rem;letter-spacing:3.5px;text-transform:uppercase;color:#111;font-weight:700;white-space:nowrap}
 .proj-feed-rule{flex:1;height:1px;background:#ccc}
 
-/* feed rows */
 .proj-feed{display:flex;flex-direction:column}
 .proj-post{display:grid;grid-template-columns:1fr 1fr;gap:2.2rem;align-items:center;padding:1.9rem 0;border-top:1px solid #d8d8d2;text-decoration:none;color:inherit;transition:opacity .2s}
 .proj-post:first-child{border-top:none}
@@ -157,7 +126,6 @@ body{background:#f4f4ef;color:var(--black);font-family:'Space Mono',monospace;ov
 .proj-post-excerpt{font-size:.72rem;line-height:2;color:#3a3a3a;margin-bottom:1rem}
 .proj-post-foot{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:.7rem 1rem;margin-top:auto}
 
-/* About-panel projects preview — open image cards (no box) */
 .proj-card{display:flex;flex-direction:column;gap:.55rem;text-decoration:none;color:inherit}
 .proj-c-img{aspect-ratio:16/9;background:#ecece8;border-radius:14px;overflow:hidden;box-shadow:0 8px 22px rgba(0,0,0,.10);transition:box-shadow .3s,transform .3s cubic-bezier(.2,.7,.2,1)}
 .proj-c-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
@@ -171,7 +139,6 @@ body{background:#f4f4ef;color:var(--black);font-family:'Space Mono',monospace;ov
 .proj-c-cta{align-self:center;margin-top:.9rem;padding:.65rem 1.5rem;border:1px solid #1a1a1a;border-radius:999px;font-size:.44rem;letter-spacing:2.5px;text-transform:uppercase;color:#111;background:none;transition:background .2s,color .2s,transform .2s}
 .proj-card:hover .proj-c-cta{background:#1a1a1a;color:#f4f4ef}
 
-/* ARTE */
 .arte-grid{columns:3 280px;column-gap:1.8rem}
 .arte-empty{font-size:.62rem;letter-spacing:3px;text-transform:uppercase;color:#bbb;padding:4rem 0;border:1px dashed #ddd;text-align:center}
 .arte-piece{break-inside:avoid;margin-bottom:1.8rem;overflow:hidden;border:1px solid #e5e5e5;background:#f7f7f2}
@@ -180,7 +147,6 @@ body{background:#f4f4ef;color:var(--black);font-family:'Space Mono',monospace;ov
 img.lb-trigger{cursor:zoom-in;transition:opacity .2s}
 img.lb-trigger:hover{opacity:.88}
 
-/* LIGHTBOX */
 #lightbox{position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.93);display:none;align-items:center;justify-content:center;cursor:zoom-out}
 #lightbox.open{display:flex;animation:lbIn .18s ease}
 @keyframes lbIn{from{opacity:0}to{opacity:1}}
@@ -188,7 +154,6 @@ img.lb-trigger:hover{opacity:.88}
 #lb-close{position:absolute;top:1.2rem;right:1.4rem;background:none;border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.6);font-size:1.1rem;line-height:1;padding:.5rem .7rem;cursor:pointer;transition:all .18s;font-family:'Space Mono',monospace}
 #lb-close:hover{color:#fff;border-color:rgba(255,255,255,.55)}
 
-/* CONTACT */
 .ct-header{text-align:center;margin-bottom:1.6rem}
 .ct-big{color:#0a0a0a;margin-bottom:.8rem}
 .ct-sub{font-size:.58rem;color:#444;max-width:44rem;margin:0 auto;line-height:1.8}
@@ -201,13 +166,11 @@ img.lb-trigger:hover{opacity:.88}
 .ct-soc:hover{border-color:#555;color:#0a0a0a;background:rgba(0,0,0,.04)}
 .ct-soc svg{width:16px;height:16px;fill:currentColor;flex-shrink:0}
 
-/* FOOTER */
 footer{padding:1.2rem 4rem;border-top:1px solid #e5e5e5;display:flex;justify-content:space-between;font-size:.46rem;letter-spacing:2px;text-transform:uppercase;color:#aaa}
 
 @keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 
-/* TABLET ≤900px */
 @media(max-width:900px){
   .lang-toggle{top:.8rem;right:.8rem}
   .tab-btn{padding:1rem 1.2rem;font-size:.6rem;letter-spacing:2px;white-space:nowrap;flex-shrink:0}
@@ -217,23 +180,17 @@ footer{padding:1.2rem 4rem;border-top:1px solid #e5e5e5;display:flex;justify-con
   .apm-row{grid-template-columns:1fr 1fr}
   .proj-lead{grid-template-columns:1fr;gap:1.6rem}
   .proj-post{grid-template-columns:10rem 1fr;gap:1.3rem}
-  .hero-bottom{padding:0 1.5rem}
   .arte-grid{columns:2 240px}
   .ct-socials{gap:.55rem}
   footer{flex-direction:column;gap:.5rem;text-align:center}
 }
 
-/* MOBILE ≤600px */
 @media(max-width:600px){
   html{font-size:16px}
   .lang-toggle{top:.6rem;right:.6rem;gap:.2rem}
   .lang-btn{font-size:.6rem;padding:.35rem .6rem}
   #hero{height:100svh}
   .hero-name{font-size:clamp(3.5rem,18vw,7rem);letter-spacing:-1px;line-height:.9}
-  .hero-sub{margin-top:1.2rem}
-  .hero-bottom{flex-direction:column;align-items:center;gap:1rem;bottom:1.8rem;padding:0 1.2rem}
-  .hero-socials{gap:.5rem}
-  .hero-socials a{font-size:.65rem;padding:.7rem 1rem}
   .tab-btn{padding:1.1rem 1.4rem;font-size:.7rem;letter-spacing:2px;white-space:nowrap;flex-shrink:0}
   .dark-panel,.light-panel{padding:2.5rem 1.2rem 3.5rem}
   .sec-title{font-size:clamp(2.5rem,12vw,5rem)}
@@ -254,41 +211,23 @@ footer{padding:1.2rem 4rem;border-top:1px solid #e5e5e5;display:flex;justify-con
   footer{flex-direction:column;gap:.5rem;padding:1rem 1.2rem;text-align:center}
 }
 
-/* SMALL MOBILE ≤380px */
 @media(max-width:380px){
   html{font-size:14px}
   .tab-btn{padding:1rem 1.2rem;font-size:.65rem}
-  .hero-socials a{padding:.6rem .8rem;gap:.4rem}
 }
 </style>
 </head>
 <body>
 
-<!-- LANGUAGE TOGGLE -->
 <div class="lang-toggle">
   <button class="lang-btn active" data-lang="es">ES</button>
   <button class="lang-btn" data-lang="en">EN</button>
 </div>
 
-<!-- HERO -->
 <section id="hero">
   <canvas id="c-conway"></canvas>
   <div class="hero-inner">
     <div class="hero-name" style="letter-spacing:-2px;">Jerónimo<br>Hoyos Botero</div>
-    <div class="hero-sub" data-es="Data Scientist · ML Engineer" data-en="Data Scientist · ML Engineer">Data Scientist · ML Engineer</div>
-  </div>
-  <div class="hero-bottom">
-    <div class="hero-socials">
-      <a href="https://github.com/JeroHoyos" target="_blank" rel="noopener noreferrer">
-        <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.21.08 1.85 1.24 1.85 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02.005 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.82.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg><span>GitHub</span>
-      </a>
-      <a href="https://www.linkedin.com/in/jeronimo-hoyos-botero/" target="_blank" rel="noopener noreferrer">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg><span>LinkedIn</span>
-      </a>
-      <a href="https://www.kaggle.com/scratchbox" target="_blank" rel="noopener noreferrer">
-        <svg viewBox="0 0 24 24"><path d="M18.825 23.859c-.022.092-.117.141-.281.141h-3.139c-.187 0-.351-.082-.492-.248l-5.178-6.589-1.448 1.374v5.111c0 .235-.117.352-.351.352H5.505c-.236 0-.354-.117-.354-.352V.353c0-.233.118-.353.354-.353h2.431c.234 0 .351.12.351.353v14.343l6.203-6.272c.165-.165.33-.246.495-.246h3.239c.144 0 .236.06.285.18.046.149.034.255-.036.315l-6.555 6.344 6.836 8.507c.095.104.117.208.07.336z"/></svg><span>Kaggle</span>
-      </a>
-    </div>
   </div>
 </section>
 
@@ -300,7 +239,6 @@ footer{padding:1.2rem 4rem;border-top:1px solid #e5e5e5;display:flex;justify-con
     <button class="tab-btn" data-tab="contact" data-es="Contacto" data-en="Contact">Contacto</button>
   </nav>
 
-  <!-- ABOUT -->
   <div class="tab-panel active" id="panel-about" role="tabpanel">
     <canvas id="c-delaunay" aria-hidden="true"></canvas>
     <div class="panel-content light-panel">
@@ -309,41 +247,13 @@ footer{padding:1.2rem 4rem;border-top:1px solid #e5e5e5;display:flex;justify-con
 
         <div>
           <div class="about-sub-label" data-es="Quién soy" data-en="Who I am">Quién soy</div>
-          <div class="about-bio" data-es="<p>Soy <strong>Jerónimo Hoyos</strong>, estudiante de Ingeniería en Sistemas e Informática en la Universidad Nacional de Colombia con una obsesión por entender los problemas antes de resolverlos.</p><p>Trabajo en la intersección de la <strong>estadística</strong>, el <strong>álgebra lineal</strong> y el <strong>aprendizaje automático</strong>. Lo que me motiva no es solo que un modelo funcione, sino comprender por qué funciona y qué dice sobre la estructura del problema.</p><p>Me mantengo al día con el estado del arte en IA y aplico <strong>GPU-accelerated computing</strong> cuando la escala lo exige. Fuera del código me encuentras leyendo, con mis gatos o pensando en matemáticas.</p>" data-en="<p>I'm <strong>Jerónimo Hoyos</strong>, a Computer Software Engineering student at Universidad Nacional de Colombia, obsessed with understanding problems before solving them.</p><p>I work at the intersection of <strong>statistics</strong>, <strong>linear algebra</strong>, and <strong>machine learning</strong>. What drives me isn't just building models that work — it's understanding why they work and what they reveal about the problem's structure.</p><p>I keep up with the AI state of the art and apply <strong>GPU-accelerated computing</strong> when scale demands it. Outside of code you'll find me reading, with my cats, or thinking about math.</p>"><p>Soy <strong>Jerónimo Hoyos</strong>, estudiante de Ingeniería en Sistemas e Informática en la Universidad Nacional de Colombia con una obsesión por entender los problemas antes de resolverlos.</p><p>Trabajo en la intersección de la <strong>estadística</strong>, el <strong>álgebra lineal</strong> y el <strong>aprendizaje automático</strong>. Lo que me motiva no es solo que un modelo funcione, sino comprender por qué funciona y qué dice sobre la estructura del problema.</p><p>Me mantengo al día con el estado del arte en IA y aplico <strong>GPU-accelerated computing</strong> cuando la escala lo exige. Fuera del código me encuentras leyendo, con mis gatos o pensando en matemáticas.</p></div>
-          <figure class="bio-talk">
-            <img src="static/epam-talk.jpg" alt="Jerónimo presentando en Medellín IA" loading="lazy">
-            <figcaption data-es="Presentando &ldquo;How to build a transformer from scratch&rdquo; en Medellín IA community · EPAM Medellín" data-en="Presenting &ldquo;How to build a transformer from scratch&rdquo; at Medellín IA community · EPAM Medellín">Presentando &ldquo;How to build a transformer from scratch&rdquo; en Medellín IA community · EPAM Medellín</figcaption>
-          </figure>
+          <div class="about-bio" data-es="<p>Soy <strong>Jerónimo Hoyos</strong>, estudiante de Ingeniería en Sistemas e Informática en la Universidad Nacional de Colombia con una obsesión por entender los problemas antes de resolverlos. Trabajo en la intersección de la <strong>probabilidad</strong>, el <strong>álgebra lineal</strong> y las <strong>ciencias de la computación</strong>.</p><p>Lo que me motiva no es solo que un modelo funcione, sino comprender por qué funciona y qué dice sobre la estructura del problema. Me mantengo al día con el estado del arte en IA, y fuera del código me encuentras leyendo, viendo videos de gatos o jugando.</p>" data-en="<p>I'm <strong>Jerónimo Hoyos</strong>, a Computer Software Engineering student at Universidad Nacional de Colombia, obsessed with understanding problems before solving them. I work at the intersection of <strong>probability</strong>, <strong>linear algebra</strong>, and <strong>computer science</strong>.</p><p>What drives me isn't just building models that work, but understanding why they work and what they reveal about the structure of the problem. I keep up with the state of the art in AI, and outside of code you'll find me reading, watching cat videos, or gaming.</p>"><p>Soy <strong>Jerónimo Hoyos</strong>, estudiante de Ingeniería en Sistemas e Informática en la Universidad Nacional de Colombia con una obsesión por entender los problemas antes de resolverlos. Trabajo en la intersección de la <strong>probabilidad</strong>, el <strong>álgebra lineal</strong> y las <strong>ciencias de la computación</strong>.</p><p>Lo que me motiva no es solo que un modelo funcione, sino comprender por qué funciona y qué dice sobre la estructura del problema. Me mantengo al día con el estado del arte en IA, y fuera del código me encuentras leyendo, viendo videos de gatos o jugando.</p></div>
         </div>
 
-        <div>
-          <div class="about-sub-label" data-es="Stack tecnológico" data-en="Tech stack">Stack tecnológico</div>
-          
-      <div class="stack-tier">
-        <div class="stack-tier-label" data-es="Lenguajes" data-en="Languages">Lenguajes <span></span></div>
-        <div class="stack-chips"><span class="chip chip-lang">Python</span><span class="chip chip-lang">R</span><span class="chip chip-lang">SQL</span><span class="chip chip-lang">C</span><span class="chip chip-lang">Rust</span></div>
-      </div>
-      <div class="stack-tier">
-        <div class="stack-tier-label" data-es="Data Science" data-en="Data Science">Data Science <span></span></div>
-        <div class="stack-chips"><span class="chip chip-data">NumPy</span><span class="chip chip-data">Pandas</span><span class="chip chip-data">Polars</span><span class="chip chip-data">scikit-learn</span><span class="chip chip-data">XGBoost</span><span class="chip chip-data">Statsmodels</span></div>
-      </div>
-      <div class="stack-tier">
-        <div class="stack-tier-label" data-es="Deep Learning & IA" data-en="Deep Learning & AI">Deep Learning & IA <span></span></div>
-        <div class="stack-chips"><span class="chip chip-ml">PyTorch</span><span class="chip chip-ml">Transformers</span><span class="chip chip-ml">LangGraph</span><span class="chip chip-ml">Ollama</span><span class="chip chip-ml">Foundation Models</span></div>
-      </div>
-      <div class="stack-tier">
-        <div class="stack-tier-label" data-es="High Performance Computing" data-en="High Performance Computing">High Performance Computing <span></span></div>
-        <div class="stack-chips"><span class="chip chip-hpc">CUDA</span><span class="chip chip-hpc">cuBLAS</span><span class="chip chip-hpc">RAPIDS</span><span class="chip chip-hpc">Polars</span><span class="chip chip-hpc">Spark</span></div>
-      </div>
-      <div class="stack-tier">
-        <div class="stack-tier-label" data-es="Visualización & Apps" data-en="Visualization & Apps">Visualización & Apps <span></span></div>
-        <div class="stack-chips"><span class="chip chip-viz">Matplotlib</span><span class="chip chip-viz">Plotly</span><span class="chip chip-viz">Seaborn</span><span class="chip chip-viz">Streamlit</span><span class="chip chip-viz">FastAPI</span><span class="chip chip-viz">Power BI</span></div>
-      </div>
-      <div class="stack-tier">
-        <div class="stack-tier-label" data-es="Dev & Herramientas" data-en="Dev & Tools">Dev & Herramientas <span></span></div>
-        <div class="stack-chips"><span class="chip chip-ops">Git</span><span class="chip chip-ops">Linux</span><span class="chip chip-ops">Docker</span><span class="chip chip-ops">Jupyter</span><span class="chip chip-ops">VS Code</span><span class="chip chip-ops">Excel</span></div>
-      </div>
-        </div>
+        <figure class="bio-talk">
+          <img src="static/epam-talk.jpg" alt="Jerónimo presentando en Medellín IA" loading="lazy">
+          <figcaption data-es="Presentando &ldquo;How to build a transformer from scratch&rdquo; en Medellín IA community · EPAM Medellín" data-en="Presenting &ldquo;How to build a transformer from scratch&rdquo; at Medellín IA community · EPAM Medellín">Presentando &ldquo;How to build a transformer from scratch&rdquo; en Medellín IA community · EPAM Medellín</figcaption>
+        </figure>
 
         <div class="about-bottom">
           <div>
@@ -394,9 +304,8 @@ footer{padding:1.2rem 4rem;border-top:1px solid #e5e5e5;display:flex;justify-con
     </div>
   </div>
 
-  <!-- PROJECTS -->
   <div class="tab-panel" id="panel-projects" role="tabpanel">
-    <canvas id="c-flow" aria-hidden="true"></canvas>
+    <canvas id="c-lorenz" aria-hidden="true"></canvas>
     <div class="panel-content light-panel">
       <div class="sec-title" data-es="PROYECTOS" data-en="PROJECTS">PROYECTOS</div>
       <div class="sec-sub" data-es="Transformers desde cero, agentes de IA, GPU computing y machine learning aplicado." data-en="From-scratch transformers, AI agents, GPU computing and applied machine learning.">Transformers desde cero, agentes de IA, GPU computing y machine learning aplicado.</div>
@@ -466,7 +375,6 @@ footer{padding:1.2rem 4rem;border-top:1px solid #e5e5e5;display:flex;justify-con
     </div>
   </div>
 
-  <!-- ARTE -->
   <div class="tab-panel" id="panel-arte" role="tabpanel">
     <canvas id="c-dp" aria-hidden="true"></canvas>
     <div class="panel-content light-panel">
@@ -505,13 +413,11 @@ footer{padding:1.2rem 4rem;border-top:1px solid #e5e5e5;display:flex;justify-con
       </div>
     </div>
   </div>
-  <!-- LIGHTBOX -->
   <div id="lightbox" role="dialog" aria-modal="true" aria-label="Imagen ampliada">
     <button id="lb-close" aria-label="Cerrar">&#x2715;</button>
     <img id="lb-img" src="" alt="">
   </div>
 
-  <!-- CONTACT -->
   <div class="tab-panel" id="panel-contact">
     <canvas id="c-fourier" aria-hidden="true"></canvas>
     <div class="panel-content dark-panel">
@@ -541,7 +447,7 @@ footer{padding:1.2rem 4rem;border-top:1px solid #e5e5e5;display:flex;justify-con
       </div>
     </div>
   </div>
-</div><!-- /shell -->
+</div>
 
 <footer>
   <span>© 2025 Jerónimo Hoyos Botero</span>
@@ -549,7 +455,6 @@ footer{padding:1.2rem 4rem;border-top:1px solid #e5e5e5;display:flex;justify-con
 </footer>
 <script>const _mob=window.innerWidth<=768||('ontouchstart' in window);
 
-/* ═══ LANGUAGE TOGGLE ═══ */
 function setLang(lang) {
   document.documentElement.lang = lang;
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
@@ -573,7 +478,6 @@ document.querySelectorAll('.lang-btn').forEach(btn => {
 (function() {
   try { const s = localStorage.getItem('lang'); setLang(s || 'en'); } catch(e) { setLang('en'); }
 })();
-/* Email copy button */
 (function() {
   const btn = document.getElementById('ct-email-copy');
   if (!btn) return;
@@ -586,7 +490,6 @@ document.querySelectorAll('.lang-btn').forEach(btn => {
     });
   });
 })();
-/* ═══ TABS ═══ */
 function activateTab(id) {
   const panel = document.getElementById('panel-' + id);
   if (!panel) return;
@@ -607,7 +510,6 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
   const hash = window.location.hash.replace('#','');
   if (hash) activateTab(hash);
 })();
-/* ═══ HERO — Conway's Game of Life ═══ */
 (function() {
   const cv = document.getElementById('c-conway'), cx = cv.getContext('2d');
   const SZ = _mob?32:18, STEP=_mob?8:5; let cols, rows, grid, frame = 0;
@@ -641,7 +543,6 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
   window.addEventListener('resize',()=>{ if(Math.abs(window.innerWidth-_cw)>30){_cw=window.innerWidth;init();} });
   window.addEventListener('pageshow',e=>{ if(e.persisted) init(); });
 })();
-/* ═══ ABOUT — Delaunay Triangulation ═══ */
 (function() {
   const cv = document.getElementById('c-delaunay'), cx = cv.getContext('2d');
   let pts=[], W=0, H=0, initialized=false;
@@ -672,7 +573,7 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     const r=panel.getBoundingClientRect();
     W=r.width||panel.offsetWidth||window.innerWidth;
     H=r.height||panel.offsetHeight||window.innerHeight;
-    if(W<10||H<10) return; // panel oculto, no reinicializar
+    if(W<10||H<10) return;
     cv.width=W; cv.height=H;
     pts=Array.from({length:_mob?20:48}, () => ({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.55,vy:(Math.random()-.5)*.55}));
   }
@@ -699,47 +600,53 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
   new MutationObserver(() => { if (document.getElementById('panel-about').classList.contains('active')&&!initialized){resize();initialized=true;} })
     .observe(document.getElementById('panel-about'),{attributes:true,attributeFilter:['class']});
 })();
-/* ═══ PROJECTS — de Jong strange attractor (morphing fractal cloud) ═══ */
 (function() {
-  const cv=document.getElementById('c-flow'), cx=cv.getContext('2d');
-  let W,H,active=false,initialized=false,t=0,tiles=[];
-  const PF=_mob?2000:4800;
-  function build() {
-    const p=document.getElementById('panel-projects');
-    W=p.offsetWidth||window.innerWidth; H=p.offsetHeight||window.innerHeight;
+  const cv=document.getElementById('c-lorenz'), cx=cv.getContext('2d'), panel=document.getElementById('panel-projects');
+  const NP=_mob?4:8, L=_mob?300:450, SUB=2, CH=15, DT=0.004;
+  let W=0,H=0,t=0,tiles=[];
+  function step(p) {
+    const dx=10*(p.y-p.x), dy=p.x*(28-p.z)-p.y, dz=p.x*p.y-8/3*p.z;
+    p.x+=dx*DT; p.y+=dy*DT; p.z+=dz*DT;
+  }
+  function trail() {
+    const q={x:Math.random()*2-1, y:Math.random()*2-1, z:20+Math.random()*10}, tr=[];
+    for(let n=0,m=1000+Math.random()*1000;n<m;n++) step(q);
+    for(let n=0;n<L;n++){ step(q); tr.push({x:q.x,y:q.y,z:q.z}); }
+    return {q,tr};
+  }
+  function layout() {
+    W=panel.offsetWidth; H=panel.offsetHeight;
+    if(W<10||H<10) return;
     cv.width=W; cv.height=H;
-    const th=_mob?520:660, nT=Math.max(1,Math.round(H/th)), TH=H/nT;
-    tiles=[];
-    for(let i=0;i<nT;i++) tiles.push({cy:TH*(i+0.5), sx:W*0.225, sy:TH*0.235, x:Math.random()*2-1, y:Math.random()*2-1, ph:i*2.3});
-    cx.fillStyle='#f4f4ef'; cx.fillRect(0,0,W,H);
+    const nT=Math.max(1,Math.round(H/(_mob?520:660))), TH=H/nT, sc=Math.min(W*0.42/30,TH*0.8/50);
+    while(tiles.length<nT) tiles.push({ph:tiles.length*1.9, trails:Array.from({length:NP},trail)});
+    tiles.length=nT;
+    tiles.forEach((tl,i)=>{ tl.cy=TH*(i+0.5); tl.h=TH; tl.sc=sc; });
   }
   (function loop() {
     requestAnimationFrame(loop);
-    if (!active || document.hidden) return;
-    t+=0.02;
-    cx.fillStyle='rgba(244,244,239,0.016)'; cx.fillRect(0,0,W,H);
-    cx.fillStyle='rgba(5,5,5,0.26)';
-    const per=Math.floor(PF/tiles.length);
-    for(const tl of tiles){
-      const T=t+tl.ph;
-      const a=-1.7+0.45*Math.sin(T*0.11), b=1.7+0.35*Math.cos(T*0.13),
-            c=-1.8+0.40*Math.sin(T*0.09+1), d=-1.9+0.35*Math.cos(T*0.15+2);
-      let x=tl.x, y=tl.y;
-      for(let k=0;k<per;k++){
-        const nx=Math.sin(a*y)-Math.cos(b*x);
-        y=Math.sin(c*x)-Math.cos(d*y); x=nx;
-        cx.fillRect(W*0.5+x*tl.sx, tl.cy+y*tl.sy, 1, 1);
+    if (!tiles.length || document.hidden || !panel.classList.contains('active')) return;
+    t+=0.004;
+    for(const tl of tiles) for(const o of tl.trails) for(let k=0;k<SUB;k++){ step(o.q); o.tr.shift(); o.tr.push({x:o.q.x,y:o.q.y,z:o.q.z}); }
+    cx.clearRect(0,0,W,H);
+    cx.lineWidth=0.9;
+    const top=panel.getBoundingClientRect().top, seg=Math.ceil(L/CH);
+    const vis=tiles.filter(tl=>top+tl.cy+tl.h/2>0&&top+tl.cy-tl.h/2<window.innerHeight);
+    for(let c=0;c<CH;c++){
+      const s0=c*seg, s1=Math.min(L-1,s0+seg);
+      cx.beginPath();
+      for(const tl of vis){
+        const co=Math.cos(t+tl.ph), si=Math.sin(t+tl.ph);
+        for(const o of tl.trails) for(let n=s0;n<=s1;n++){
+          const p=o.tr[n], x=W*0.5+(p.x*co-p.y*si)*tl.sc, y=tl.cy+(24-p.z)*tl.sc;
+          n===s0?cx.moveTo(x,y):cx.lineTo(x,y);
+        }
       }
-      tl.x=x; tl.y=y;
+      cx.strokeStyle=`rgba(5,5,5,${(0.5*(c+1)/CH).toFixed(3)})`; cx.stroke();
     }
   })();
-  let _cw=window.innerWidth;
-  build(); initialized=true;
-  new MutationObserver(() => { const on=document.getElementById('panel-projects').classList.contains('active'); if(on&&!active){if(!initialized){build();initialized=true;}active=true;}else if(!on) active=false; })
-    .observe(document.getElementById('panel-projects'),{attributes:true,attributeFilter:['class']});
-  window.addEventListener('resize',()=>{ if(active&&Math.abs(window.innerWidth-_cw)>30){_cw=window.innerWidth;build();} });
+  new ResizeObserver(layout).observe(panel);
 })();
-/* ═══ CONTACT — Chladni Figures ═══ */
 (function() {
   const cv=document.getElementById('c-fourier'), cx=cv.getContext('2d');
   let W,H,active=false,initialized=false,transT=0,pairIdx=0;
@@ -783,7 +690,6 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
   new MutationObserver(()=>{const on=document.getElementById('panel-contact').classList.contains('active');if(on&&!active){if(!initialized){init();initialized=true;}active=true;}else if(!on)active=false;}).observe(document.getElementById('panel-contact'),{attributes:true,attributeFilter:['class']});
   window.addEventListener('resize',()=>{if(active&&Math.abs(window.innerWidth-_cw)>30){_cw=window.innerWidth;init();}});
 })();
-/* ═══ Campo de partículas con atractores · reutilizable (Arte + Blog) ═══ */
 function particleField(cvId, panelId){
   const cv=document.getElementById(cvId); if(!cv) return;
   const cx=cv.getContext('2d'), panel=()=>document.getElementById(panelId);
@@ -855,7 +761,6 @@ function particleField(cvId, panelId){
 }
 particleField('c-dp','panel-arte');
 
-/* ═══ LIGHTBOX ═══ */
 (function(){
   const lb=document.getElementById('lightbox');
   const lbImg=document.getElementById('lb-img');

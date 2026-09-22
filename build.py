@@ -1,7 +1,4 @@
 #!/usr/bin/env python3
-# ╔══════════════════════════════════════════════════════════════════╗
-# ║  Edita generator/content.py y luego corre:  python build.py     ║
-# ╚══════════════════════════════════════════════════════════════════╝
 
 import re
 from pathlib import Path
@@ -81,7 +78,6 @@ def build() -> None:
     print(f"   Proyectos: {len(C.PROYECTOS)}")
     print(f"   Arte     : {len(C.ARTE)} pieza(s)")
     print("   docs/robots.txt, sitemap.xml, og.png, favicon.ico y 404.html generados.")
-
 
 if __name__ == "__main__":
     build()

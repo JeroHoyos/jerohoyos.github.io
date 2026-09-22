@@ -1,36 +1,23 @@
-# ╔══════════════════════════════════════════════════════════════════╗
-# ║                  CONTENT.PY — Solo edita este archivo            ║
-# ║  Después de cambiar algo, corre:  python build.py                ║
-# ╚══════════════════════════════════════════════════════════════════╝
-
-# ── IDENTIDAD ────────────────────────────────────────────────────────
 NOMBRE      = "Jerónimo<br>Hoyos Botero"
 TITULO      = "Data Scientist · ML Engineer"
-TITULO_EN   = "Data Scientist · ML Engineer"
 EMAIL       = "jerohoyos1@gmail.com"
 CIUDAD      = "Medellín"
 PAIS        = "Colombia"
 AÑO         = "2025"
 
-# ── REDES ─────────────────────────────────────────────────────────────
 GITHUB    = "https://github.com/JeroHoyos"
 LINKEDIN  = "https://www.linkedin.com/in/jeronimo-hoyos-botero/"
 KAGGLE    = "https://www.kaggle.com/scratchbox"
 
-# ── BIO (párrafos en ES y EN) ─────────────────────────────────────────
 BIO_ES = [
-    "Soy <strong>Jerónimo Hoyos</strong>, estudiante de Ingeniería en Sistemas e Informática en la Universidad Nacional de Colombia con una obsesión por entender los problemas antes de resolverlos.",
-    "Trabajo en la intersección de la <strong>estadística</strong>, el <strong>álgebra lineal</strong> y el <strong>aprendizaje automático</strong>. Lo que me motiva no es solo que un modelo funcione, sino comprender por qué funciona y qué dice sobre la estructura del problema.",
-    "Me mantengo al día con el estado del arte en IA y aplico <strong>GPU-accelerated computing</strong> cuando la escala lo exige. Fuera del código me encuentras leyendo, con mis gatos o pensando en matemáticas.",
+    "Soy <strong>Jerónimo Hoyos</strong>, estudiante de Ingeniería en Sistemas e Informática en la Universidad Nacional de Colombia con una obsesión por entender los problemas antes de resolverlos. Trabajo en la intersección de la <strong>probabilidad</strong>, el <strong>álgebra lineal</strong> y las <strong>ciencias de la computación</strong>.",
+    "Lo que me motiva no es solo que un modelo funcione, sino comprender por qué funciona y qué dice sobre la estructura del problema. Me mantengo al día con el estado del arte en IA, y fuera del código me encuentras leyendo, viendo videos de gatos o jugando.",
 ]
 BIO_EN = [
-    "I'm <strong>Jerónimo Hoyos</strong>, a Computer Software Engineering student at Universidad Nacional de Colombia, obsessed with understanding problems before solving them.",
-    "I work at the intersection of <strong>statistics</strong>, <strong>linear algebra</strong>, and <strong>machine learning</strong>. What drives me isn't just building models that work — it's understanding why they work and what they reveal about the problem's structure.",
-    "I keep up with the AI state of the art and apply <strong>GPU-accelerated computing</strong> when scale demands it. Outside of code you'll find me reading, with my cats, or thinking about math.",
+    "I'm <strong>Jerónimo Hoyos</strong>, a Computer Software Engineering student at Universidad Nacional de Colombia, obsessed with understanding problems before solving them. I work at the intersection of <strong>probability</strong>, <strong>linear algebra</strong>, and <strong>computer science</strong>.",
+    "What drives me isn't just building models that work, but understanding why they work and what they reveal about the structure of the problem. I keep up with the state of the art in AI, and outside of code you'll find me reading, watching cat videos, or gaming.",
 ]
 
-# ── EDUCACIÓN ─────────────────────────────────────────────────────────
-# Lista de dicts: year, name_es, name_en, institution
 EDUCACION = [
     {
         "year_es": "2024 - Actualidad",
@@ -41,49 +28,6 @@ EDUCACION = [
     },
 ]
 
-# ── TECH STACK ────────────────────────────────────────────────────────
-# Categorías con nombre ES/EN, clase CSS de chip, y lista de tecnologías
-STACK = [
-    {
-        "label_es": "Lenguajes",
-        "label_en": "Languages",
-        "chip_class": "chip-lang",
-        "items": ["Python", "R", "SQL", "C", "Rust"],
-    },
-    {
-        "label_es": "Data Science",
-        "label_en": "Data Science",
-        "chip_class": "chip-data",
-        "items": ["NumPy", "Pandas", "Polars", "scikit-learn", "XGBoost", "Statsmodels"],
-    },
-    {
-        "label_es": "Deep Learning & IA",
-        "label_en": "Deep Learning & AI",
-        "chip_class": "chip-ml",
-        "items": ["PyTorch", "Transformers", "LangGraph", "Ollama", "Foundation Models"],
-    },
-    {
-    "label_es": "High Performance Computing",
-    "label_en": "High Performance Computing",
-    "chip_class": "chip-hpc",
-    "items": ["CUDA", "cuBLAS", "RAPIDS", "Polars", "Spark"],
-    },
-    {
-        "label_es": "Visualización & Apps",
-        "label_en": "Visualization & Apps",
-        "chip_class": "chip-viz",
-        "items": ["Matplotlib", "Plotly", "Seaborn", "Streamlit", "FastAPI", "Power BI"],
-    },
-    {
-        "label_es": "Dev & Herramientas",
-        "label_en": "Dev & Tools",
-        "chip_class": "chip-ops",
-        "items": ["Git", "Linux", "Docker", "Jupyter", "VS Code", "Excel"],
-    },
-]
-
-# ── PROYECTOS ─────────────────────────────────────────────────────────
-# featured=True → tarjeta grande con stats; featured=False → tarjeta normal
 PROYECTOS = [
     {
         "featured": True,
@@ -161,9 +105,6 @@ PROYECTOS = [
     },
 ]
 
-# ── ARTE ──────────────────────────────────────────────────────────────
-# Agrega imágenes con: {"tipo": "imagen", "url": "dibujos/archivo.jpg",
-#                        "titulo_es": "Título", "titulo_en": "Title"}
 ARTE = [
     {"tipo": "imagen", "url": "dibujos/bomb.jpg",     "titulo_es": "Bomb",     "titulo_en": "Bomb"},
     {"tipo": "imagen", "url": "dibujos/pokemon.webp", "titulo_es": "Pokémon",  "titulo_en": "Pokémon"},
@@ -173,21 +114,17 @@ ARTE = [
     {"tipo": "imagen", "url": "dibujos/monster.webp", "titulo_es": "Monster",  "titulo_en": "Monster"},
 ]
 
-# ── IDIOMAS ───────────────────────────────────────────────────────────
 IDIOMAS = [
     {"name": "Español", "level_es": "Nativo",  "level_en": "Native"},
     {"name": "Inglés",  "level_es": "B1",       "level_en": "B1"},
 ]
 
-# ── PROYECTOS ─────────────────────────────────────────────────────────
 PROYECTOS_SUB_ES = "Transformers desde cero, agentes de IA, GPU computing y machine learning aplicado."
 PROYECTOS_SUB_EN = "From-scratch transformers, AI agents, GPU computing and applied machine learning."
 
-# ── ARTE ──────────────────────────────────────────────────────────────
 ARTE_SUB_ES = "Dibujos digitales hechos en ratos libres. Personajes, criaturas y lo que salga."
 ARTE_SUB_EN = "Digital drawings made in my spare time. Characters, creatures and whatever comes out."
 
-# ── CONTACTO ──────────────────────────────────────────────────────────
 CONTACTO_TITULO_ES = "HABLEMOS"
 CONTACTO_TITULO_EN = "LET'S TALK"
 CONTACTO_SUB_ES    = "Si tienes alguna pregunta, propuesta u oportunidad de colaboración, no dudes en contactarme."

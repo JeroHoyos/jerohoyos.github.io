@@ -1,10 +1,7 @@
-"""Image asset generation: favicon.ico and og.png."""
-
 from pathlib import Path
 
 
 def _find_font(candidates: list, size: int):
-    """Return the first loadable ImageFont from a list of path strings."""
     try:
         from PIL import ImageFont
         for path in candidates:
@@ -17,7 +14,6 @@ def _find_font(candidates: list, size: int):
         return None
 
 
-# Common system font paths per OS (tried in order)
 _BOLD_SERIF = [
     r"C:\Windows\Fonts\georgiab.ttf",
     r"C:\Windows\Fonts\arialbd.ttf",
@@ -51,7 +47,6 @@ _MONO = [
 
 
 def build_favicon(output: str = "docs/favicon.ico") -> bool:
-    """Generate a dark-background 'J' monogram favicon at 16/32/48 px."""
     try:
         from PIL import Image, ImageDraw
 
@@ -76,7 +71,6 @@ def build_favicon(output: str = "docs/favicon.ico") -> bool:
 
 def build_og_image(nombre: str, titulo: str, site_url: str,
                    output: str = "docs/og.png") -> bool:
-    """Generate a 1200×630 Open Graph image."""
     try:
         from PIL import Image, ImageDraw
 
