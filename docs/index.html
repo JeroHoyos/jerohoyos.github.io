@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Jerónimo Hoyos Botero</title>
+<script>try{var l=localStorage.getItem('lang')}catch(e){}document.documentElement.lang=l||(/^es/i.test(navigator.language||'')?'es':'en')</script>
+<meta name="description" content="Jerónimo Hoyos Botero: machine learning enthusiast studying at the Universidad Nacional de Colombia. Talks, projects and drawings.">
+<meta name="theme-color" content="#050505">
+<link rel="canonical" href="https://jerohoyos.github.io/">
 <link rel="icon" href="favicon.ico" sizes="32x32">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐈‍⬛</text></svg>" type="image/svg+xml">
-<meta name="description" content="Data Scientist · ML Engineer en Medellín. I'm Jerónimo Hoyos, a Computer Software Engineering student at Universidad Nacional de Colombia, obsessed with understanding problems before solving them. I work at the intersection of probability, linear algebra, and computer science.">
-<meta property="og:title" content="Jerónimo Hoyos Botero — Data Scientist · ML Engineer">
-<meta property="og:description" content="Data Scientist · ML Engineer en Medellín. Estudiante de Ingeniería en Sistemas, Universidad Nacional de Colombia.">
+<meta property="og:title" content="Jerónimo Hoyos Botero">
+<meta property="og:description" content="Machine learning enthusiast at the Universidad Nacional de Colombia. I love cats, coding and math.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://jerohoyos.github.io/">
 <meta property="og:image" content="https://jerohoyos.github.io/og.png">
@@ -18,764 +21,328 @@
 <meta name="twitter:image" content="https://jerohoyos.github.io/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=Rye&family=Special+Elite&family=Nosifer&family=EB+Garamond:ital,wght@0,500;1,500&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-html{font-size:20px;scroll-behavior:smooth;overflow-x:hidden}
-:root{--black:#050505;--white:#f4f4ef;--gray:#666}
-body{background:#f4f4ef;color:var(--black);font-family:'Space Mono',monospace;overflow-x:hidden;-webkit-text-size-adjust:100%}
-
-.lang-toggle{position:fixed;top:1.2rem;right:1.5rem;z-index:200;display:flex;gap:.3rem}
-.lang-btn{font-family:'Space Mono',monospace;font-size:.46rem;letter-spacing:2.5px;text-transform:uppercase;padding:.38rem .7rem;background:rgba(30,30,30,0.35);border:1px solid rgba(160,160,160,0.35);color:#888;cursor:pointer;transition:all .2s;backdrop-filter:blur(6px)}
-.lang-btn.active{border-color:rgba(180,180,180,0.65);color:#bbb}
-.lang-btn:hover{border-color:rgba(160,160,160,0.55);color:#aaa}
-
-#hero{height:65vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;position:relative;overflow:hidden;background:var(--black)}
-#hero canvas{position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
-.hero-inner{position:relative;z-index:2}
-.hero-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,8vw,8rem);line-height:.88;letter-spacing:-3px;color:var(--white);animation:fadeUp .8s .1s ease both}
-
-#shell{display:flex;flex-direction:column}
-#tab-bar{position:sticky;top:0;z-index:50;background:var(--black);border-bottom:1px solid #222;display:flex;align-items:stretch;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
-#tab-bar::-webkit-scrollbar{display:none}
-.tab-btn:first-child{margin-left:auto;border-left:1px solid #222}
-.tab-btn:last-child{margin-right:auto}
-.tab-btn{font-family:'Space Mono',monospace;font-size:.75rem;letter-spacing:3px;text-transform:uppercase;padding:1.6rem 2.4rem;background:none;border:none;color:#555;cursor:pointer;border-right:1px solid #222;transition:color .2s;position:relative;white-space:nowrap;flex-shrink:0}
-.tab-btn::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--white);transform:scaleX(0);transition:transform .25s}
-.tab-btn:hover{color:#bbb}
-.tab-btn.active{color:var(--white)}
-.tab-btn.active::after{transform:scaleX(1)}
-.tab-panel{display:none;position:relative;background:#f4f4ef}
-.tab-panel.active{display:block;animation:tabIn .3s ease both}
-@keyframes tabIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-.tab-panel>canvas{position:absolute;inset:0;z-index:0;pointer-events:none;display:block;width:100%;height:100%}
-.panel-content{position:relative;z-index:2}
-.dark-panel{background:rgba(244,244,239,0.78);padding:5rem 4rem 6rem}
-.light-panel{background:rgba(244,244,239,0.62);color:var(--black);padding:5rem 4rem 6rem}
-.sec-label{font-size:.52rem;letter-spacing:4px;text-transform:uppercase;color:var(--gray);margin-bottom:.8rem}
-.sec-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,7vw,7rem);letter-spacing:1px;line-height:.9;margin-bottom:.8rem}
-.sec-sub{font-size:.85rem;color:#2a2a2a;max-width:52rem;line-height:2.4;margin-bottom:3rem}
-#panel-projects .panel-content{background:rgba(244,244,239,0.38)}
-#panel-projects .sec-title,#panel-arte .sec-title{text-align:center}
-#panel-projects .sec-sub,#panel-arte .sec-sub{text-align:center;margin-left:auto;margin-right:auto}
-
-.about-layout{display:grid;grid-template-columns:1fr 1.35fr;gap:1.5rem 5rem;align-items:start}
-.about-bottom{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:3rem;padding-top:1.2rem;border-top:2px solid #999;align-items:start}
-.idioma-item{display:flex;justify-content:space-between;align-items:baseline;padding:.45rem 0;border-bottom:1px solid #eee}
-.idioma-item:last-child{border-bottom:none}
-.idioma-name{font-size:.65rem;color:#222}
-.idioma-level{font-size:.48rem;letter-spacing:2px;text-transform:uppercase;color:#888}
-.about-preview{grid-column:1/-1;padding-top:1.2rem;border-top:2px solid #999}
-.apm-row{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-top:.8rem}
-.apm-tags{display:flex;flex-wrap:wrap;gap:.3rem}
-.apm-ver-mas{display:block;width:max-content;max-width:100%;margin:2.4rem auto 0;text-align:center;padding:.9rem 2.6rem;border:1px solid #1a1a1a;border-radius:999px;font-size:.6rem;letter-spacing:2.5px;text-transform:uppercase;color:#111;cursor:pointer;background:none;font-family:'Space Mono',monospace;font-weight:700;transition:background .2s,color .2s,transform .2s}
-.apm-ver-mas:hover{background:#1a1a1a;color:#f4f4ef;transform:translateY(-1px)}
-.apm-ver-mas span{pointer-events:none}
-.about-sub-label{font-size:.85rem;letter-spacing:4px;text-transform:uppercase;color:#111;margin-bottom:1.4rem;font-weight:700}
-.about-bio p{font-size:.85rem;line-height:2.4;color:#2a2a2a;margin-bottom:1.2rem}
-.about-bio strong{color:var(--black)}
-.bio-talk{border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.08)}
-.bio-talk img{width:100%;height:auto;display:block}
-.bio-talk figcaption{font-size:.5rem;letter-spacing:1.5px;color:#888;padding:.7rem 1rem;text-align:center;background:#fafaf8}
-
-.edu-item{margin-bottom:1.5rem}
-.edu-item:last-child{margin-bottom:0}
-.edu-year{font-size:.5rem;letter-spacing:2px;color:#bbb;margin-bottom:.35rem}
-.edu-name{font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--black);margin-bottom:.25rem;line-height:1.3}
-.edu-inst{font-size:.62rem;color:#555}
-
-.proj-paper{max-width:60rem;margin:0 auto;text-align:left}
-
-.proj-kicker{font-size:.46rem;letter-spacing:3px;text-transform:uppercase;color:#666;font-weight:700;margin-bottom:.75rem}
-.proj-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:.4rem}
-.proj-tag{font-size:.44rem;letter-spacing:1.5px;text-transform:uppercase;padding:.32rem .78rem;border:1px solid;border-radius:999px;background:transparent;white-space:nowrap;font-weight:700}
-
-.proj-lead{display:grid;grid-template-columns:1.05fr 1fr;gap:2.4rem;align-items:center;padding-bottom:2.6rem;margin-bottom:.5rem;border-bottom:2px solid #1a1a1a}
-.proj-lead-media{display:block;background:#ecece8;border-radius:16px;overflow:hidden;aspect-ratio:4/3;box-shadow:0 12px 34px rgba(0,0,0,.11)}
-.proj-lead-media img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
-.proj-lead-media:hover img{transform:scale(1.02)}
-.proj-lead-body{display:flex;flex-direction:column}
-.proj-lead-badge{align-self:center;display:inline-flex;align-items:center;gap:.3rem;font-size:.44rem;letter-spacing:2.5px;text-transform:uppercase;font-weight:700;color:#f4f4ef;background:#1a1a1a;border-radius:999px;padding:.38rem .9rem;margin-bottom:1.1rem}
-.proj-lead-title{font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,3.4vw,2.7rem);line-height:1.08;color:#0a0a0a;text-decoration:none;text-align:center;margin-bottom:1rem;transition:color .2s}
-.proj-lead-title:hover{color:#555}
-.proj-lead-deck{font-size:.72rem;line-height:2;color:#3a3a3a;margin-bottom:1.3rem}
-.proj-lead-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem;padding:1.1rem 0;margin-bottom:1.3rem;border-top:1px solid #d8d8d2;border-bottom:1px solid #d8d8d2}
-.proj-stat{display:flex;flex-direction:column;gap:.25rem}
-.proj-stat-val{font-family:'DM Serif Display',serif;font-size:.92rem;color:#0a0a0a;line-height:1.05}
-.proj-stat-label{font-size:.4rem;letter-spacing:1.5px;text-transform:uppercase;color:#555}
-.proj-lead .proj-tags{margin-bottom:1.4rem}
-.proj-readmore{align-self:center;padding:.72rem 1.7rem;border:1px solid #1a1a1a;border-radius:999px;font-size:.46rem;letter-spacing:2.5px;text-transform:uppercase;color:#111;text-decoration:none;background:none;transition:background .2s,color .2s,transform .2s}
-.proj-readmore:hover{background:#1a1a1a;color:#f4f4ef;transform:translateY(-1px)}
-.proj-post:hover .proj-readmore{background:#1a1a1a;color:#f4f4ef}
-.proj-post-cta{margin-top:1.3rem}
-
-.proj-feed-head{display:flex;align-items:center;gap:1rem;margin:2.6rem 0 1.4rem}
-.proj-feed-label{font-size:.5rem;letter-spacing:3.5px;text-transform:uppercase;color:#111;font-weight:700;white-space:nowrap}
-.proj-feed-rule{flex:1;height:1px;background:#ccc}
-
-.proj-feed{display:flex;flex-direction:column}
-.proj-post{display:grid;grid-template-columns:1fr 1fr;gap:2.2rem;align-items:center;padding:1.9rem 0;border-top:1px solid #d8d8d2;text-decoration:none;color:inherit;transition:opacity .2s}
-.proj-post:first-child{border-top:none}
-.proj-post-media{aspect-ratio:16/10;background:#ecece8;border-radius:14px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.09)}
-.proj-post-media img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
-.proj-post:hover .proj-post-media img{transform:scale(1.04)}
-.proj-post-body{display:flex;flex-direction:column;min-width:0}
-.proj-post-title{font-family:'DM Serif Display',serif;font-size:1.4rem;line-height:1.18;color:#0a0a0a;text-align:center;margin-bottom:.6rem;transition:color .2s}
-.proj-post:hover .proj-post-title{color:#555}
-.proj-post-excerpt{font-size:.72rem;line-height:2;color:#3a3a3a;margin-bottom:1rem}
-.proj-post-foot{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:.7rem 1rem;margin-top:auto}
-
-.proj-card{display:flex;flex-direction:column;gap:.55rem;text-decoration:none;color:inherit}
-.proj-c-img{aspect-ratio:16/9;background:#ecece8;border-radius:14px;overflow:hidden;box-shadow:0 8px 22px rgba(0,0,0,.10);transition:box-shadow .3s,transform .3s cubic-bezier(.2,.7,.2,1)}
-.proj-c-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
-.proj-card:hover .proj-c-img{box-shadow:0 14px 32px rgba(0,0,0,.16);transform:translateY(-3px)}
-.proj-card:hover .proj-c-img img{transform:scale(1.05)}
-.proj-c-name{font-family:'DM Serif Display',serif;font-size:1.4rem;color:#111;line-height:1.2;text-align:center;margin-top:.4rem;transition:color .2s}
-.proj-card:hover .proj-c-name{color:#555}
-.proj-c-desc{font-size:.72rem;line-height:2;color:#3a3a3a;flex:1}
-.proj-c-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:.3rem;margin-top:.15rem}
-.proj-c-tag{font-size:.44rem;letter-spacing:1.5px;text-transform:uppercase;padding:.3rem .72rem;border:1px solid;border-radius:999px;background:transparent;white-space:nowrap;font-weight:700}
-.proj-c-cta{align-self:center;margin-top:.9rem;padding:.65rem 1.5rem;border:1px solid #1a1a1a;border-radius:999px;font-size:.44rem;letter-spacing:2.5px;text-transform:uppercase;color:#111;background:none;transition:background .2s,color .2s,transform .2s}
-.proj-card:hover .proj-c-cta{background:#1a1a1a;color:#f4f4ef}
-
-.arte-grid{columns:3 280px;column-gap:1.8rem}
-.arte-empty{font-size:.62rem;letter-spacing:3px;text-transform:uppercase;color:#bbb;padding:4rem 0;border:1px dashed #ddd;text-align:center}
-.arte-piece{break-inside:avoid;margin-bottom:1.8rem;overflow:hidden;border:1px solid #e5e5e5;background:#f7f7f2}
-.arte-img-wrap{width:100%;overflow:hidden}
-.arte-img-wrap img{display:block;width:100%;height:auto;object-fit:cover}
-img.lb-trigger{cursor:zoom-in;transition:opacity .2s}
-img.lb-trigger:hover{opacity:.88}
-
-#lightbox{position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.93);display:none;align-items:center;justify-content:center;cursor:zoom-out}
-#lightbox.open{display:flex;animation:lbIn .18s ease}
-@keyframes lbIn{from{opacity:0}to{opacity:1}}
-#lightbox img{max-width:90vw;max-height:90vh;object-fit:contain;display:block;cursor:default;box-shadow:0 8px 40px rgba(0,0,0,.6)}
-#lb-close{position:absolute;top:1.2rem;right:1.4rem;background:none;border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.6);font-size:1.1rem;line-height:1;padding:.5rem .7rem;cursor:pointer;transition:all .18s;font-family:'Space Mono',monospace}
-#lb-close:hover{color:#fff;border-color:rgba(255,255,255,.55)}
-
-.ct-header{text-align:center;margin-bottom:1.6rem}
-.ct-big{color:#0a0a0a;margin-bottom:.8rem}
-.ct-sub{font-size:.58rem;color:#444;max-width:44rem;margin:0 auto;line-height:1.8}
-.ct-email-wrap{text-align:center;margin:3rem 0 2.5rem}
-.ct-email-btn{font-family:'Space Mono',monospace;font-size:clamp(.55rem,2vw,.85rem);color:#111;background:none;border:1px solid rgba(0,0,0,.28);padding:1.1rem 2.5rem;cursor:pointer;letter-spacing:1.5px;transition:border-color .2s,background .2s}
-.ct-email-btn:hover{border-color:#111;background:rgba(0,0,0,.04)}
-.ct-email-hint{font-size:.44rem;letter-spacing:2px;text-transform:uppercase;color:#888;margin-top:.7rem}
-.ct-socials{display:flex;gap:.8rem;flex-wrap:wrap;justify-content:center;margin-top:1.8rem}
-.ct-soc{display:inline-flex;align-items:center;gap:.7rem;font-size:.55rem;letter-spacing:2.5px;text-transform:uppercase;color:#555;text-decoration:none;padding:1rem 2rem;border:1px solid #ccc;transition:border-color .2s,color .2s,background .2s}
-.ct-soc:hover{border-color:#555;color:#0a0a0a;background:rgba(0,0,0,.04)}
-.ct-soc svg{width:16px;height:16px;fill:currentColor;flex-shrink:0}
-
-footer{padding:1.2rem 4rem;border-top:1px solid #e5e5e5;display:flex;justify-content:space-between;font-size:.46rem;letter-spacing:2px;text-transform:uppercase;color:#aaa}
-
-@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-
-@media(max-width:900px){
-  .lang-toggle{top:.8rem;right:.8rem}
-  .tab-btn{padding:1rem 1.2rem;font-size:.6rem;letter-spacing:2px;white-space:nowrap;flex-shrink:0}
-  .dark-panel,.light-panel{padding:3rem 2rem 4rem}
-  .about-layout{grid-template-columns:1fr}
-  .about-bottom{grid-template-columns:1fr 1fr}
-  .apm-row{grid-template-columns:1fr 1fr}
-  .proj-lead{grid-template-columns:1fr;gap:1.6rem}
-  .proj-post{grid-template-columns:10rem 1fr;gap:1.3rem}
-  .arte-grid{columns:2 240px}
-  .ct-socials{gap:.55rem}
-  footer{flex-direction:column;gap:.5rem;text-align:center}
-}
-
-@media(max-width:600px){
-  html{font-size:16px}
-  .lang-toggle{top:.6rem;right:.6rem;gap:.2rem}
-  .lang-btn{font-size:.6rem;padding:.35rem .6rem}
-  #hero{height:100svh}
-  .hero-name{font-size:clamp(3.5rem,18vw,7rem);letter-spacing:-1px;line-height:.9}
-  .tab-btn{padding:1.1rem 1.4rem;font-size:.7rem;letter-spacing:2px;white-space:nowrap;flex-shrink:0}
-  .dark-panel,.light-panel{padding:2.5rem 1.2rem 3.5rem}
-  .sec-title{font-size:clamp(2.5rem,12vw,5rem)}
-  .about-bottom{grid-template-columns:1fr}
-  .apm-row{grid-template-columns:1fr}
-  .apm-row .proj-card--featured{grid-column:span 1}
-  .proj-lead-stats{grid-template-columns:repeat(2,1fr)}
-  .proj-post{grid-template-columns:1fr;gap:1rem}
-  .proj-post-media{aspect-ratio:16/9}
-  .summon{grid-template-columns:1fr;max-width:30rem;border-width:10px}
-  .summon::after{display:none}
-  .summon-right{padding-top:0}
-  .summon-hand{max-width:15rem}
-  .summon-page{padding:2rem 1.5rem}
-  .arte-grid{columns:1}
-  .ct-socials{gap:.5rem}
-  .ct-soc{padding:.75rem 1.2rem;font-size:.5rem}
-  footer{flex-direction:column;gap:.5rem;padding:1rem 1.2rem;text-align:center}
-}
-
-@media(max-width:380px){
-  html{font-size:14px}
-  .tab-btn{padding:1rem 1.2rem;font-size:.65rem}
-}
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="static/style.css">
 </head>
 <body>
+<canvas id="bg" aria-hidden="true"></canvas>
 
-<div class="lang-toggle">
-  <button class="lang-btn active" data-lang="es">ES</button>
-  <button class="lang-btn" data-lang="en">EN</button>
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>softmax(QKᵀ/√d)·V ✦ ẋ = σ(y − x), ẏ = x(ρ − z) − y, ż = xy − βz ✦ ∇²u + k²u = 0 ✦ B3/S23 ✦ ∀△ ∄p ∈ circumcircle(△) ✦ P(A|B) = P(B|A)·P(A) / P(B) ✦ K(A, b) = span{b, Ab, A²b, …} ✦ θ ← θ − η∇L(θ) ✦ e^(iπ) + 1 = 0 ✦ Av = λv ✦ =^.^= ✦</span>
+    <span>softmax(QKᵀ/√d)·V ✦ ẋ = σ(y − x), ẏ = x(ρ − z) − y, ż = xy − βz ✦ ∇²u + k²u = 0 ✦ B3/S23 ✦ ∀△ ∄p ∈ circumcircle(△) ✦ P(A|B) = P(B|A)·P(A) / P(B) ✦ K(A, b) = span{b, Ab, A²b, …} ✦ θ ← θ − η∇L(θ) ✦ e^(iπ) + 1 = 0 ✦ Av = λv ✦ =^.^= ✦</span>
+  </div>
 </div>
 
-<section id="hero">
-  <canvas id="c-conway"></canvas>
-  <div class="hero-inner">
-    <div class="hero-name" style="letter-spacing:-2px;">Jerónimo<br>Hoyos Botero</div>
-  </div>
-</section>
+<div class="page">
 
-<div id="shell">
-  <nav id="tab-bar" role="tablist">
-    <button class="tab-btn active" data-tab="about" data-es="Sobre mí" data-en="About">Sobre mí</button>
-    <button class="tab-btn" data-tab="projects" data-es="Proyectos" data-en="Projects">Proyectos</button>
-    <button class="tab-btn" data-tab="arte" data-es="Arte" data-en="Art">Arte</button>
-    <button class="tab-btn" data-tab="contact" data-es="Contacto" data-en="Contact">Contacto</button>
+  <header class="banner">
+    <canvas id="c-life" aria-hidden="true"></canvas>
+    <div class="banner-inner">
+      <p class="banner-kicker"><span lang="en">hi, I'm</span><span lang="es">hola, soy</span></p>
+      <h1>Jerónimo<br>Hoyos Botero</h1>
+      <p class="banner-sub"><span lang="en">machine learning · math · cats</span><span lang="es">machine learning · matemáticas · gatos</span></p>
+    </div>
+    <p class="banner-fig" aria-hidden="true"><span lang="en">fig. 0: game of life, B3/S23 (move your cursor here)</span><span lang="es">fig. 0: juego de la vida, B3/S23 (mueve el cursor aquí)</span></p>
+  </header>
+
+  <nav class="nav" aria-label="Sections">
+    <div class="nav-links">
+      <a href="#about"><span lang="en">about</span><span lang="es">sobre mí</span></a>
+      <a href="#talks"><span lang="en">talks</span><span lang="es">charlas</span></a>
+      <a href="#projects"><span lang="en">projects</span><span lang="es">proyectos</span></a>
+      <a href="#art"><span lang="en">art</span><span lang="es">arte</span></a>
+      <a href="#contact"><span lang="en">contact</span><span lang="es">contacto</span></a>
+    </div>
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" data-set-lang="es" aria-pressed="false">ES</button>
+      <button type="button" data-set-lang="en" aria-pressed="true">EN</button>
+    </div>
   </nav>
 
-  <div class="tab-panel active" id="panel-about" role="tabpanel">
-    <canvas id="c-delaunay" aria-hidden="true"></canvas>
-    <div class="panel-content light-panel">
-      <div class="sec-title" data-es="SOBRE MÍ" data-en="ABOUT ME">SOBRE MÍ</div>
-      <div class="about-layout">
+  <div class="grid">
 
-        <div>
-          <div class="about-sub-label" data-es="Quién soy" data-en="Who I am">Quién soy</div>
-          <div class="about-bio" data-es="<p>Soy <strong>Jerónimo Hoyos</strong>, estudiante de Ingeniería en Sistemas e Informática en la Universidad Nacional de Colombia con una obsesión por entender los problemas antes de resolverlos. Trabajo en la intersección de la <strong>probabilidad</strong>, el <strong>álgebra lineal</strong> y las <strong>ciencias de la computación</strong>.</p><p>Lo que me motiva no es solo que un modelo funcione, sino comprender por qué funciona y qué dice sobre la estructura del problema. Me mantengo al día con el estado del arte en IA, y fuera del código me encuentras leyendo, viendo videos de gatos o jugando.</p>" data-en="<p>I'm <strong>Jerónimo Hoyos</strong>, a Computer Software Engineering student at Universidad Nacional de Colombia, obsessed with understanding problems before solving them. I work at the intersection of <strong>probability</strong>, <strong>linear algebra</strong>, and <strong>computer science</strong>.</p><p>What drives me isn't just building models that work, but understanding why they work and what they reveal about the structure of the problem. I keep up with the state of the art in AI, and outside of code you'll find me reading, watching cat videos, or gaming.</p>"><p>Soy <strong>Jerónimo Hoyos</strong>, estudiante de Ingeniería en Sistemas e Informática en la Universidad Nacional de Colombia con una obsesión por entender los problemas antes de resolverlos. Trabajo en la intersección de la <strong>probabilidad</strong>, el <strong>álgebra lineal</strong> y las <strong>ciencias de la computación</strong>.</p><p>Lo que me motiva no es solo que un modelo funcione, sino comprender por qué funciona y qué dice sobre la estructura del problema. Me mantengo al día con el estado del arte en IA, y fuera del código me encuentras leyendo, viendo videos de gatos o jugando.</p></div>
+    <!-- ───────── left column ───────── -->
+    <aside class="side side-left">
+
+      <section class="widget w-about">
+        <h2 class="widget-title"><span><span lang="en">~ about me</span><span lang="es">~ sobre mí</span></span><span class="wt-sym" aria-hidden="true">∃</span></h2>
+        <img class="widget-img" src="static/cat.gif" width="900" height="900" alt="Pixel art of a black cat curled up by a window">
+        <div class="widget-body">
+          <p class="profile-name">Jerónimo Hoyos Botero</p>
+          <table class="info">
+            <tr><th><span lang="en">based in</span><span lang="es">vive en</span></th><td>Medellín, CO</td></tr>
+            <tr><th><span lang="en">studies</span><span lang="es">estudia</span></th><td><span lang="en">Software Eng. · UNAL</span><span lang="es">Ing. de Sistemas · UNAL</span></td></tr>
+            <tr><th><span lang="en">loves</span><span lang="es">ama</span></th><td><span lang="en">cats, code, math</span><span lang="es">gatos, código, mates</span></td></tr>
+            <tr><th><span lang="en">speaks</span><span lang="es">habla</span></th><td><span lang="en">ES (native) · EN (B1)</span><span lang="es">ES (nativo) · EN (B1)</span></td></tr>
+          </table>
         </div>
+      </section>
 
-        <figure class="bio-talk">
-          <img src="static/epam-talk.jpg" alt="Jerónimo presentando en Medellín IA" loading="lazy">
-          <figcaption data-es="Presentando &ldquo;How to build a transformer from scratch&rdquo; en Medellín IA community · EPAM Medellín" data-en="Presenting &ldquo;How to build a transformer from scratch&rdquo; at Medellín IA community · EPAM Medellín">Presentando &ldquo;How to build a transformer from scratch&rdquo; en Medellín IA community · EPAM Medellín</figcaption>
-        </figure>
+      <section class="widget">
+        <h2 class="widget-title"><span><span lang="en">~ links</span><span lang="es">~ enlaces</span></span><span class="wt-sym" aria-hidden="true">→</span></h2>
+        <div class="widget-body">
+          <ul class="links">
+            <li><a href="https://github.com/JeroHoyos" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.21.08 1.85 1.24 1.85 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02.005 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.82.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/jeronimo-hoyos-botero/" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>LinkedIn</a></li>
+            <li><a href="https://www.kaggle.com/scratchbox" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.825 23.859c-.022.092-.117.141-.281.141h-3.139c-.187 0-.351-.082-.492-.248l-5.178-6.589-1.448 1.374v5.111c0 .235-.117.352-.351.352H5.505c-.236 0-.354-.117-.354-.352V.353c0-.233.118-.353.354-.353h2.431c.234 0 .351.12.351.353v14.343l6.203-6.272c.165-.165.33-.246.495-.246h3.239c.144 0 .236.06.285.18.046.149.034.255-.036.315l-6.555 6.344 6.836 8.507c.095.104.117.208.07.336z"/></svg>Kaggle</a></li>
+            <li><a href="https://aperture-systems-lab.github.io/" target="_blank" rel="noopener noreferrer"><svg class="stroke" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.75-9.94M9.69 16L3.95 6.06M14.31 16H2.83M16.62 12l-5.74 9.94"/></svg>Aperture</a></li>
+            <li><a href="mailto:jerohoyos1@gmail.com"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>Email</a></li>
+          </ul>
+        </div>
+      </section>
 
-        <div class="about-bottom">
-          <div>
-            <div class="about-sub-label" data-es="Formación" data-en="Education">Formación</div>
-            
-      <div class="edu-item">
-        <div class="edu-year" data-es="2024 - Actualidad" data-en="2024 - Present">2024 - Actualidad</div>
-        <div class="edu-name" data-es="Ingeniería en Sistemas e Informática" data-en="Computer Software Engineering">Ingeniería en Sistemas e Informática</div>
-        <div class="edu-inst">Universidad Nacional de Colombia</div>
-      </div>
+      <section class="widget">
+        <h2 class="widget-title"><span><span lang="en">~ into</span><span lang="es">~ me gusta</span></span><span class="wt-sym" aria-hidden="true">∞</span></h2>
+        <canvas id="c-lorenz" class="widget-fig" aria-hidden="true"></canvas>
+        <p class="widget-cap"><span lang="en">fig. 1: lorenz attractor, σ=10 ρ=28 β=8/3</span><span lang="es">fig. 1: atractor de lorenz, σ=10 ρ=28 β=8/3</span></p>
+        <div class="widget-body">
+          <div class="tags" lang="en">
+            <span class="tag">probability</span><span class="tag">linear algebra</span><span class="tag">transformers</span><span class="tag">deep learning</span><span class="tag">GPU computing</span><span class="tag">Rust</span><span class="tag">AI agents</span><span class="tag">computer graphics</span><span class="tag">cats</span><span class="tag">drawing</span><span class="tag">animated talks</span>
           </div>
-          <div>
-            <div class="about-sub-label" data-es="Idiomas" data-en="Languages">Idiomas</div>
-            
-      <div class="idioma-item">
-        <span class="idioma-name">Español</span>
-        <span class="idioma-level" data-es="Nativo" data-en="Native">Nativo</span>
-      </div>
-      <div class="idioma-item">
-        <span class="idioma-name">Inglés</span>
-        <span class="idioma-level" data-es="B1" data-en="B1">B1</span>
-      </div>
+          <div class="tags" lang="es">
+            <span class="tag">probabilidad</span><span class="tag">álgebra lineal</span><span class="tag">transformers</span><span class="tag">deep learning</span><span class="tag">cómputo en GPU</span><span class="tag">Rust</span><span class="tag">agentes de IA</span><span class="tag">gráficos 3D</span><span class="tag">gatos</span><span class="tag">dibujar</span><span class="tag">charlas animadas</span>
           </div>
         </div>
+      </section>
 
-        <div class="about-preview">
-          <div class="about-sub-label" data-es="Proyectos" data-en="Projects">Proyectos</div>
-          <div class="apm-row">
-          <a href="https://github.com/JeroHoyos/Molinete-AI" target="_blank" rel="noopener noreferrer" class="proj-card proj-card--featured">
-            <div class="proj-c-img"><img src="proyectos/molinete.png" alt="Molinete-AI" loading="lazy"></div>
-            <div class="proj-c-name" data-es="Molinete-AI" data-en="Molinete-AI">Molinete-AI</div>
-            <div class="proj-c-desc" data-es="Transformer desarrollado desde cero en Rust, enfocado en implementación eficiente de arquitecturas de deep learning y operaciones tensoriales. Presentado en la comunidad Medellín IA en la oficina de EPAM Medellín." data-en="Transformer built from scratch in Rust, focused on efficient implementation of deep learning architectures and tensor operations. Presented at the Medellín IA community at EPAM Medellín's office.">Transformer desarrollado desde cero en Rust, enfocado en implementación eficiente de arquitecturas de deep learning y operaciones tensoriales. Presentado en la comunidad Medellín IA en la oficina de EPAM Medellín.</div>
-            <div class="proj-c-tags"><span class="proj-c-tag" style="background:#ececea;color:#555;border-color:#e0e0da">Transformer</span><span class="proj-c-tag" style="background:#ececea;color:#555;border-color:#e0e0da">Rust</span><span class="proj-c-tag" style="background:#ececea;color:#555;border-color:#e0e0da">Deep Learning</span><span class="proj-c-tag" style="background:#ececea;color:#555;border-color:#e0e0da">Tensors</span></div>
-            <div class="proj-c-cta" data-es="Ver repositorio ↗" data-en="View repository ↗">Ver repositorio ↗</div>
-          </a>
-          <a href="https://github.com/SudoerJteheran/ResearchAgent-DataHack2026" target="_blank" rel="noopener noreferrer" class="proj-card">
-            <div class="proj-c-img"><img src="proyectos/investigia.png" alt="InvestigIA" loading="lazy"></div>
-            <div class="proj-c-name" data-es="InvestigIA" data-en="InvestigIA">InvestigIA</div>
-            <div class="proj-c-desc" data-es="Asistente autónomo para investigación científica construido con LangGraph y Ollama. Análisis de literatura académica con inferencia completamente local. Tercer lugar en DataHack 2026." data-en="Autonomous scientific research assistant built with LangGraph and Ollama. Academic literature analysis with fully local inference. Third place at DataHack 2026.">Asistente autónomo para investigación científica construido con LangGraph y Ollama. Análisis de literatura académica con inferencia completamente local. Tercer lugar en DataHack 2026.</div>
-            <div class="proj-c-tags"><span class="proj-c-tag" style="background:#ececea;color:#555;border-color:#e0e0da">LangGraph</span><span class="proj-c-tag" style="background:#ececea;color:#555;border-color:#e0e0da">Ollama</span><span class="proj-c-tag" style="background:#ececea;color:#555;border-color:#e0e0da">Agents</span><span class="proj-c-tag" style="background:#ececea;color:#555;border-color:#e0e0da">RAG</span></div>
-            <div class="proj-c-cta" data-es="Ver repositorio ↗" data-en="View repository ↗">Ver repositorio ↗</div>
-          </a>
+      <section class="widget">
+        <h2 class="widget-title"><span><span lang="en">~ education</span><span lang="es">~ formación</span></span><span class="wt-sym" aria-hidden="true">∂</span></h2>
+        <div class="widget-body">
+          <p class="edu-year"><span lang="en">2024 – present</span><span lang="es">2024 – actualidad</span></p>
+          <p class="edu-name"><span lang="en">Computer Software Engineering</span><span lang="es">Ingeniería en Sistemas e Informática</span></p>
+          <p class="edu-inst">Universidad Nacional de Colombia</p>
+        </div>
+      </section>
+
+    </aside>
+
+    <!-- ───────── center column ───────── -->
+    <main class="feed">
+
+      <article class="post" id="about">
+        <header class="post-head">
+          <h2 class="post-title"><span lang="en">~ about me ~</span><span lang="es">~ sobre mí ~</span></h2>
+          <span class="post-meta">§1</span>
+        </header>
+        <div class="post-body">
+          <div class="prose" lang="en">
+            <p>I'm a <strong>machine learning</strong> enthusiast and a Computer Software Engineering student at the <strong>Universidad Nacional de Colombia</strong>. I love <strong>cats</strong>, <strong>coding</strong> and <strong>math</strong>, especially where <strong>probability</strong>, <strong>linear algebra</strong> and computer science meet.</p>
+            <p>I'm obsessed with understanding problems before solving them. What drives me isn't just building models that work, but understanding why they work and what they reveal about the structure of the problem.</p>
+            <p>I sometimes give animated talks, and I coordinate <a href="https://aperture-systems-lab.github.io/" target="_blank" rel="noopener noreferrer">Aperture</a>, a student research group at my university. Outside of code you'll find me reading, drawing, watching cat videos or gaming.</p>
           </div>
-          <button onclick="document.querySelector('[data-tab=projects]').click()" class="apm-ver-mas"><span data-es="Ver todos los proyectos →" data-en="See all projects →">Ver todos los proyectos →</span></button>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-  <div class="tab-panel" id="panel-projects" role="tabpanel">
-    <canvas id="c-lorenz" aria-hidden="true"></canvas>
-    <div class="panel-content light-panel">
-      <div class="sec-title" data-es="PROYECTOS" data-en="PROJECTS">PROYECTOS</div>
-      <div class="sec-sub" data-es="Transformers desde cero, agentes de IA, GPU computing y machine learning aplicado." data-en="From-scratch transformers, AI agents, GPU computing and applied machine learning.">Transformers desde cero, agentes de IA, GPU computing y machine learning aplicado.</div>
-      <div class="proj-paper">
-        
-        <article class="proj-lead">
-          <a href="https://github.com/JeroHoyos/Molinete-AI" target="_blank" rel="noopener noreferrer" class="proj-lead-media"><img src="proyectos/molinete.png" alt="Molinete-AI" loading="lazy"></a>
-          <div class="proj-lead-body">
-            <div class="proj-lead-badge" data-es="★ Destacado" data-en="★ Featured">★ Destacado</div>
-            <a href="https://github.com/JeroHoyos/Molinete-AI" target="_blank" rel="noopener noreferrer" class="proj-lead-title" data-es="Molinete-AI" data-en="Molinete-AI">Molinete-AI</a>
-            <p class="proj-lead-deck" data-es="Transformer desarrollado desde cero en Rust, enfocado en implementación eficiente de arquitecturas de deep learning y operaciones tensoriales. Presentado en la comunidad Medellín IA en la oficina de EPAM Medellín." data-en="Transformer built from scratch in Rust, focused on efficient implementation of deep learning architectures and tensor operations. Presented at the Medellín IA community at EPAM Medellín's office.">Transformer desarrollado desde cero en Rust, enfocado en implementación eficiente de arquitecturas de deep learning y operaciones tensoriales. Presentado en la comunidad Medellín IA en la oficina de EPAM Medellín.</p>
-            <div class="proj-tags"><span class="proj-tag" style="background:#ececea;color:#555;border-color:#e0e0da">Transformer</span><span class="proj-tag" style="background:#ececea;color:#555;border-color:#e0e0da">Rust</span><span class="proj-tag" style="background:#ececea;color:#555;border-color:#e0e0da">Deep Learning</span><span class="proj-tag" style="background:#ececea;color:#555;border-color:#e0e0da">Tensors</span></div>
-            <a href="https://github.com/JeroHoyos/Molinete-AI" target="_blank" rel="noopener noreferrer" class="proj-readmore" data-es="Ver repositorio ↗" data-en="View repository ↗">Ver repositorio ↗</a>
+          <div class="prose" lang="es">
+            <p>Soy un entusiasta del <strong>machine learning</strong> y estudio Ingeniería en Sistemas e Informática en la <strong>Universidad Nacional de Colombia</strong>. Me encantan los <strong>gatos</strong>, <strong>programar</strong> y las <strong>matemáticas</strong>, sobre todo donde se cruzan la <strong>probabilidad</strong>, el <strong>álgebra lineal</strong> y las ciencias de la computación.</p>
+            <p>Me obsesiona entender los problemas antes de resolverlos. Lo que me motiva no es solo que un modelo funcione, sino comprender por qué funciona y qué dice sobre la estructura del problema.</p>
+            <p>A veces doy charlas animadas y coordino <a href="https://aperture-systems-lab.github.io/" target="_blank" rel="noopener noreferrer">Aperture</a>, un semillero de investigación estudiantil de mi universidad. Fuera del código me encuentras leyendo, dibujando, viendo videos de gatos o jugando.</p>
           </div>
-        </article>
-        <div class="proj-feed-head">
-          <span class="proj-feed-label" data-es="Más proyectos" data-en="More projects">Más proyectos</span>
-          <span class="proj-feed-rule"></span>
         </div>
-        <div class="proj-feed">
-          <a href="https://github.com/SudoerJteheran/ResearchAgent-DataHack2026" target="_blank" rel="noopener noreferrer" class="proj-post">
-            <div class="proj-post-media"><img src="proyectos/investigia.png" alt="InvestigIA" loading="lazy"></div>
-            <div class="proj-post-body">
-              <div class="proj-post-title" data-es="InvestigIA" data-en="InvestigIA">InvestigIA</div>
-              <p class="proj-post-excerpt" data-es="Asistente autónomo para investigación científica construido con LangGraph y Ollama. Análisis de literatura académica con inferencia completamente local. Tercer lugar en DataHack 2026." data-en="Autonomous scientific research assistant built with LangGraph and Ollama. Academic literature analysis with fully local inference. Third place at DataHack 2026.">Asistente autónomo para investigación científica construido con LangGraph y Ollama. Análisis de literatura académica con inferencia completamente local. Tercer lugar en DataHack 2026.</p>
-              <div class="proj-post-foot">
-                <div class="proj-tags"><span class="proj-tag" style="background:#ececea;color:#555;border-color:#e0e0da">LangGraph</span><span class="proj-tag" style="background:#ececea;color:#555;border-color:#e0e0da">Ollama</span><span class="proj-tag" style="background:#ececea;color:#555;border-color:#e0e0da">Agents</span><span class="proj-tag" style="background:#ececea;color:#555;border-color:#e0e0da">RAG</span></div>
-              </div>
-              <span class="proj-readmore proj-post-cta" data-es="Ver repositorio ↗" data-en="View repository ↗">Ver repositorio ↗</span>
-            </div>
-          </a>
-          <a href="https://www.kaggle.com/code/scratchbox/analysis-and-modeling-of-smoking" target="_blank" rel="noopener noreferrer" class="proj-post">
-            <div class="proj-post-media"><img src="proyectos/smoking.png" alt="Analysis and Modeling of Smoking" loading="lazy"></div>
-            <div class="proj-post-body">
-              <div class="proj-post-title" data-es="Analysis and Modeling of Smoking" data-en="Analysis and Modeling of Smoking">Analysis and Modeling of Smoking</div>
-              <p class="proj-post-excerpt" data-es="Análisis exploratorio y modelado de machine learning sobre el dataset Body Signals of Smoking para predecir hábitos de tabaquismo a partir de señales fisiológicas." data-en="Exploratory analysis and ML modeling on the Body Signals of Smoking dataset to predict smoking habits from physiological signals.">Análisis exploratorio y modelado de machine learning sobre el dataset Body Signals of Smoking para predecir hábitos de tabaquismo a partir de señales fisiológicas.</p>
-              <div class="proj-post-foot">
-                <div class="proj-tags"><span class="proj-tag" style="background:#ececea;color:#555;border-color:#e0e0da">EDA</span><span class="proj-tag" style="background:#ececea;color:#555;border-color:#e0e0da">scikit-learn</span><span class="proj-tag" style="background:#ececea;color:#555;border-color:#e0e0da">Pandas</span><span class="proj-tag" style="background:#ececea;color:#555;border-color:#e0e0da">Kaggle</span></div>
-              </div>
-              <span class="proj-readmore proj-post-cta" data-es="Ver repositorio ↗" data-en="View repository ↗">Ver repositorio ↗</span>
-            </div>
-          </a>
-          <a href="https://github.com/JeroHoyos/Efficient-Krylov-Sequence-Computation-in-GPU" target="_blank" rel="noopener noreferrer" class="proj-post">
-            <div class="proj-post-media"><img src="proyectos/krylov.png" alt="Cómputo Eficiente de Krylov en GPU" loading="lazy"></div>
-            <div class="proj-post-body">
-              <div class="proj-post-title" data-es="Cómputo Eficiente de Krylov en GPU" data-en="Efficient Krylov Sequence Computation on GPU">Cómputo Eficiente de Krylov en GPU</div>
-              <p class="proj-post-excerpt" data-es="Benchmarking y optimización en CUDA para generación de subespacios de Krylov, comparando CPU y GPU mediante estrategias como tiled, coalesced y cuBLAS." data-en="CUDA benchmarking and optimization for Krylov subspace generation, comparing CPU and GPU implementations using tiled, coalesced and cuBLAS strategies.">Benchmarking y optimización en CUDA para generación de subespacios de Krylov, comparando CPU y GPU mediante estrategias como tiled, coalesced y cuBLAS.</p>
-              <div class="proj-post-foot">
-                <div class="proj-tags"><span class="proj-tag" style="background:#ececea;color:#555;border-color:#e0e0da">CUDA</span><span class="proj-tag" style="background:#ececea;color:#555;border-color:#e0e0da">cuBLAS</span><span class="proj-tag" style="background:#ececea;color:#555;border-color:#e0e0da">HPC</span><span class="proj-tag" style="background:#ececea;color:#555;border-color:#e0e0da">GPU</span></div>
-              </div>
-              <span class="proj-readmore proj-post-cta" data-es="Ver repositorio ↗" data-en="View repository ↗">Ver repositorio ↗</span>
-            </div>
-          </a>
-          <a href="https://github.com/HacklabMLMedellin/Sanghelios" target="_blank" rel="noopener noreferrer" class="proj-post">
-            <div class="proj-post-media"><img src="proyectos/sanghelios.png" alt="Sanghelios: Inteligencia Predictiva para Bancos de Sangre" loading="lazy"></div>
-            <div class="proj-post-body">
-              <div class="proj-post-title" data-es="Sanghelios: Inteligencia Predictiva para Bancos de Sangre" data-en="Sanghelios: Predictive Intelligence for Blood Banks">Sanghelios: Inteligencia Predictiva para Bancos de Sangre</div>
-              <p class="proj-post-excerpt" data-es="Sistema que anticipa la escasez de sangre del Hospital General de Medellín con 14 días de anticipación mediante un modelo XGBoost, y convierte esa señal en campañas de donación diseñadas con IA, desplegadas en un dashboard y mapa 3D." data-en="System that predicts blood shortages at Hospital General de Medellín 14 days in advance using an XGBoost model, turning that signal into AI-designed donation campaigns deployed through a dashboard and 3D map.">Sistema que anticipa la escasez de sangre del Hospital General de Medellín con 14 días de anticipación mediante un modelo XGBoost, y convierte esa señal en campañas de donación diseñadas con IA, desplegadas en un dashboard y mapa 3D.</p>
-              <div class="proj-post-foot">
-                <div class="proj-tags"><span class="proj-tag" style="background:#ececea;color:#555;border-color:#e0e0da">Python</span><span class="proj-tag" style="background:#ececea;color:#555;border-color:#e0e0da">FastAPI</span><span class="proj-tag" style="background:#ececea;color:#555;border-color:#e0e0da">XGBoost</span><span class="proj-tag" style="background:#ececea;color:#555;border-color:#e0e0da">AI Agents</span></div>
-              </div>
-              <span class="proj-readmore proj-post-cta" data-es="Ver repositorio ↗" data-en="View repository ↗">Ver repositorio ↗</span>
-            </div>
-          </a>
+      </article>
+
+      <article class="post" id="talks">
+        <header class="post-head">
+          <h2 class="post-title"><span lang="en">~ talks ~</span><span lang="es">~ charlas ~</span></h2>
+          <span class="post-meta">§2</span>
+        </header>
+        <div class="post-body">
+          <figure class="talk-photo">
+            <img src="static/epam-talk.jpg" width="1600" height="739" loading="lazy" alt="Jerónimo on stage next to a slide that reads “Construyendo un Transformer con Rust y Python”">
+            <figcaption><span lang="en">Presenting “How to build a transformer from scratch” at the Medellín IA community · EPAM Medellín</span><span lang="es">Presentando “How to build a transformer from scratch” en la comunidad Medellín IA · EPAM Medellín</span></figcaption>
+          </figure>
+          <ol class="talks">
+            <li class="talk">
+              <span class="talk-venue">PyCon Colombia 2026</span>
+              <a class="talk-title" href="https://github.com/JeroHoyos/Molinete-AI" target="_blank" rel="noopener noreferrer"><span lang="en">Building a Transformer with Rust</span><span lang="es">Construyendo un Transformer con Rust</span></a>
+            </li>
+            <li class="talk">
+              <span class="talk-venue">Python Medellín × Medellín AI</span>
+              <a class="talk-title" href="https://github.com/JeroHoyos/charla-redes-neuronales" target="_blank" rel="noopener noreferrer"><span lang="en">How do neural networks work? A visual introduction</span><span lang="es">¿Cómo funcionan las redes neuronales? Una introducción visual</span></a>
+            </li>
+            <li class="talk">
+              <span class="talk-venue"><span lang="en">Aperture research group</span><span lang="es">Semillero Aperture</span></span>
+              <a class="talk-title" href="https://github.com/JeroHoyos/charla-git" target="_blank" rel="noopener noreferrer"><span lang="en">Introduction to Git and GitHub</span><span lang="es">Introducción a Git y GitHub</span></a>
+            </li>
+            <li class="talk">
+              <span class="talk-venue"><span lang="en">Aperture research group</span><span lang="es">Semillero Aperture</span></span>
+              <a class="talk-title" href="https://github.com/JeroHoyos/charla-inaguracion" target="_blank" rel="noopener noreferrer"><span lang="en">Inaugural session of the Data Science &amp; AI research group</span><span lang="es">Sesión inaugural del semillero de Ciencia de Datos e IA</span></a>
+            </li>
+          </ol>
         </div>
-      </div>
-    </div>
+      </article>
+
+      <article class="post" id="projects">
+        <header class="post-head">
+          <h2 class="post-title"><span lang="en">~ projects ~</span><span lang="es">~ proyectos ~</span></h2>
+          <span class="post-meta">§3</span>
+        </header>
+        <div class="post-body">
+
+          <div class="feat">
+            <a class="feat-media" href="https://github.com/JeroHoyos/Molinete-AI" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><img src="proyectos/molinete.png" width="1600" height="899" loading="lazy" alt=""></a>
+            <span class="badge"><span lang="en">★ featured</span><span lang="es">★ destacado</span></span>
+            <a class="feat-title" href="https://github.com/JeroHoyos/Molinete-AI" target="_blank" rel="noopener noreferrer">Molinete-AI</a>
+            <p class="post-lead" lang="en">A GPT-2 Transformer built from scratch in Rust and trained on the works of Cervantes, focused on an efficient implementation of the architecture and its tensor operations. Presented at PyCon Colombia 2026 and at the Medellín IA community.</p>
+            <p class="post-lead" lang="es">Un Transformer GPT-2 construido desde cero en Rust y entrenado con las obras de Cervantes, enfocado en una implementación eficiente de la arquitectura y sus operaciones tensoriales. Presentado en PyCon Colombia 2026 y en la comunidad Medellín IA.</p>
+            <dl class="stats">
+              <div><dt><span lang="en">model</span><span lang="es">modelo</span></dt><dd>GPT-2</dd></div>
+              <div><dt><span lang="en">core</span><span lang="es">núcleo</span></dt><dd>Rust</dd></div>
+              <div><dt>corpus</dt><dd>Cervantes</dd></div>
+              <div><dt><span lang="en">approach</span><span lang="es">enfoque</span></dt><dd><span lang="en">from scratch</span><span lang="es">desde cero</span></dd></div>
+            </dl>
+            <div class="tags"><span class="tag">Rust</span><span class="tag">Python</span><span class="tag">Transformer</span><span class="tag">Tensors</span></div>
+          </div>
+
+          <div class="projs">
+            <a class="proj" href="https://github.com/JeroHoyos/Sanghelios" target="_blank" rel="noopener noreferrer">
+              <div class="proj-media"><img src="proyectos/sanghelios.png" width="1852" height="938" loading="lazy" alt=""></div>
+              <div class="proj-body">
+                <h3 class="proj-name">Sanghelios</h3>
+                <p class="proj-desc" lang="en">Predicts blood shortages at Hospital General de Medellín 14 days in advance with XGBoost, and turns that signal into AI-designed donation campaigns.</p>
+                <p class="proj-desc" lang="es">Anticipa la escasez de sangre del Hospital General de Medellín con 14 días de anticipación usando XGBoost, y convierte esa señal en campañas de donación diseñadas con IA.</p>
+                <div class="tags"><span class="tag">Python</span><span class="tag">XGBoost</span><span class="tag">FastAPI</span><span class="tag">AI agents</span></div>
+              </div>
+            </a>
+            <a class="proj" href="https://github.com/JeroHoyos/InvestigIA" target="_blank" rel="noopener noreferrer">
+              <div class="proj-media"><img src="proyectos/investigia.png" width="1600" height="811" loading="lazy" alt=""></div>
+              <div class="proj-body">
+                <h3 class="proj-name">InvestigIA</h3>
+                <p class="proj-note"><span lang="en">★ 3rd place · DataHack 2026</span><span lang="es">★ 3.er lugar · DataHack 2026</span></p>
+                <p class="proj-desc" lang="en">Autonomous research assistant built with LangGraph and Ollama: academic literature analysis with fully local inference.</p>
+                <p class="proj-desc" lang="es">Asistente autónomo de investigación construido con LangGraph y Ollama: análisis de literatura académica con inferencia completamente local.</p>
+                <div class="tags"><span class="tag">LangGraph</span><span class="tag">Ollama</span><span class="tag">Agents</span><span class="tag">RAG</span></div>
+              </div>
+            </a>
+            <a class="proj" href="https://github.com/JeroHoyos/VertexRS" target="_blank" rel="noopener noreferrer">
+              <div class="proj-media"><div class="proj-glyph" aria-hidden="true"><div class="cube"><i></i><i></i><i></i><i></i><i></i><i></i></div></div></div>
+              <div class="proj-body">
+                <h3 class="proj-name">VertexRS</h3>
+                <p class="proj-desc" lang="en">A 3D software renderer written in Rust: the whole rendering pipeline on the CPU, no graphics API.</p>
+                <p class="proj-desc" lang="es">Un renderizador 3D por software escrito en Rust: todo el pipeline de render en la CPU, sin API gráfica.</p>
+                <div class="tags"><span class="tag">Rust</span><span class="tag">3D</span><span class="tag">Graphics</span></div>
+              </div>
+            </a>
+            <a class="proj" href="https://github.com/JeroHoyos/Efficient-Krylov-Sequence-Computation-in-GPU" target="_blank" rel="noopener noreferrer">
+              <div class="proj-media"><img src="proyectos/krylov.png" width="1185" height="690" loading="lazy" alt=""></div>
+              <div class="proj-body">
+                <h3 class="proj-name"><span lang="en">Krylov sequences on GPU</span><span lang="es">Secuencias de Krylov en GPU</span></h3>
+                <p class="proj-desc" lang="en">Benchmarking iterative matrix multiplication for Krylov subspace generation, CPU vs GPU: tiled, coalesced and cuBLAS strategies in CUDA.</p>
+                <p class="proj-desc" lang="es">Benchmarking de multiplicación iterativa de matrices para generar subespacios de Krylov, CPU vs GPU: estrategias tiled, coalesced y cuBLAS en CUDA.</p>
+                <div class="tags"><span class="tag">CUDA</span><span class="tag">C</span><span class="tag">cuBLAS</span><span class="tag">HPC</span></div>
+              </div>
+            </a>
+            <a class="proj" href="https://github.com/JeroHoyos/mysql-vs-postgres-benchmark" target="_blank" rel="noopener noreferrer">
+              <div class="proj-media"><div class="proj-glyph" aria-hidden="true"><span class="glyph-math">H<sub>0</sub>: μ<sub>my</sub> = μ<sub>pg</sub></span></div></div>
+              <div class="proj-body">
+                <h3 class="proj-name">mysql-vs-postgres-benchmark</h3>
+                <p class="proj-desc" lang="en">Performance comparison of MySQL and PostgreSQL on insertion and query workloads, with pandas as an in-memory reference.</p>
+                <p class="proj-desc" lang="es">Comparación de rendimiento entre MySQL y PostgreSQL en cargas de inserción y consulta, con pandas como referencia en memoria.</p>
+                <div class="tags"><span class="tag">Python</span><span class="tag">SQL</span><span class="tag">PostgreSQL</span><span class="tag">MySQL</span></div>
+              </div>
+            </a>
+            <a class="proj" href="https://github.com/JeroHoyos/CATlude" target="_blank" rel="noopener noreferrer">
+              <div class="proj-media"><div class="proj-glyph" aria-hidden="true"><span class="glyph-cat">=^.^=</span></div></div>
+              <div class="proj-body">
+                <h3 class="proj-name">CATlude</h3>
+                <p class="proj-desc" lang="en">A tiny coding agent, like Claude Code, but with a cat.</p>
+                <p class="proj-desc" lang="es">Un pequeño agente de programación, como Claude Code, pero con un gato.</p>
+                <div class="tags"><span class="tag">Python</span><span class="tag">LLM</span><span class="tag">Agent</span></div>
+              </div>
+            </a>
+          </div>
+
+          <a class="more" href="https://github.com/JeroHoyos" target="_blank" rel="noopener noreferrer"><span lang="en">more on GitHub ↗</span><span lang="es">más en GitHub ↗</span></a>
+        </div>
+      </article>
+
+      <article class="post" id="art">
+        <header class="post-head">
+          <h2 class="post-title"><span lang="en">~ art ~</span><span lang="es">~ arte ~</span></h2>
+          <span class="post-meta">§4</span>
+        </header>
+        <div class="post-body">
+          <canvas id="c-flow" class="art-fig" aria-hidden="true"></canvas>
+          <p class="art-cap"><span lang="en">fig. 3: particles drifting through a sinusoidal flow field</span><span lang="es">fig. 3: partículas a la deriva en un campo de flujo sinusoidal</span></p>
+          <p class="post-lead" lang="en">Digital drawings made in my spare time. Characters, creatures and whatever comes out.</p>
+          <p class="post-lead" lang="es">Dibujos digitales hechos en ratos libres. Personajes, criaturas y lo que salga.</p>
+          <div class="art-grid">
+            <button type="button" class="art-piece" data-full="dibujos/bomb.jpg"><img src="dibujos/bomb.jpg" width="1024" height="1024" loading="lazy" alt="Drawing: Bomb"></button>
+            <button type="button" class="art-piece" data-full="dibujos/pokemon.webp"><img src="dibujos/pokemon.webp" width="722" height="458" loading="lazy" alt="Drawing: Pokémon"></button>
+            <button type="button" class="art-piece" data-full="dibujos/cato.webp"><img src="dibujos/cato.webp" width="698" height="571" loading="lazy" alt="Drawing: Cato"></button>
+            <button type="button" class="art-piece" data-full="dibujos/foxy.webp"><img src="dibujos/foxy.webp" width="669" height="498" loading="lazy" alt="Drawing: Foxy"></button>
+            <button type="button" class="art-piece" data-full="dibujos/tryk.webp"><img src="dibujos/tryk.webp" width="639" height="370" loading="lazy" alt="Drawing: Tryk"></button>
+            <button type="button" class="art-piece" data-full="dibujos/monster.webp"><img src="dibujos/monster.webp" width="364" height="504" loading="lazy" alt="Drawing: Monster"></button>
+          </div>
+        </div>
+      </article>
+
+    </main>
+
+    <!-- ───────── right column ───────── -->
+    <aside class="side side-right">
+
+      <section class="widget">
+        <h2 class="widget-title"><span><span lang="en">~ lately</span><span lang="es">~ últimamente</span></span><span class="wt-sym" aria-hidden="true">Δ</span></h2>
+        <div class="widget-body">
+          <div class="now-item">
+            <p class="now-label"><span lang="en">last talk</span><span lang="es">última charla</span></p>
+            <p class="now-value">PyCon Colombia 2026</p>
+          </div>
+          <div class="now-item">
+            <p class="now-label"><span lang="en">coordinating</span><span lang="es">coordinando</span></p>
+            <p class="now-value">Aperture</p>
+          </div>
+          <div class="now-item">
+            <p class="now-label">hackathon</p>
+            <p class="now-value"><span lang="en">3rd · DataHack 2026</span><span lang="es">3.º · DataHack 2026</span></p>
+          </div>
+        </div>
+      </section>
+
+      <section class="widget">
+        <h2 class="widget-title"><span>~ aperture</span><span class="wt-sym" aria-hidden="true">◎</span></h2>
+        <div class="widget-body">
+          <p lang="en">A student research group at the Universidad Nacional de Colombia that I coordinate. I gave the inaugural session of its Data Science &amp; AI group.</p>
+          <p lang="es">Un semillero de investigación estudiantil de la Universidad Nacional de Colombia que coordino. Di la sesión inaugural de su línea de Ciencia de Datos e IA.</p>
+          <a class="btn" href="https://aperture-systems-lab.github.io/" target="_blank" rel="noopener noreferrer"><span lang="en">visit aperture ↗</span><span lang="es">visitar aperture ↗</span></a>
+        </div>
+      </section>
+
+      <section class="widget" id="contact">
+        <h2 class="widget-title"><span><span lang="en">~ contact</span><span lang="es">~ contacto</span></span><span class="wt-sym" aria-hidden="true">@</span></h2>
+        <canvas id="c-chladni" class="widget-fig" aria-hidden="true"></canvas>
+        <p class="widget-cap"><span lang="en">fig. 2: chladni figure</span><span lang="es">fig. 2: figura de chladni</span>, (m, n) = (<span id="chladni-mn">2, 5</span>)</p>
+        <div class="widget-body">
+          <p lang="en">Questions, proposals or collaborations? Write me.</p>
+          <p lang="es">¿Preguntas, propuestas o colaboraciones? Escríbeme.</p>
+          <button type="button" class="btn email-btn" id="email-copy" data-email="jerohoyos1@gmail.com"><span class="addr">jerohoyos1@gmail.com</span><span class="ok"><span lang="en">✓ copied</span><span lang="es">✓ copiado</span></span></button>
+          <p class="hint"><span lang="en">click to copy</span><span lang="es">clic para copiar</span></p>
+        </div>
+      </section>
+
+      <section class="widget">
+        <h2 class="widget-title"><span><span lang="en">~ visitor</span><span lang="es">~ visitante</span></span><span class="wt-sym" aria-hidden="true">ฅ</span></h2>
+        <div class="widget-body">
+          <p lang="en">There's a cat chasing your cursor. This is expected behaviour.</p>
+          <p lang="es">Hay un gato persiguiendo tu cursor. Es el comportamiento esperado.</p>
+        </div>
+      </section>
+
+    </aside>
   </div>
 
-  <div class="tab-panel" id="panel-arte" role="tabpanel">
-    <canvas id="c-dp" aria-hidden="true"></canvas>
-    <div class="panel-content light-panel">
-      <div class="sec-title" data-es="ARTE" data-en="ART">ARTE</div>
-      <div class="sec-sub" data-es="Dibujos digitales hechos en ratos libres. Personajes, criaturas y lo que salga." data-en="Digital drawings made in my spare time. Characters, creatures and whatever comes out.">Dibujos digitales hechos en ratos libres. Personajes, criaturas y lo que salga.</div>
-      <div class="arte-grid"><div class="arte-piece">
-        <div class="arte-img-wrap">
-          <img src="dibujos/bomb.jpg" alt="Bomb" loading="lazy" data-full="dibujos/bomb.jpg" class="lb-trigger">
-        </div>
-      </div>
-      <div class="arte-piece">
-        <div class="arte-img-wrap">
-          <img src="dibujos/pokemon.webp" alt="Pokémon" loading="lazy" data-full="dibujos/pokemon.webp" class="lb-trigger">
-        </div>
-      </div>
-      <div class="arte-piece">
-        <div class="arte-img-wrap">
-          <img src="dibujos/cato.webp" alt="Cato" loading="lazy" data-full="dibujos/cato.webp" class="lb-trigger">
-        </div>
-      </div>
-      <div class="arte-piece">
-        <div class="arte-img-wrap">
-          <img src="dibujos/foxy.webp" alt="Foxy" loading="lazy" data-full="dibujos/foxy.webp" class="lb-trigger">
-        </div>
-      </div>
-      <div class="arte-piece">
-        <div class="arte-img-wrap">
-          <img src="dibujos/tryk.webp" alt="Tryk" loading="lazy" data-full="dibujos/tryk.webp" class="lb-trigger">
-        </div>
-      </div>
-      <div class="arte-piece">
-        <div class="arte-img-wrap">
-          <img src="dibujos/monster.webp" alt="Monster" loading="lazy" data-full="dibujos/monster.webp" class="lb-trigger">
-        </div>
-      </div>
-      </div>
-    </div>
-  </div>
-  <div id="lightbox" role="dialog" aria-modal="true" aria-label="Imagen ampliada">
-    <button id="lb-close" aria-label="Cerrar">&#x2715;</button>
-    <img id="lb-img" src="" alt="">
-  </div>
+  <footer class="foot">
+    <span>© 2026 Jerónimo Hoyos Botero · Medellín, Colombia</span>
+    <span><span lang="en">hand-written HTML, CSS &amp; JS</span><span lang="es">HTML, CSS y JS escritos a mano</span> · <span lang="en">cat GIF from</span><span lang="es">GIF del gato de</span> <a href="https://giphy.com/gifs/pixel-animals-cats-sZPQXNBBN7mbDALod9" target="_blank" rel="noopener noreferrer">GIPHY</a> · <a href="https://github.com/adryd325/oneko.js" target="_blank" rel="noopener noreferrer">oneko.js</a></span>
+  </footer>
 
-  <div class="tab-panel" id="panel-contact">
-    <canvas id="c-fourier" aria-hidden="true"></canvas>
-    <div class="panel-content dark-panel">
-      <div class="ct-header">
-        <div class="sec-title ct-big" data-es="HABLEMOS" data-en="LET'S TALK">HABLEMOS</div>
-        <div class="ct-sub" data-es="Si tienes alguna pregunta, propuesta u oportunidad de colaboración, no dudes en contactarme." data-en="If you have a question, proposal, or collaboration opportunity, don't hesitate to reach out.">Si tienes alguna pregunta, propuesta u oportunidad de colaboración, no dudes en contactarme.</div>
-      </div>
-      <div class="ct-email-wrap">
-        <button class="ct-email-btn" id="ct-email-copy" data-email="jerohoyos1@gmail.com">
-          <span>jerohoyos1@gmail.com</span>
-        </button>
-        <div class="ct-email-hint" data-es="clic para copiar" data-en="click to copy">clic para copiar</div>
-      </div>
-      <div class="ct-socials">
-        <a href="https://github.com/JeroHoyos" target="_blank" rel="noopener noreferrer" class="ct-soc">
-          <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.21.08 1.85 1.24 1.85 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02.005 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.82.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg><span>GitHub</span>
-        </a>
-        <a href="https://www.linkedin.com/in/jeronimo-hoyos-botero/" target="_blank" rel="noopener noreferrer" class="ct-soc">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg><span>LinkedIn</span>
-        </a>
-        <a href="https://www.kaggle.com/scratchbox" target="_blank" rel="noopener noreferrer" class="ct-soc">
-          <svg viewBox="0 0 24 24"><path d="M18.825 23.859c-.022.092-.117.141-.281.141h-3.139c-.187 0-.351-.082-.492-.248l-5.178-6.589-1.448 1.374v5.111c0 .235-.117.352-.351.352H5.505c-.236 0-.354-.117-.354-.352V.353c0-.233.118-.353.354-.353h2.431c.234 0 .351.12.351.353v14.343l6.203-6.272c.165-.165.33-.246.495-.246h3.239c.144 0 .236.06.285.18.046.149.034.255-.036.315l-6.555 6.344 6.836 8.507c.095.104.117.208.07.336z"/></svg><span>Kaggle</span>
-        </a>
-        <a href="mailto:jerohoyos1@gmail.com" class="ct-soc">
-          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg><span>Email</span>
-        </a>
-      </div>
-    </div>
-  </div>
 </div>
 
-<footer>
-  <span>© 2025 Jerónimo Hoyos Botero</span>
-  <span>Medellín, Colombia</span>
-</footer>
-<script>const _mob=window.innerWidth<=768||('ontouchstart' in window);
+<dialog class="lightbox" id="lightbox" aria-label="Artwork">
+  <form method="dialog"><button class="lb-close" aria-label="Close">✕</button></form>
+  <img alt="">
+</dialog>
 
-function setLang(lang) {
-  document.documentElement.lang = lang;
-  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
-  document.querySelectorAll('[data-es]').forEach(el => {
-    const txt = el.getAttribute('data-' + lang);
-    if (txt !== null) el.innerHTML = txt;
-  });
-  document.querySelectorAll('.tab-btn').forEach(btn => {
-    const t = btn.getAttribute('data-' + lang);
-    if (t) btn.textContent = t;
-  });
-  document.querySelectorAll('.explore-btn').forEach(btn => {
-    const t = btn.getAttribute('data-' + lang);
-    if (t) btn.textContent = t;
-  });
-  try { localStorage.setItem('lang', lang); } catch(e) {}
-}
-document.querySelectorAll('.lang-btn').forEach(btn => {
-  btn.addEventListener('click', () => setLang(btn.dataset.lang));
-});
-(function() {
-  try { const s = localStorage.getItem('lang'); setLang(s || 'en'); } catch(e) { setLang('en'); }
-})();
-(function() {
-  const btn = document.getElementById('ct-email-copy');
-  if (!btn) return;
-  const span = btn.querySelector('span');
-  btn.addEventListener('click', () => {
-    navigator.clipboard.writeText(btn.dataset.email).then(() => {
-      const prev = span.textContent;
-      span.textContent = document.documentElement.lang === 'en' ? '✓ copied' : '✓ copiado';
-      setTimeout(() => { span.textContent = prev; }, 2000);
-    });
-  });
-})();
-function activateTab(id) {
-  const panel = document.getElementById('panel-' + id);
-  if (!panel) return;
-  document.querySelectorAll('.tab-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  const btn = document.querySelector('.tab-btn[data-tab="' + id + '"]');
-  if (btn) { btn.classList.add('active'); btn.setAttribute('aria-selected','true'); }
-  panel.classList.add('active');
-}
-document.querySelectorAll('.tab-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    activateTab(btn.dataset.tab);
-    const sh=document.getElementById('shell');
-    window.scrollTo(0, sh.getBoundingClientRect().top + window.pageYOffset);
-  });
-});
-(function() {
-  const hash = window.location.hash.replace('#','');
-  if (hash) activateTab(hash);
-})();
-(function() {
-  const cv = document.getElementById('c-conway'), cx = cv.getContext('2d');
-  const SZ = _mob?32:18, STEP=_mob?8:5; let cols, rows, grid, frame = 0;
-  function init() {
-    const r = cv.parentElement.getBoundingClientRect();
-    cv.width = r.width || window.innerWidth; cv.height = r.height || window.innerHeight;
-    cols = Math.ceil(cv.width/SZ); rows = Math.ceil(cv.height/SZ);
-    grid = Array.from({length:cols}, () => Array.from({length:rows}, () => Math.random()>.65?1:0));
-  }
-  function step() {
-    const n = Array.from({length:cols}, () => new Array(rows).fill(0));
-    for (let x=0;x<cols;x++) for (let y=0;y<rows;y++) {
-      let nb=0;
-      for (let dx=-1;dx<=1;dx++) for (let dy=-1;dy<=1;dy++) { if(!dx&&!dy) continue; nb+=grid[(x+dx+cols)%cols][(y+dy+rows)%rows]; }
-      const c=grid[x][y]; n[x][y]=c?(nb===2||nb===3?1:0):(nb===3?1:0);
-    }
-    grid=n;
-  }
-  (function loop() {
-    requestAnimationFrame(loop);
-    if (document.hidden) return;
-    frame++;
-    if (frame%STEP===0) step();
-    cx.clearRect(0,0,cv.width,cv.height);
-    for (let x=0;x<cols;x++) for (let y=0;y<rows;y++) {
-      if (grid[x][y]) { cx.fillStyle='rgba(255,255,255,0.18)'; cx.fillRect(x*SZ+1,y*SZ+1,SZ-2,SZ-2); }
-    }
-  })();
-  let _cw=window.innerWidth;
-  init();
-  window.addEventListener('resize',()=>{ if(Math.abs(window.innerWidth-_cw)>30){_cw=window.innerWidth;init();} });
-  window.addEventListener('pageshow',e=>{ if(e.persisted) init(); });
-})();
-(function() {
-  const cv = document.getElementById('c-delaunay'), cx = cv.getContext('2d');
-  let pts=[], W=0, H=0, initialized=false;
-  function circ(ax,ay,bx,by,ex,ey) {
-    const D=2*(ax*(by-ey)+bx*(ey-ay)+ex*(ay-by));
-    if (Math.abs(D)<1e-10) return null;
-    const ux=((ax*ax+ay*ay)*(by-ey)+(bx*bx+by*by)*(ey-ay)+(ex*ex+ey*ey)*(ay-by))/D;
-    const uy=((ax*ax+ay*ay)*(ex-bx)+(bx*bx+by*by)*(ax-ex)+(ex*ex+ey*ey)*(bx-ax))/D;
-    return {x:ux, y:uy, r2:(ax-ux)**2+(ay-uy)**2};
-  }
-  function delaunay(pts) {
-    const N=pts.length, sup=[{x:-9e3,y:-9e3},{x:2e4,y:0},{x:0,y:2e4}], all=[...pts,...sup];
-    let tris=[[N,N+1,N+2]];
-    for (let i=0;i<N;i++) {
-      const p=all[i]; let edges=[];
-      tris=tris.filter(t => {
-        const cc=circ(all[t[0]].x,all[t[0]].y,all[t[1]].x,all[t[1]].y,all[t[2]].x,all[t[2]].y);
-        if (!cc) return true;
-        if ((p.x-cc.x)**2+(p.y-cc.y)**2<cc.r2) { edges.push([t[0],t[1]],[t[1],t[2]],[t[2],t[0]]); return false; }
-        return true;
-      });
-      edges.filter(([a,b],idx,arr) => !arr.some(([c,d],j) => idx!==j&&((a===d&&b===c)||(a===c&&b===d)))).forEach(([a,b]) => tris.push([a,b,i]));
-    }
-    return tris.filter(t => !t.some(v => v>=N));
-  }
-  function resize() {
-    const panel=document.getElementById('panel-about');
-    const r=panel.getBoundingClientRect();
-    W=r.width||panel.offsetWidth||window.innerWidth;
-    H=r.height||panel.offsetHeight||window.innerHeight;
-    if(W<10||H<10) return;
-    cv.width=W; cv.height=H;
-    pts=Array.from({length:_mob?20:48}, () => ({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.55,vy:(Math.random()-.5)*.55}));
-  }
-  let t=0;
-  (function loop() {
-    if (!pts.length || document.hidden) { requestAnimationFrame(loop); return; }
-    t++; pts.forEach(p => { p.x+=p.vx; p.y+=p.vy; if(p.x<0||p.x>W) p.vx*=-1; if(p.y<0||p.y>H) p.vy*=-1; });
-    cx.fillStyle='#f4f4ef'; cx.fillRect(0,0,W,H);
-    try {
-      const tris=delaunay(pts);
-      tris.forEach((tr) => {
-        const p0=pts[tr[0]],p1=pts[tr[1]],p2=pts[tr[2]];
-        const mx=(p0.x+p1.x+p2.x)/3, my=(p0.y+p1.y+p2.y)/3;
-        const pulse=Math.sin(mx*0.003+my*0.003+t*0.02)*0.5+0.5;
-        cx.beginPath(); cx.moveTo(p0.x,p0.y); cx.lineTo(p1.x,p1.y); cx.lineTo(p2.x,p2.y); cx.closePath();
-        cx.fillStyle=`rgba(0,0,0,${(pulse*0.03).toFixed(4)})`; cx.fill();
-        cx.strokeStyle=`rgba(0,0,0,${(0.08+pulse*0.07).toFixed(3)})`; cx.lineWidth=0.7; cx.stroke();
-      });
-    } catch(e) {}
-    pts.forEach(p => { cx.beginPath(); cx.arc(p.x,p.y,1.8,0,Math.PI*2); cx.fillStyle='rgba(0,0,0,0.18)'; cx.fill(); });
-    requestAnimationFrame(loop);
-  })();
-  resize(); window.addEventListener('resize',resize);
-  new MutationObserver(() => { if (document.getElementById('panel-about').classList.contains('active')&&!initialized){resize();initialized=true;} })
-    .observe(document.getElementById('panel-about'),{attributes:true,attributeFilter:['class']});
-})();
-(function() {
-  const cv=document.getElementById('c-lorenz'), cx=cv.getContext('2d'), panel=document.getElementById('panel-projects');
-  const NP=_mob?4:8, L=_mob?300:450, SUB=2, CH=15, DT=0.004;
-  let W=0,H=0,t=0,tiles=[];
-  function step(p) {
-    const dx=10*(p.y-p.x), dy=p.x*(28-p.z)-p.y, dz=p.x*p.y-8/3*p.z;
-    p.x+=dx*DT; p.y+=dy*DT; p.z+=dz*DT;
-  }
-  function trail() {
-    const q={x:Math.random()*2-1, y:Math.random()*2-1, z:20+Math.random()*10}, tr=[];
-    for(let n=0,m=1000+Math.random()*1000;n<m;n++) step(q);
-    for(let n=0;n<L;n++){ step(q); tr.push({x:q.x,y:q.y,z:q.z}); }
-    return {q,tr};
-  }
-  function layout() {
-    W=panel.offsetWidth; H=panel.offsetHeight;
-    if(W<10||H<10) return;
-    cv.width=W; cv.height=H;
-    const nT=Math.max(1,Math.round(H/(_mob?520:660))), TH=H/nT, sc=Math.min(W*0.42/30,TH*0.8/50);
-    while(tiles.length<nT) tiles.push({ph:tiles.length*1.9, trails:Array.from({length:NP},trail)});
-    tiles.length=nT;
-    tiles.forEach((tl,i)=>{ tl.cy=TH*(i+0.5); tl.h=TH; tl.sc=sc; });
-  }
-  (function loop() {
-    requestAnimationFrame(loop);
-    if (!tiles.length || document.hidden || !panel.classList.contains('active')) return;
-    t+=0.004;
-    for(const tl of tiles) for(const o of tl.trails) for(let k=0;k<SUB;k++){ step(o.q); o.tr.shift(); o.tr.push({x:o.q.x,y:o.q.y,z:o.q.z}); }
-    cx.clearRect(0,0,W,H);
-    cx.lineWidth=0.9;
-    const top=panel.getBoundingClientRect().top, seg=Math.ceil(L/CH);
-    const vis=tiles.filter(tl=>top+tl.cy+tl.h/2>0&&top+tl.cy-tl.h/2<window.innerHeight);
-    for(let c=0;c<CH;c++){
-      const s0=c*seg, s1=Math.min(L-1,s0+seg);
-      cx.beginPath();
-      for(const tl of vis){
-        const co=Math.cos(t+tl.ph), si=Math.sin(t+tl.ph);
-        for(const o of tl.trails) for(let n=s0;n<=s1;n++){
-          const p=o.tr[n], x=W*0.5+(p.x*co-p.y*si)*tl.sc, y=tl.cy+(24-p.z)*tl.sc;
-          n===s0?cx.moveTo(x,y):cx.lineTo(x,y);
-        }
-      }
-      cx.strokeStyle=`rgba(5,5,5,${(0.5*(c+1)/CH).toFixed(3)})`; cx.stroke();
-    }
-  })();
-  new ResizeObserver(layout).observe(panel);
-})();
-(function() {
-  const cv=document.getElementById('c-fourier'), cx=cv.getContext('2d');
-  let W,H,active=false,initialized=false,transT=0,pairIdx=0;
-  const PAIRS=[[2,3],[3,2],[4,3],[3,4],[2,5],[5,2],[4,5],[5,4],[3,5],[5,3],[4,7],[7,4]];
-  const TRANS=200;
-  const off=document.createElement('canvas'), oc=off.getContext('2d');
-  function ss(t){return t*t*(3-2*t);}
-  function render(m,n) {
-    const SC=_mob?10:4, cols=Math.max(1,Math.floor(W/SC)), rows=Math.max(1,Math.floor(H/SC));
-    if(off.width!==cols||off.height!==rows){off.width=cols;off.height=rows;}
-    const img=oc.createImageData(cols,rows), d=img.data;
-    for(let i=0;i<rows;i++){
-      const yn=i/rows;
-      for(let j=0;j<cols;j++){
-        const xn=j/cols;
-        const v=Math.sin(m*Math.PI*xn)*Math.sin(n*Math.PI*yn)+Math.sin(n*Math.PI*xn)*Math.sin(m*Math.PI*yn);
-        const dark=Math.exp(-v*v*9);
-        const col=Math.round(244*(1-dark*0.92));
-        const idx=(i*cols+j)*4;
-        d[idx]=col;d[idx+1]=col;d[idx+2]=Math.round(col*0.99);d[idx+3]=255;
-      }
-    }
-    oc.putImageData(img,0,0);
-    cx.drawImage(off,0,0,W,H);
-  }
-  function init() {
-    const p=document.getElementById('panel-contact');
-    W=p.offsetWidth||window.innerWidth; H=p.offsetHeight||window.innerHeight;
-    cv.width=W; cv.height=H; transT=0;
-  }
-  (function loop() {
-    requestAnimationFrame(loop); if(!active || document.hidden) return;
-    const nextIdx=(pairIdx+1)%PAIRS.length;
-    const [m0,n0]=PAIRS[pairIdx],[m1,n1]=PAIRS[nextIdx];
-    const a=ss(Math.min(1,transT/TRANS));
-    render(m0+(m1-m0)*a, n0+(n1-n0)*a);
-    if(++transT>=TRANS){pairIdx=nextIdx;transT=0;}
-  })();
-  let _cw=window.innerWidth;
-  init(); initialized=true;
-  new MutationObserver(()=>{const on=document.getElementById('panel-contact').classList.contains('active');if(on&&!active){if(!initialized){init();initialized=true;}active=true;}else if(!on)active=false;}).observe(document.getElementById('panel-contact'),{attributes:true,attributeFilter:['class']});
-  window.addEventListener('resize',()=>{if(active&&Math.abs(window.innerWidth-_cw)>30){_cw=window.innerWidth;init();}});
-})();
-function particleField(cvId, panelId){
-  const cv=document.getElementById(cvId); if(!cv) return;
-  const cx=cv.getContext('2d'), panel=()=>document.getElementById(panelId);
-  let W,H,active=false,initialized=false,t=0,pts=[];
-  const N=_mob?200:900;
-
-  function init(){
-    const p=panel();
-    W=p.offsetWidth||window.innerWidth;H=p.offsetHeight||window.innerHeight;
-    cv.width=W;cv.height=H;
-    pts=Array.from({length:N},()=>({
-      x:Math.random()*W,y:Math.random()*H,
-      vx:0,vy:0,
-      life:Math.floor(Math.random()*200),
-      max:120+Math.random()*180,
-      w:0.4+Math.random()*1.1
-    }));
-    cx.fillStyle='#f4f4ef';cx.fillRect(0,0,W,H);
-  }
-
-  function noise(x,y,t){
-    return Math.sin(x*0.0055+t)*Math.cos(y*0.0048+t*0.79)
-          +Math.sin(x*0.012-t*0.63)*Math.cos(y*0.0095+t*0.31)
-          +Math.sin((x-y)*0.0038+t*0.47)*0.55
-          +Math.sin(x*0.0021+y*0.003-t*0.19)*0.3;
-  }
-
-  function forces(px,py,t){
-    const a1x=W*0.5+Math.cos(t*0.37)*W*0.28,a1y=H*0.5+Math.sin(t*0.37)*H*0.23;
-    const a2x=W*0.5+Math.cos(t*0.23+2.1)*W*0.21,a2y=H*0.5+Math.sin(t*0.29+1.0)*H*0.26;
-    const a3x=W*0.5+Math.cos(t*0.51+4.2)*W*0.14,a3y=H*0.5+Math.sin(t*0.44+3.1)*H*0.14;
-    let fx=0,fy=0;
-    for(const [ax,ay,str] of [[a1x,a1y,14000],[a2x,a2y,10000],[a3x,a3y,7000]]){
-      const dx=ax-px,dy=ay-py,d2=dx*dx+dy*dy+600;
-      fx+=dx/d2*str;fy+=dy/d2*str;
-    }
-    return [fx,fy];
-  }
-
-  (function loop(){
-    requestAnimationFrame(loop);if(!active||document.hidden)return;
-    t+=0.005;
-    cx.fillStyle='rgba(244,244,239,0.028)';cx.fillRect(0,0,W,H);
-    for(const p of pts){
-      const angle=noise(p.x,p.y,t)*Math.PI*2;
-      const [fx,fy]=forces(p.x,p.y,t);
-      p.vx=p.vx*0.91+Math.cos(angle)*1.6+fx*0.014;
-      p.vy=p.vy*0.91+Math.sin(angle)*1.6+fy*0.014;
-      const spd=Math.sqrt(p.vx*p.vx+p.vy*p.vy);
-      if(spd>4.5){p.vx=p.vx/spd*4.5;p.vy=p.vy/spd*4.5;}
-      const nx=p.x+p.vx,ny=p.y+p.vy;
-      p.life++;
-      const age=p.life/p.max,fade=age<0.08?age/0.08:age>0.82?(1-age)/0.18:1;
-      cx.beginPath();cx.moveTo(p.x,p.y);cx.lineTo(nx,ny);
-      cx.strokeStyle=`rgba(5,5,5,${(0.62*fade).toFixed(3)})`;
-      cx.lineWidth=p.w;cx.stroke();
-      p.x=nx;p.y=ny;
-      if(p.life>p.max||nx<-8||nx>W+8||ny<-8||ny>H+8){
-        p.x=Math.random()*W;p.y=Math.random()*H;
-        p.vx=0;p.vy=0;p.life=0;p.max=120+Math.random()*180;
-      }
-    }
-  })();
-
-  let _cw=window.innerWidth;
-  init(); initialized=true;
-  new MutationObserver(()=>{const on=panel().classList.contains('active');if(on&&!active){if(!initialized){init();initialized=true;}active=true;}else if(!on)active=false;}).observe(panel(),{attributes:true,attributeFilter:['class']});
-  window.addEventListener('resize',()=>{if(active&&Math.abs(window.innerWidth-_cw)>30){_cw=window.innerWidth;init();}});
-}
-particleField('c-dp','panel-arte');
-
-(function(){
-  const lb=document.getElementById('lightbox');
-  const lbImg=document.getElementById('lb-img');
-  const lbClose=document.getElementById('lb-close');
-  if(!lb||!lbImg) return;
-  function open(src,alt){lbImg.src=src;lbImg.alt=alt||'';lb.classList.add('open');document.body.style.overflow='hidden';}
-  function close(){lb.classList.remove('open');document.body.style.overflow='';lbImg.src='';}
-  document.querySelectorAll('img.lb-trigger').forEach(img=>{
-    img.addEventListener('click',()=>open(img.dataset.full||img.src,img.alt));
-  });
-  lbClose.addEventListener('click',close);
-  lb.addEventListener('click',e=>{if(e.target===lb)close();});
-  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&lb.classList.contains('open'))close();});
-})();
-</script>
+<script src="static/main.js"></script>
 <script src="static/oneko.js" data-cat="static/oneko.gif"></script>
 </body>
 </html>
