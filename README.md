@@ -12,3 +12,5 @@ Es un sitio estático escrito a mano, sin paso de build. GitHub Pages sirve la c
 | `docs/static/oneko.js` | El gato que persigue el cursor ([oneko.js](https://github.com/adryd325/oneko.js)). |
 
 Para verlo localmente basta con abrir `docs/index.html` en el navegador.
+
+GitHub Pages cachea los archivos 10 minutos. Al cambiar `style.css`, `main.js` o una imagen, sube el `?v=` con el que se enlazan en `index.html` para que nadie vea el HTML nuevo con el CSS/JS viejo.
