@@ -45,25 +45,17 @@
     lb.addEventListener('close', () => lbImg.removeAttribute('src'));
   }
 
-  /* ───────── nav: highlight the section on screen ───────── */
-  const navLinks = [...document.querySelectorAll('.nav-links a')];
-  const spy = new IntersectionObserver(entries => {
-    for (const en of entries) if (en.isIntersecting)
-      navLinks.forEach(a => a.classList.toggle('on', a.hash === '#' + en.target.id));
-  }, { rootMargin: '-40% 0px -55% 0px' });
-  navLinks.forEach(a => { const t = document.querySelector(a.hash); if (t) spy.observe(t); });
-
   /* ───────── canvas animations ─────────
      Each one is make(ctx, w, h) → { frame(dt), still(), resize?(w, h), ... }.
      A single rAF loop drives only the ones on screen; with reduced motion
-     they draw one still frame instead. */
+     they draw one still frame instead, unless registered with always = true. */
   const anims = [];
 
-  function canvasAnim(id, make) {
+  function canvasAnim(id, make, always = false) {
     const cv = document.getElementById(id);
     if (!cv || !cv.getContext) return null;
     const ctx = cv.getContext('2d');
-    const a = { cv, state: null, visible: false, w: 0, h: 0 };
+    const a = { cv, state: null, visible: false, w: 0, h: 0, always };
     const fit = () => {
       const w = cv.clientWidth, h = cv.clientHeight;
       if (w < 2 || h < 2 || (w === a.w && h === a.h)) return;
@@ -71,7 +63,7 @@
       cv.width = Math.round(w * DPR); cv.height = Math.round(h * DPR);
       ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
       if (a.state && a.state.resize) a.state.resize(w, h);
-      else { a.state = make(ctx, w, h); if (reduce) a.state.still(); }
+      else { a.state = make(ctx, w, h); if (reduce && !always) a.state.still(); }
     };
     new ResizeObserver(fit).observe(cv);
     new IntersectionObserver(([e]) => { a.visible = e.isIntersecting; }, { rootMargin: '120px' }).observe(cv);
@@ -79,20 +71,18 @@
     return a;
   }
 
-  if (!reduce) {
-    let last = performance.now();
-    const loop = now => {
-      requestAnimationFrame(loop);
-      const dt = now - last;
-      if (dt < 15 || document.hidden) return;   // cap at ~60fps on high-refresh screens
-      last = now;
-      const step = Math.min(dt, 50);
-      for (const a of anims) if (a.visible && a.state) a.state.frame(step);
-    };
+  let last = performance.now();
+  const loop = now => {
     requestAnimationFrame(loop);
-  }
+    const dt = now - last;
+    if (dt < 15 || document.hidden) return;   // cap at ~60fps on high-refresh screens
+    last = now;
+    const step = Math.min(dt, 50);
+    for (const a of anims) if (a.visible && a.state && (a.always || !reduce)) a.state.frame(step);
+  };
+  requestAnimationFrame(loop);
 
-  /* fig. 0 — Conway's game of life (B3/S23) on the banner */
+  /* banner — Conway's game of life (B3/S23) on the banner */
   const life = canvasAnim('c-life', (ctx, W, H) => {
     const S = W < 640 ? 12 : 10, cols = Math.ceil(W / S), rows = Math.ceil(H / S), N = cols * rows;
     let g = new Uint8Array(N), nx = new Uint8Array(N);
@@ -145,7 +135,7 @@
     if (life.state) life.state.poke(e.clientX - r.left, e.clientY - r.top);
   });
 
-  /* fig. 1 — Lorenz attractor (σ=10, ρ=28, β=8/3), slowly rotating about z */
+  /* into — Lorenz attractor (σ=10, ρ=28, β=8/3), slowly rotating about z */
   canvasAnim('c-lorenz', (ctx, W, H) => {
     const NP = 6, L = 560, DT = 0.005, CH = 12, TILT = 0.38;
     const step = p => {
@@ -199,90 +189,404 @@
     };
   });
 
-  /* fig. 2 — Chladni figures: nodal lines of cos(nπx)cos(mπy) − cos(mπx)cos(nπy) */
-  const mnLabel = document.getElementById('chladni-mn');
-  canvasAnim('c-chladni', (ctx, W, H) => {
-    // always m < n, so interpolating between modes never hits the all-zero m = n case
-    const MODES = [[2, 5], [3, 4], [1, 6], [3, 5], [4, 5], [2, 7], [5, 6], [3, 7], [4, 7], [1, 4], [2, 3], [3, 8]];
-    const SC = 2, cols = Math.ceil(W / SC), rows = Math.ceil(H / SC);
-    const off = document.createElement('canvas');
-    off.width = cols; off.height = rows;
-    const oc = off.getContext('2d'), img = oc.createImageData(cols, rows), d = img.data;
-    const HOLD = 2600, TRANS = 2200;
-    let k = 0, t = 0;
+  /* contact — a Galton board: 9 coin-flip bounces per ball pile up into a bell curve */
+  canvasAnim('c-galton', (ctx, W, H) => {
+    const R = 9, cx = W / 2, sp = Math.min(W * 0.88 / (R + 1), 22);
+    const y0 = 12, y1 = H * 0.52, vsp = (y1 - y0) / R, bottom = H - 6, unit = 1.6;
+    const cap = (bottom - y1 - 10) / unit, sigma = Math.sqrt(R) / 2;
+    const pegX = (r, j) => cx + (j - r / 2) * sp;   // peg j of row r (row R = the bins)
+    const counts = new Array(R + 1).fill(0);
+    let balls = [], spawnT = 0, holdT = 0, full = false;
 
-    function render(m, n) {
-      for (let i = 0; i < rows; i++) {
-        const y = i / (rows - 1);
-        for (let j = 0; j < cols; j++) {
-          const x = j / (cols - 1);
-          const v = Math.cos(n * Math.PI * x) * Math.cos(m * Math.PI * y) - Math.cos(m * Math.PI * x) * Math.cos(n * Math.PI * y);
-          const s = Math.exp(-v * v * 45) * 0.9, o = (i * cols + j) * 4;
-          d[o] = d[o + 1] = 244 - 239 * s; d[o + 2] = 239 - 234 * s; d[o + 3] = 255;
-        }
+    const coin = () => (Math.random() < 0.5 ? 0 : 1);
+    const pos = b => {
+      if (b.r < R) {   // bouncing from peg (r, k) to peg (r + 1, k + d)
+        const xa = pegX(b.r, b.k), xb = pegX(b.r + 1, b.k + b.d), ya = y0 + b.r * vsp;
+        return [xa + (xb - xa) * b.p, ya + vsp * b.p - Math.sin(Math.PI * b.p) * vsp * 0.45 - 3];
       }
-      oc.putImageData(img, 0, 0);
-      ctx.drawImage(off, 0, 0, W, H);
+      const top = bottom - counts[b.k] * unit - 2;   // falling into bin k
+      return [pegX(R, b.k), y1 - 3 + (top - y1 + 3) * b.p * b.p];
+    };
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = 'rgba(5,5,5,.45)';
+      for (let r = 0; r < R; r++) for (let j = 0; j <= r; j++) {
+        ctx.beginPath(); ctx.arc(pegX(r, j), y0 + r * vsp, 1.5, 0, 6.2832); ctx.fill();
+      }
+      const left = pegX(R, 0) - sp / 2, right = pegX(R, R) + sp / 2;
+      ctx.strokeStyle = 'rgba(5,5,5,.18)'; ctx.lineWidth = 1; ctx.beginPath();
+      for (let k = 0; k <= R + 1; k++) { ctx.moveTo(left + k * sp, y1 + 6); ctx.lineTo(left + k * sp, bottom); }
+      ctx.moveTo(left, bottom); ctx.lineTo(right, bottom);
+      ctx.stroke();
+      ctx.fillStyle = 'rgba(5,5,5,.8)';
+      counts.forEach((c, k) => { if (c) ctx.fillRect(pegX(R, k) - sp / 2 + 2.5, bottom - c * unit, sp - 5, c * unit); });
+      // the normal curve N(R/2, R/4) these counts should approach
+      const total = counts.reduce((a, c) => a + c, 0);
+      if (total > 8) {
+        ctx.setLineDash([3, 3]); ctx.strokeStyle = 'rgba(5,5,5,.55)'; ctx.beginPath();
+        for (let u = -0.5; u <= R + 0.5; u += 0.1) {
+          const f = Math.exp(-((u - R / 2) ** 2) / (2 * sigma * sigma)) / (sigma * Math.sqrt(2 * Math.PI));
+          const x = pegX(R, u), y = bottom - total * f * unit;
+          u === -0.5 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+        }
+        ctx.stroke(); ctx.setLineDash([]);
+      }
+      ctx.fillStyle = '#050505';
+      for (const b of balls) { const [x, y] = pos(b); ctx.beginPath(); ctx.arc(x, y, 2.2, 0, 6.2832); ctx.fill(); }
     }
-    const label = () => { if (mnLabel) mnLabel.textContent = MODES[k].join(', '); };
-    const still = () => { render(...MODES[k]); label(); };
-    still();
+
+    return {
+      frame(dt) {
+        if (!full && Math.max(...counts) >= cap) full = true;
+        if (!full && (spawnT += dt) > 85) { spawnT = 0; balls.push({ r: 0, k: 0, d: coin(), p: 0 }); }
+        for (const b of balls) {
+          b.p += dt / (b.r < R ? 110 : 260);
+          if (b.p < 1) continue;
+          if (b.r < R) { b.k += b.d; b.r++; b.p = 0; b.d = coin(); }
+          else { counts[b.k]++; b.done = true; }
+        }
+        balls = balls.filter(b => !b.done);
+        if (full && !balls.length && (holdT += dt) > 1400) { counts.fill(0); full = false; holdT = 0; }
+        draw();
+      },
+      still() {
+        for (let i = 0; i < 130; i++) { let k = 0; for (let r = 0; r < R; r++) k += coin(); counts[k]++; }
+        draw();
+      },
+    };
+  });
+
+  /* education — sorting algorithms at work: quicksort, insertion sort and selection sort, in turn */
+  canvasAnim('c-sort', (ctx, W, H) => {
+    const N = 24, STEP = 32, SWEEP = 25, PAD = 12;
+    const swap = (A, i, j) => { [A[i], A[j]] = [A[j], A[i]]; };
+    function* quick(A, lo = 0, hi = A.length - 1) {   // Lomuto partition
+      if (lo >= hi) return;
+      let i = lo;
+      for (let j = lo; j < hi; j++) { yield [j, hi]; if (A[j] < A[hi]) swap(A, i++, j); }
+      swap(A, i, hi); yield [i, hi];
+      yield* quick(A, lo, i - 1);
+      yield* quick(A, i + 1, hi);
+    }
+    function* insertion(A) {
+      for (let i = 1; i < A.length; i++)
+        for (let j = i; j > 0; j--) { yield [j - 1, j]; if (A[j - 1] > A[j]) swap(A, j - 1, j); else break; }
+    }
+    function* selection(A) {
+      for (let i = 0; i < A.length - 1; i++) {
+        let m = i;
+        for (let j = i + 1; j < A.length; j++) { yield [m, j]; if (A[j] < A[m]) m = j; }
+        swap(A, i, m); yield [i, m];
+      }
+    }
+    const ALGOS = [quick, insertion, selection];
+    let A, run, hl, phase, t, swept, algo = Math.random() * ALGOS.length | 0;
+
+    function reset() {
+      A = Array.from({ length: N }, (_, i) => i + 1);
+      for (let i = N - 1; i > 0; i--) swap(A, i, Math.random() * (i + 1) | 0);
+      algo = (algo + 1) % ALGOS.length;
+      run = ALGOS[algo](A); phase = 'sort'; hl = []; t = 0; swept = 0;
+    }
+    reset();
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      const bw = (W - 2 * PAD) / N;
+      A.forEach((v, i) => {
+        const h = v / N * (H - 2 * PAD);
+        ctx.fillStyle = hl.includes(i) ? '#050505' : i < swept ? 'rgba(5,5,5,.75)' : 'rgba(5,5,5,.28)';
+        ctx.fillRect(PAD + i * bw + 1, H - PAD - h, bw - 2, h);
+      });
+    }
     return {
       frame(dt) {
         t += dt;
-        if (t < HOLD) return;
-        const k2 = (k + 1) % MODES.length, u = Math.min(1, (t - HOLD) / TRANS), e = u * u * (3 - 2 * u);
-        const [m0, n0] = MODES[k], [m1, n1] = MODES[k2];
-        render(m0 + (m1 - m0) * e, n0 + (n1 - n0) * e);
-        if (u >= 1) { k = k2; t = 0; label(); }
+        if (phase === 'sort') {
+          while (t > STEP) {
+            t -= STEP;
+            const r = run.next();
+            if (r.done) { phase = 'sweep'; hl = []; t = 0; break; }
+            hl = r.value;
+          }
+        } else {   // sorted: sweep across it once, then shuffle and run the next algorithm
+          swept = t / SWEEP;
+          if (t > N * SWEEP + 1200) reset();
+        }
+        draw();
       },
-      still,
+      still() { A.sort((a, b) => a - b); swept = N; hl = []; draw(); },
     };
   });
 
-  /* fig. 3 — particles following a drifting sinusoidal flow field */
-  canvasAnim('c-flow', (ctx, W, H) => {
-    const N = Math.round(Math.min(520, W * H / 180));
-    const spawn = p => {
-      p.x = Math.random() * W; p.y = Math.random() * H;
-      p.vx = p.vy = 0; p.life = 0; p.max = 90 + Math.random() * 160;
-      return p;
+  /* links — modular times table: a chord from point i to point k·i (mod N), with k drifting */
+  canvasAnim('c-times', (ctx, W, H) => {
+    const N = 120, cx = W / 2, cy = H / 2, R = Math.min(W, H) * 0.44, KMAX = 34;
+    let k = 2, dir = 1;
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      ctx.strokeStyle = 'rgba(5,5,5,.22)'; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.arc(cx, cy, R, 0, 6.2832); ctx.stroke();
+      ctx.strokeStyle = 'rgba(5,5,5,.4)'; ctx.lineWidth = 0.6; ctx.beginPath();
+      for (let i = 0; i < N; i++) {
+        const a = 2 * Math.PI * i / N + Math.PI, b = 2 * Math.PI * k * i / N + Math.PI;
+        ctx.moveTo(cx + R * Math.cos(a), cy + R * Math.sin(a));
+        ctx.lineTo(cx + R * Math.cos(b), cy + R * Math.sin(b));
+      }
+      ctx.stroke();
+    }
+    return {
+      frame(dt) {
+        k += dir * dt * 0.00025;
+        if (k > KMAX || k < 2) { dir = -dir; k = Math.max(2, Math.min(KMAX, k)); }
+        draw();
+      },
+      still: draw,
     };
-    const ps = Array.from({ length: N }, () => {
-      const p = spawn({ w: 0.4 + Math.random() * 0.9 });
-      p.life = Math.random() * p.max | 0;
-      return p;
-    });
-    let t = Math.random() * 100;
-    const noise = (x, y) =>
-      Math.sin(x * 0.0055 + t) * Math.cos(y * 0.0048 + t * 0.79) +
-      Math.sin(x * 0.012 - t * 0.63) * Math.cos(y * 0.0095 + t * 0.31) +
-      Math.sin((x - y) * 0.0038 + t * 0.47) * 0.55;
+  });
 
-    ctx.fillStyle = '#f4f4ef'; ctx.fillRect(0, 0, W, H);
-    ctx.lineCap = 'round';
-    function frame() {
-      t += 0.004;
-      ctx.fillStyle = 'rgba(244,244,239,.07)'; ctx.fillRect(0, 0, W, H);
-      const ax = W * 0.5 + Math.cos(t * 0.9) * W * 0.32, ay = H * 0.5 + Math.sin(t * 1.3) * H * 0.3;
-      for (const p of ps) {
-        const ang = noise(p.x, p.y) * Math.PI * 2;
-        const dx = ax - p.x, dy = ay - p.y, d2 = dx * dx + dy * dy + 400;
-        p.vx = p.vx * 0.9 + Math.cos(ang) * 1.4 + dx / d2 * 40;
-        p.vy = p.vy * 0.9 + Math.sin(ang) * 1.4 + dy / d2 * 40;
-        const sp = Math.hypot(p.vx, p.vy);
-        if (sp > 4) { p.vx *= 4 / sp; p.vy *= 4 / sp; }
-        const nx = p.x + p.vx, ny = p.y + p.vy, age = ++p.life / p.max;
-        const fade = age < 0.1 ? age / 0.1 : age > 0.8 ? (1 - age) / 0.2 : 1;
-        ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(nx, ny);
-        ctx.strokeStyle = `rgba(5,5,5,${(0.6 * fade).toFixed(3)})`;
-        ctx.lineWidth = p.w; ctx.stroke();
-        p.x = nx; p.y = ny;
-        if (p.life > p.max || nx < -8 || nx > W + 8 || ny < -8 || ny > H + 8) spawn(p);
+  /* ───────── project covers: paper-on-ink, animated even with reduced motion ───────── */
+  const paper = a => `rgba(244,244,239,${a})`;
+  const MONO = '"Space Mono", ui-monospace, monospace';
+  const hash = (a, b) => { const x = Math.sin(a * 127.1 + b * 311.7) * 43758.5453; return x - Math.floor(x); };
+
+  /* Molinete-AI — the model writing the Quijote word by word, with its attention arcs */
+  canvasAnim('c-molinete', (ctx, W, H) => {
+    const WORDS = ('En un lugar de la Mancha, de cuyo nombre no quiero acordarme, no ha mucho tiempo que vivía ' +
+      'un hidalgo de los de lanza en astillero, adarga antigua, rocín flaco y galgo corredor.').split(' ');
+    const FONT = `13px ${MONO}`, GAP = 9, BASE = H * 0.78, PAD = 18, CTX = 7, CHAR = 55;
+    let xs = [], ws = [];
+    const layout = () => {
+      ctx.font = FONT; xs = []; ws = [];
+      let x = 0;
+      for (const w of WORDS) { const m = ctx.measureText(w).width; xs.push(x); ws.push(m); x += m + GAP; }
+    };
+    layout();
+    if (document.fonts) document.fonts.ready.then(layout);
+    let i = 0, t = 0, phase = 'type', off = 0;
+
+    // softmax over the previous CTX words: pseudo-random scores plus a bias towards recent words
+    const attn = i => {
+      const e = [];
+      for (let j = 1; j <= Math.min(i, CTX); j++) e.push(Math.exp(hash(i, j) * 3 - j * 0.25));
+      const s = e.reduce((a, b) => a + b, 0);
+      return e.map(v => v / s);
+    };
+    function draw(snap) {
+      ctx.clearRect(0, 0, W, H);
+      const target = Math.max(0, xs[i] + ws[i] - (W - 2 * PAD));
+      off = snap ? target : off + (target - off) * 0.08;
+      const X = j => PAD - off + xs[j];
+      const typed = phase === 'type' ? Math.min(WORDS[i].length, Math.floor(t / CHAR)) : WORDS[i].length;
+
+      if (phase !== 'type' && i > 0) {
+        const a = phase === 'attend' ? Math.min(1, t / 350) : 1, xa = X(i) + ws[i] / 2, y = BASE - 16;
+        attn(i).forEach((p, k) => {
+          const j = i - 1 - k, xb = X(j) + ws[j] / 2;
+          ctx.beginPath(); ctx.moveTo(xa, y);
+          ctx.quadraticCurveTo((xa + xb) / 2, y - 10 - (xa - xb) * 0.34, xb, y);
+          ctx.strokeStyle = paper(a * (0.15 + p * 0.85)); ctx.lineWidth = 0.6 + p * 3.2; ctx.stroke();
+        });
+      }
+      ctx.font = FONT;
+      for (let j = 0; j <= i; j++) {
+        const x = X(j);
+        if (x > W || x + ws[j] < 0) continue;
+        ctx.fillStyle = paper(j === i ? 1 : 0.5);
+        ctx.fillText(j === i ? WORDS[j].slice(0, typed) : WORDS[j], x, BASE);
+      }
+      if (phase === 'type') {
+        ctx.fillStyle = paper(0.9);
+        ctx.fillRect(X(i) + ctx.measureText(WORDS[i].slice(0, typed)).width + 2, BASE - 11, 7, 13);
       }
     }
-    return { frame, still() { for (let i = 0; i < 140; i++) frame(); } };
-  });
+    return {
+      frame(dt) {
+        t += dt;
+        if (phase === 'type' && t > WORDS[i].length * CHAR + 120) { phase = 'attend'; t = 0; }
+        else if (phase === 'attend' && t > 900) {
+          if (i < WORDS.length - 1) { i++; phase = 'type'; } else phase = 'rest';
+          t = 0;
+        } else if (phase === 'rest' && t > 2200) { i = 0; off = 0; phase = 'type'; t = 0; }
+        draw();
+      },
+      still() { i = 9; phase = 'rest'; draw(true); },
+    };
+  }, true);
+
+  /* Sanghelios — blood stock so far and a 14-day forecast with its uncertainty band */
+  canvasAnim('c-sanghelios', (ctx, W, H) => {
+    const top = 18, bot = H - 18, left = 12, nowX = W * 0.6, HIST = 30, FC = 14, TH = 0.34;
+    const pxDay = (nowX - left) / HIST;
+    const trend = d => 0.52 + 0.2 * Math.sin(d * 0.21) + 0.11 * Math.sin(d * 0.53 + 1.3);
+    const obs = d => trend(d) + (hash(d, 7) - 0.5) * 0.1;   // what was measured on day d
+    const Y = v => top + (1 - v) * (bot - top);
+    let now = 40 + Math.random() * 60, pulse = 0;
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      const X = d => nowX + (d - now) * pxDay, d0 = Math.floor(now);
+      const vNow = obs(d0) + (obs(d0 + 1) - obs(d0)) * (now - d0);
+      const fc = d => trend(d) + (vNow - trend(now)) * Math.exp(-(d - now) / 2);
+      const band = d => 0.025 + 0.012 * (d - now);
+
+      ctx.setLineDash([3, 4]); ctx.lineWidth = 1;
+      ctx.strokeStyle = paper(0.4); ctx.beginPath(); ctx.moveTo(left, Y(TH)); ctx.lineTo(W - left, Y(TH)); ctx.stroke();
+      ctx.strokeStyle = paper(0.22); ctx.beginPath(); ctx.moveTo(nowX, top - 8); ctx.lineTo(nowX, bot); ctx.stroke();
+      ctx.setLineDash([]);
+
+      ctx.beginPath();   // uncertainty band
+      for (let d = now; d <= now + FC; d += 0.25) ctx.lineTo(X(d), Y(fc(d) + band(d)));
+      for (let d = now + FC; d >= now; d -= 0.25) ctx.lineTo(X(d), Y(fc(d) - band(d)));
+      ctx.fillStyle = paper(0.1); ctx.fill();
+
+      ctx.setLineDash([4, 3]); ctx.strokeStyle = paper(0.85); ctx.lineWidth = 1.2; ctx.beginPath();
+      for (let d = now; d <= now + FC; d += 0.25) ctx.lineTo(X(d), Y(fc(d)));
+      ctx.stroke(); ctx.setLineDash([]);
+
+      ctx.strokeStyle = paper(0.9); ctx.lineWidth = 1.3; ctx.beginPath();
+      for (let d = Math.ceil(now - HIST); d <= d0; d++) ctx.lineTo(X(d), Y(obs(d)));
+      ctx.lineTo(nowX, Y(vNow)); ctx.stroke();
+      ctx.fillStyle = paper(0.55);
+      for (let d = Math.ceil(now - HIST); d <= d0; d++) { ctx.beginPath(); ctx.arc(X(d), Y(obs(d)), 1.3, 0, 6.2832); ctx.fill(); }
+
+      // first day the forecast drops below the shortage line
+      for (let d = now; d <= now + FC; d += 0.25) {
+        if (fc(d) >= TH) continue;
+        const x = X(d), y = Y(fc(d)), p = pulse % 1;
+        ctx.strokeStyle = paper(1 - p); ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(x, y, 3 + p * 9, 0, 6.2832); ctx.stroke();
+        ctx.fillStyle = paper(1); ctx.beginPath(); ctx.arc(x, y, 2.4, 0, 6.2832); ctx.fill();
+        break;
+      }
+    }
+    return {
+      frame(dt) { now += dt / 650; pulse += dt / 1100; draw(); },
+      still: draw,
+    };
+  }, true);
+
+  /* InvestigIA — the agent graph: plan → search → read (→ search again) → write → plan */
+  canvasAnim('c-investigia', (ctx, W, H) => {
+    const N = { plan: [W * 0.17, H * 0.54], search: [W * 0.5, H * 0.28], read: [W * 0.83, H * 0.54], write: [W * 0.5, H * 0.82] };
+    const HW = 27, HH = 10, BEND = { 'search>read': 12, 'read>search': 12 };
+    const ROUTE = ['plan', 'search', 'read', 'search', 'read', 'write', 'plan'], DWELL = 420, MOVE = 700;
+
+    const clip = (p, q) => {   // where the segment p→q leaves the box around p
+      const dx = q[0] - p[0], dy = q[1] - p[1], s = Math.min((HW + 3) / Math.abs(dx || 1e-9), (HH + 3) / Math.abs(dy || 1e-9));
+      return [p[0] + dx * s, p[1] + dy * s];
+    };
+    const edges = {};
+    for (const key of ['plan>search', 'search>read', 'read>search', 'read>write', 'write>plan']) {
+      const [a, b] = key.split('>'), A = clip(N[a], N[b]), B = clip(N[b], N[a]);
+      const len = Math.hypot(B[0] - A[0], B[1] - A[1]), c = BEND[key] || 0;
+      edges[key] = [A, [(A[0] + B[0]) / 2 - (B[1] - A[1]) / len * c, (A[1] + B[1]) / 2 + (B[0] - A[0]) / len * c], B];
+    }
+    const bez = ([A, C, B], u) => [
+      (1 - u) ** 2 * A[0] + 2 * (1 - u) * u * C[0] + u * u * B[0],
+      (1 - u) ** 2 * A[1] + 2 * (1 - u) * u * C[1] + u * u * B[1],
+    ];
+    let s = 0, t = 0;
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      const moving = t > DWELL, u = Math.min(1, (t - DWELL) / MOVE);
+      const active = moving ? ROUTE[s] + '>' + ROUTE[s + 1] : null;
+      for (const [key, e] of Object.entries(edges)) {
+        const [A, C, B] = e, on = key === active;
+        ctx.strokeStyle = paper(on ? 0.7 : 0.28); ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(...A); ctx.quadraticCurveTo(...C, ...B); ctx.stroke();
+        const ang = Math.atan2(B[1] - C[1], B[0] - C[0]);
+        ctx.fillStyle = paper(on ? 0.7 : 0.35); ctx.beginPath(); ctx.moveTo(...B);
+        ctx.lineTo(B[0] - 6 * Math.cos(ang - 0.4), B[1] - 6 * Math.sin(ang - 0.4));
+        ctx.lineTo(B[0] - 6 * Math.cos(ang + 0.4), B[1] - 6 * Math.sin(ang + 0.4)); ctx.fill();
+      }
+      if (moving) for (let k = 0; k < 5; k++) {
+        const [x, y] = bez(edges[active], Math.max(0, u - k * 0.04));
+        ctx.fillStyle = paper(1 - k * 0.2); ctx.beginPath(); ctx.arc(x, y, 2.6 - k * 0.35, 0, 6.2832); ctx.fill();
+      }
+      ctx.font = `10px ${MONO}`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      for (const [name, [x, y]] of Object.entries(N)) {
+        const here = !moving && ROUTE[s] === name;
+        ctx.beginPath();
+        ctx.roundRect ? ctx.roundRect(x - HW, y - HH, HW * 2, HH * 2, 4) : ctx.rect(x - HW, y - HH, HW * 2, HH * 2);
+        ctx.fillStyle = here ? paper(1) : '#050505'; ctx.fill();
+        ctx.strokeStyle = paper(here ? 1 : 0.7); ctx.lineWidth = 1; ctx.stroke();
+        ctx.fillStyle = here ? '#050505' : paper(0.85); ctx.fillText(name, x, y + 0.5);
+      }
+      ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+    }
+    return {
+      frame(dt) {
+        t += dt;
+        if (t > DWELL + MOVE) {
+          t = 0; s++;
+          if (s === ROUTE.length - 1) s = 0;
+        }
+        draw();
+      },
+      still: draw,
+    };
+  }, true);
+
+  /* Krylov on GPU — C = A × B one thread block at a time: each thread of the 3×3 tile
+     walks its row of A and its column of B, accumulating one entry of C */
+  canvasAnim('c-krylov', (ctx, W, H) => {
+    const n = 6, TILE = 3, TILES = (n / TILE) ** 2, STEP = 150, HOLD = 1400;
+    const s = Math.min((W - 90) / 3, H - 44), cs = s / n, g = (W - 3 * s) / 4, y0 = (H - s) / 2;
+    const XA = g, XB = 2 * g + s, XC = 3 * g + 2 * s;
+    const done = new Array(n * n).fill(false);
+    let tile = 0, k = 0, t = 0, seed = Math.random() * 100;
+    const val = (m, i, j) => 0.1 + 0.32 * hash(i + seed + m * 17, j + m * 5);
+
+    const bracket = x => {
+      ctx.strokeStyle = paper(0.7); ctx.lineWidth = 1.2; ctx.beginPath();
+      ctx.moveTo(x - 1, y0 - 4); ctx.lineTo(x - 5, y0 - 4); ctx.lineTo(x - 5, y0 + s + 4); ctx.lineTo(x - 1, y0 + s + 4);
+      ctx.moveTo(x + s + 1, y0 - 4); ctx.lineTo(x + s + 5, y0 - 4); ctx.lineTo(x + s + 5, y0 + s + 4); ctx.lineTo(x + s + 1, y0 + s + 4);
+      ctx.stroke();
+    };
+    const cell = (x, i, j, a) => { ctx.fillStyle = paper(a); ctx.fillRect(x + j * cs + 1, y0 + i * cs + 1, cs - 2, cs - 2); };
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      const active = tile < TILES, tr = (tile / (n / TILE) | 0) * TILE, tc = (tile % (n / TILE)) * TILE;
+      const inRows = i => active && i >= tr && i < tr + TILE, inCols = j => active && j >= tc && j < tc + TILE;
+      const p = (k + t / STEP) / n;
+      for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) {
+        cell(XA, i, j, inRows(i) && j === k ? 0.95 : val(0, i, j));
+        cell(XB, i, j, inCols(j) && i === k ? 0.95 : val(1, i, j));
+        if (inRows(i) && inCols(j)) cell(XC, i, j, 0.1 + 0.55 * p);
+        else cell(XC, i, j, done[i * n + j] ? 0.2 + val(2, i, j) : 0.05);
+      }
+      if (active) {   // the rows / columns this thread block is reading, and the tile it writes
+        ctx.strokeStyle = paper(0.85); ctx.lineWidth = 1;
+        ctx.strokeRect(XA + 0.5, y0 + tr * cs + 0.5, s - 1, TILE * cs - 1);
+        ctx.strokeRect(XB + tc * cs + 0.5, y0 + 0.5, TILE * cs - 1, s - 1);
+        ctx.strokeRect(XC + tc * cs + 0.5, y0 + tr * cs + 0.5, TILE * cs - 1, TILE * cs - 1);
+      }
+      bracket(XA); bracket(XB); bracket(XC);
+      ctx.font = `16px ${MONO}`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillStyle = paper(0.75);
+      ctx.fillText('×', (XA + s + XB) / 2, y0 + s / 2);
+      ctx.fillText('=', (XB + s + XC) / 2, y0 + s / 2);
+      ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+    }
+    return {
+      frame(dt) {
+        t += dt;
+        if (tile < TILES) {
+          if (t > STEP) {
+            t = 0;
+            if (++k === n) {
+              for (let i = 0; i < TILE; i++) for (let j = 0; j < TILE; j++)
+                done[((tile / (n / TILE) | 0) * TILE + i) * n + (tile % (n / TILE)) * TILE + j] = true;
+              k = 0; tile++;
+            }
+          }
+        } else if (t > HOLD) { done.fill(false); tile = 0; t = 0; seed = Math.random() * 100; }
+        draw();
+      },
+      still: draw,
+    };
+  }, true);
 
   /* background — Delaunay triangulation of drifting points (+ the cursor) */
   const ptr = { x: 0, y: 0, on: false };

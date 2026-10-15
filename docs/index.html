@@ -27,38 +27,18 @@
 <body>
 <canvas id="bg" aria-hidden="true"></canvas>
 
-<div class="marquee" aria-hidden="true">
-  <div class="marquee-track">
-    <span>softmax(QKᵀ/√d)·V ✦ ẋ = σ(y − x), ẏ = x(ρ − z) − y, ż = xy − βz ✦ ∇²u + k²u = 0 ✦ B3/S23 ✦ ∀△ ∄p ∈ circumcircle(△) ✦ P(A|B) = P(B|A)·P(A) / P(B) ✦ K(A, b) = span{b, Ab, A²b, …} ✦ θ ← θ − η∇L(θ) ✦ e^(iπ) + 1 = 0 ✦ Av = λv ✦ =^.^= ✦</span>
-    <span>softmax(QKᵀ/√d)·V ✦ ẋ = σ(y − x), ẏ = x(ρ − z) − y, ż = xy − βz ✦ ∇²u + k²u = 0 ✦ B3/S23 ✦ ∀△ ∄p ∈ circumcircle(△) ✦ P(A|B) = P(B|A)·P(A) / P(B) ✦ K(A, b) = span{b, Ab, A²b, …} ✦ θ ← θ − η∇L(θ) ✦ e^(iπ) + 1 = 0 ✦ Av = λv ✦ =^.^= ✦</span>
-  </div>
-</div>
-
 <div class="page">
 
   <header class="banner">
     <canvas id="c-life" aria-hidden="true"></canvas>
     <div class="banner-inner">
-      <p class="banner-kicker"><span lang="en">hi, I'm</span><span lang="es">hola, soy</span></p>
       <h1>Jerónimo<br>Hoyos Botero</h1>
-      <p class="banner-sub"><span lang="en">machine learning · math · cats</span><span lang="es">machine learning · matemáticas · gatos</span></p>
-    </div>
-    <p class="banner-fig" aria-hidden="true"><span lang="en">fig. 0: game of life, B3/S23 (move your cursor here)</span><span lang="es">fig. 0: juego de la vida, B3/S23 (mueve el cursor aquí)</span></p>
-  </header>
-
-  <nav class="nav" aria-label="Sections">
-    <div class="nav-links">
-      <a href="#about"><span lang="en">about</span><span lang="es">sobre mí</span></a>
-      <a href="#talks"><span lang="en">talks</span><span lang="es">charlas</span></a>
-      <a href="#projects"><span lang="en">projects</span><span lang="es">proyectos</span></a>
-      <a href="#art"><span lang="en">art</span><span lang="es">arte</span></a>
-      <a href="#contact"><span lang="en">contact</span><span lang="es">contacto</span></a>
     </div>
     <div class="lang" role="group" aria-label="Language">
       <button type="button" data-set-lang="es" aria-pressed="false">ES</button>
       <button type="button" data-set-lang="en" aria-pressed="true">EN</button>
     </div>
-  </nav>
+  </header>
 
   <div class="grid">
 
@@ -66,21 +46,22 @@
     <aside class="side side-left">
 
       <section class="widget w-about">
-        <h2 class="widget-title"><span><span lang="en">~ about me</span><span lang="es">~ sobre mí</span></span><span class="wt-sym" aria-hidden="true">∃</span></h2>
+        <h2 class="widget-title"><span><span lang="en">~ about me</span><span lang="es">~ sobre mí</span></span></h2>
         <img class="widget-img" src="static/cat.gif" width="900" height="900" alt="Pixel art of a black cat curled up by a window">
         <div class="widget-body">
           <p class="profile-name">Jerónimo Hoyos Botero</p>
           <table class="info">
             <tr><th><span lang="en">based in</span><span lang="es">vive en</span></th><td>Medellín, CO</td></tr>
             <tr><th><span lang="en">studies</span><span lang="es">estudia</span></th><td><span lang="en">Software Eng. · UNAL</span><span lang="es">Ing. de Sistemas · UNAL</span></td></tr>
-            <tr><th><span lang="en">loves</span><span lang="es">ama</span></th><td><span lang="en">cats, code, math</span><span lang="es">gatos, código, mates</span></td></tr>
+            <tr><th><span lang="en">loves</span><span lang="es">ama</span></th><td><span lang="en">cats, code, statistics</span><span lang="es">gatos, código, estadística</span></td></tr>
             <tr><th><span lang="en">speaks</span><span lang="es">habla</span></th><td><span lang="en">ES (native) · EN (B1)</span><span lang="es">ES (nativo) · EN (B1)</span></td></tr>
           </table>
         </div>
       </section>
 
       <section class="widget">
-        <h2 class="widget-title"><span><span lang="en">~ links</span><span lang="es">~ enlaces</span></span><span class="wt-sym" aria-hidden="true">→</span></h2>
+        <h2 class="widget-title"><span><span lang="en">~ links</span><span lang="es">~ enlaces</span></span></h2>
+        <canvas id="c-times" class="widget-fig" aria-hidden="true"></canvas>
         <div class="widget-body">
           <ul class="links">
             <li><a href="https://github.com/JeroHoyos" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.21.08 1.85 1.24 1.85 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02.005 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.82.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>GitHub</a></li>
@@ -93,21 +74,8 @@
       </section>
 
       <section class="widget">
-        <h2 class="widget-title"><span><span lang="en">~ into</span><span lang="es">~ me gusta</span></span><span class="wt-sym" aria-hidden="true">∞</span></h2>
-        <canvas id="c-lorenz" class="widget-fig" aria-hidden="true"></canvas>
-        <p class="widget-cap"><span lang="en">fig. 1: lorenz attractor, σ=10 ρ=28 β=8/3</span><span lang="es">fig. 1: atractor de lorenz, σ=10 ρ=28 β=8/3</span></p>
-        <div class="widget-body">
-          <div class="tags" lang="en">
-            <span class="tag">probability</span><span class="tag">linear algebra</span><span class="tag">transformers</span><span class="tag">deep learning</span><span class="tag">GPU computing</span><span class="tag">Rust</span><span class="tag">AI agents</span><span class="tag">computer graphics</span><span class="tag">cats</span><span class="tag">drawing</span><span class="tag">animated talks</span>
-          </div>
-          <div class="tags" lang="es">
-            <span class="tag">probabilidad</span><span class="tag">álgebra lineal</span><span class="tag">transformers</span><span class="tag">deep learning</span><span class="tag">cómputo en GPU</span><span class="tag">Rust</span><span class="tag">agentes de IA</span><span class="tag">gráficos 3D</span><span class="tag">gatos</span><span class="tag">dibujar</span><span class="tag">charlas animadas</span>
-          </div>
-        </div>
-      </section>
-
-      <section class="widget">
-        <h2 class="widget-title"><span><span lang="en">~ education</span><span lang="es">~ formación</span></span><span class="wt-sym" aria-hidden="true">∂</span></h2>
+        <h2 class="widget-title"><span><span lang="en">~ education</span><span lang="es">~ formación</span></span></h2>
+        <canvas id="c-sort" class="widget-fig" aria-hidden="true"></canvas>
         <div class="widget-body">
           <p class="edu-year"><span lang="en">2024 – present</span><span lang="es">2024 – actualidad</span></p>
           <p class="edu-name"><span lang="en">Computer Software Engineering</span><span lang="es">Ingeniería en Sistemas e Informática</span></p>
@@ -123,7 +91,6 @@
       <article class="post" id="about">
         <header class="post-head">
           <h2 class="post-title"><span lang="en">~ about me ~</span><span lang="es">~ sobre mí ~</span></h2>
-          <span class="post-meta">§1</span>
         </header>
         <div class="post-body">
           <div class="prose" lang="en">
@@ -142,7 +109,6 @@
       <article class="post" id="talks">
         <header class="post-head">
           <h2 class="post-title"><span lang="en">~ talks ~</span><span lang="es">~ charlas ~</span></h2>
-          <span class="post-meta">§2</span>
         </header>
         <div class="post-body">
           <figure class="talk-photo">
@@ -173,43 +139,33 @@
       <article class="post" id="projects">
         <header class="post-head">
           <h2 class="post-title"><span lang="en">~ projects ~</span><span lang="es">~ proyectos ~</span></h2>
-          <span class="post-meta">§3</span>
         </header>
         <div class="post-body">
 
-          <div class="feat">
-            <a class="feat-media" href="https://github.com/JeroHoyos/Molinete-AI" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><img src="proyectos/molinete.png" width="1600" height="899" loading="lazy" alt=""></a>
-            <span class="badge"><span lang="en">★ featured</span><span lang="es">★ destacado</span></span>
-            <a class="feat-title" href="https://github.com/JeroHoyos/Molinete-AI" target="_blank" rel="noopener noreferrer">Molinete-AI</a>
-            <p class="post-lead" lang="en">A GPT-2 Transformer built from scratch in Rust and trained on the works of Cervantes, focused on an efficient implementation of the architecture and its tensor operations. Presented at PyCon Colombia 2026 and at the Medellín IA community.</p>
-            <p class="post-lead" lang="es">Un Transformer GPT-2 construido desde cero en Rust y entrenado con las obras de Cervantes, enfocado en una implementación eficiente de la arquitectura y sus operaciones tensoriales. Presentado en PyCon Colombia 2026 y en la comunidad Medellín IA.</p>
-            <dl class="stats">
-              <div><dt><span lang="en">model</span><span lang="es">modelo</span></dt><dd>GPT-2</dd></div>
-              <div><dt><span lang="en">core</span><span lang="es">núcleo</span></dt><dd>Rust</dd></div>
-              <div><dt>corpus</dt><dd>Cervantes</dd></div>
-              <div><dt><span lang="en">approach</span><span lang="es">enfoque</span></dt><dd><span lang="en">from scratch</span><span lang="es">desde cero</span></dd></div>
-            </dl>
-            <div class="tags"><span class="tag">Rust</span><span class="tag">Python</span><span class="tag">Transformer</span><span class="tag">Tensors</span></div>
-          </div>
-
           <div class="projs">
+            <a class="proj" href="https://github.com/JeroHoyos/Molinete-AI" target="_blank" rel="noopener noreferrer">
+              <div class="proj-media"><canvas id="c-molinete" class="proj-canvas" aria-hidden="true"></canvas></div>
+              <div class="proj-body">
+                <h3 class="proj-name">Molinete-AI</h3>
+                <p class="proj-desc" lang="en">A GPT-2 Transformer built from scratch in Rust and trained on the works of Cervantes. Presented at PyCon Colombia 2026 and at the Medellín IA community.</p>
+                <p class="proj-desc" lang="es">Un Transformer GPT-2 construido desde cero en Rust y entrenado con las obras de Cervantes. Presentado en PyCon Colombia 2026 y en la comunidad Medellín IA.</p>
+              </div>
+            </a>
             <a class="proj" href="https://github.com/JeroHoyos/Sanghelios" target="_blank" rel="noopener noreferrer">
-              <div class="proj-media"><img src="proyectos/sanghelios.png" width="1852" height="938" loading="lazy" alt=""></div>
+              <div class="proj-media"><canvas id="c-sanghelios" class="proj-canvas" aria-hidden="true"></canvas></div>
               <div class="proj-body">
                 <h3 class="proj-name">Sanghelios</h3>
                 <p class="proj-desc" lang="en">Predicts blood shortages at Hospital General de Medellín 14 days in advance with XGBoost, and turns that signal into AI-designed donation campaigns.</p>
                 <p class="proj-desc" lang="es">Anticipa la escasez de sangre del Hospital General de Medellín con 14 días de anticipación usando XGBoost, y convierte esa señal en campañas de donación diseñadas con IA.</p>
-                <div class="tags"><span class="tag">Python</span><span class="tag">XGBoost</span><span class="tag">FastAPI</span><span class="tag">AI agents</span></div>
               </div>
             </a>
             <a class="proj" href="https://github.com/JeroHoyos/InvestigIA" target="_blank" rel="noopener noreferrer">
-              <div class="proj-media"><img src="proyectos/investigia.png" width="1600" height="811" loading="lazy" alt=""></div>
+              <div class="proj-media"><canvas id="c-investigia" class="proj-canvas" aria-hidden="true"></canvas></div>
               <div class="proj-body">
                 <h3 class="proj-name">InvestigIA</h3>
                 <p class="proj-note"><span lang="en">★ 3rd place · DataHack 2026</span><span lang="es">★ 3.er lugar · DataHack 2026</span></p>
                 <p class="proj-desc" lang="en">Autonomous research assistant built with LangGraph and Ollama: academic literature analysis with fully local inference.</p>
                 <p class="proj-desc" lang="es">Asistente autónomo de investigación construido con LangGraph y Ollama: análisis de literatura académica con inferencia completamente local.</p>
-                <div class="tags"><span class="tag">LangGraph</span><span class="tag">Ollama</span><span class="tag">Agents</span><span class="tag">RAG</span></div>
               </div>
             </a>
             <a class="proj" href="https://github.com/JeroHoyos/VertexRS" target="_blank" rel="noopener noreferrer">
@@ -218,25 +174,35 @@
                 <h3 class="proj-name">VertexRS</h3>
                 <p class="proj-desc" lang="en">A 3D software renderer written in Rust: the whole rendering pipeline on the CPU, no graphics API.</p>
                 <p class="proj-desc" lang="es">Un renderizador 3D por software escrito en Rust: todo el pipeline de render en la CPU, sin API gráfica.</p>
-                <div class="tags"><span class="tag">Rust</span><span class="tag">3D</span><span class="tag">Graphics</span></div>
               </div>
             </a>
             <a class="proj" href="https://github.com/JeroHoyos/Efficient-Krylov-Sequence-Computation-in-GPU" target="_blank" rel="noopener noreferrer">
-              <div class="proj-media"><img src="proyectos/krylov.png" width="1185" height="690" loading="lazy" alt=""></div>
+              <div class="proj-media"><canvas id="c-krylov" class="proj-canvas" aria-hidden="true"></canvas></div>
               <div class="proj-body">
                 <h3 class="proj-name"><span lang="en">Krylov sequences on GPU</span><span lang="es">Secuencias de Krylov en GPU</span></h3>
                 <p class="proj-desc" lang="en">Benchmarking iterative matrix multiplication for Krylov subspace generation, CPU vs GPU: tiled, coalesced and cuBLAS strategies in CUDA.</p>
                 <p class="proj-desc" lang="es">Benchmarking de multiplicación iterativa de matrices para generar subespacios de Krylov, CPU vs GPU: estrategias tiled, coalesced y cuBLAS en CUDA.</p>
-                <div class="tags"><span class="tag">CUDA</span><span class="tag">C</span><span class="tag">cuBLAS</span><span class="tag">HPC</span></div>
               </div>
             </a>
             <a class="proj" href="https://github.com/JeroHoyos/mysql-vs-postgres-benchmark" target="_blank" rel="noopener noreferrer">
-              <div class="proj-media"><div class="proj-glyph" aria-hidden="true"><span class="glyph-math">H<sub>0</sub>: μ<sub>my</sub> = μ<sub>pg</sub></span></div></div>
+              <div class="proj-media"><div class="proj-glyph" aria-hidden="true">
+                <svg class="glyph-db" viewBox="0 0 220 112">
+                  <g fill="none" stroke="currentColor" stroke-width="1.4">
+                    <ellipse cx="55" cy="16" rx="24" ry="7"/><path d="M31 16v40c0 3.9 10.7 7 24 7s24-3.1 24-7V16M31 29c0 3.9 10.7 7 24 7s24-3.1 24-7M31 42c0 3.9 10.7 7 24 7s24-3.1 24-7"/>
+                    <ellipse cx="165" cy="16" rx="24" ry="7"/><path d="M141 16v40c0 3.9 10.7 7 24 7s24-3.1 24-7V16M141 29c0 3.9 10.7 7 24 7s24-3.1 24-7M141 42c0 3.9 10.7 7 24 7s24-3.1 24-7"/>
+                  </g>
+                  <text x="110" y="42" text-anchor="middle">vs</text>
+                  <rect class="track" x="31" y="78" width="48" height="5"/><rect class="track" x="141" y="78" width="48" height="5"/>
+                  <rect class="bar" style="--to:.55" x="31" y="78" width="48" height="5"/>
+                  <rect class="bar" style="--to:.85" x="141" y="78" width="48" height="5"/>
+                  <text x="55" y="102" text-anchor="middle">mysql</text>
+                  <text x="165" y="102" text-anchor="middle">postgres</text>
+                </svg>
+              </div></div>
               <div class="proj-body">
                 <h3 class="proj-name">mysql-vs-postgres-benchmark</h3>
                 <p class="proj-desc" lang="en">Performance comparison of MySQL and PostgreSQL on insertion and query workloads, with pandas as an in-memory reference.</p>
                 <p class="proj-desc" lang="es">Comparación de rendimiento entre MySQL y PostgreSQL en cargas de inserción y consulta, con pandas como referencia en memoria.</p>
-                <div class="tags"><span class="tag">Python</span><span class="tag">SQL</span><span class="tag">PostgreSQL</span><span class="tag">MySQL</span></div>
               </div>
             </a>
             <a class="proj" href="https://github.com/JeroHoyos/CATlude" target="_blank" rel="noopener noreferrer">
@@ -245,7 +211,6 @@
                 <h3 class="proj-name">CATlude</h3>
                 <p class="proj-desc" lang="en">A tiny coding agent, like Claude Code, but with a cat.</p>
                 <p class="proj-desc" lang="es">Un pequeño agente de programación, como Claude Code, pero con un gato.</p>
-                <div class="tags"><span class="tag">Python</span><span class="tag">LLM</span><span class="tag">Agent</span></div>
               </div>
             </a>
           </div>
@@ -257,11 +222,8 @@
       <article class="post" id="art">
         <header class="post-head">
           <h2 class="post-title"><span lang="en">~ art ~</span><span lang="es">~ arte ~</span></h2>
-          <span class="post-meta">§4</span>
         </header>
         <div class="post-body">
-          <canvas id="c-flow" class="art-fig" aria-hidden="true"></canvas>
-          <p class="art-cap"><span lang="en">fig. 3: particles drifting through a sinusoidal flow field</span><span lang="es">fig. 3: partículas a la deriva en un campo de flujo sinusoidal</span></p>
           <p class="post-lead" lang="en">Digital drawings made in my spare time. Characters, creatures and whatever comes out.</p>
           <p class="post-lead" lang="es">Dibujos digitales hechos en ratos libres. Personajes, criaturas y lo que salga.</p>
           <div class="art-grid">
@@ -281,36 +243,29 @@
     <aside class="side side-right">
 
       <section class="widget">
-        <h2 class="widget-title"><span><span lang="en">~ lately</span><span lang="es">~ últimamente</span></span><span class="wt-sym" aria-hidden="true">Δ</span></h2>
+        <h2 class="widget-title"><span><span lang="en">~ into</span><span lang="es">~ me gusta</span></span></h2>
+        <canvas id="c-lorenz" class="widget-fig" aria-hidden="true"></canvas>
         <div class="widget-body">
-          <div class="now-item">
-            <p class="now-label"><span lang="en">last talk</span><span lang="es">última charla</span></p>
-            <p class="now-value">PyCon Colombia 2026</p>
-          </div>
-          <div class="now-item">
-            <p class="now-label"><span lang="en">coordinating</span><span lang="es">coordinando</span></p>
-            <p class="now-value">Aperture</p>
-          </div>
-          <div class="now-item">
-            <p class="now-label">hackathon</p>
-            <p class="now-value"><span lang="en">3rd · DataHack 2026</span><span lang="es">3.º · DataHack 2026</span></p>
-          </div>
-        </div>
-      </section>
-
-      <section class="widget">
-        <h2 class="widget-title"><span>~ aperture</span><span class="wt-sym" aria-hidden="true">◎</span></h2>
-        <div class="widget-body">
-          <p lang="en">A student research group at the Universidad Nacional de Colombia that I coordinate. I gave the inaugural session of its Data Science &amp; AI group.</p>
-          <p lang="es">Un semillero de investigación estudiantil de la Universidad Nacional de Colombia que coordino. Di la sesión inaugural de su línea de Ciencia de Datos e IA.</p>
-          <a class="btn" href="https://aperture-systems-lab.github.io/" target="_blank" rel="noopener noreferrer"><span lang="en">visit aperture ↗</span><span lang="es">visitar aperture ↗</span></a>
+          <ul class="into" lang="en">
+            <li>probability &amp; statistics</li>
+            <li>linear algebra</li>
+            <li>deep learning</li>
+            <li>GPU computing</li>
+            <li>computer graphics</li>
+          </ul>
+          <ul class="into" lang="es">
+            <li>probabilidad y estadística</li>
+            <li>álgebra lineal</li>
+            <li>deep learning</li>
+            <li>cómputo en GPU</li>
+            <li>gráficos por computador</li>
+          </ul>
         </div>
       </section>
 
       <section class="widget" id="contact">
-        <h2 class="widget-title"><span><span lang="en">~ contact</span><span lang="es">~ contacto</span></span><span class="wt-sym" aria-hidden="true">@</span></h2>
-        <canvas id="c-chladni" class="widget-fig" aria-hidden="true"></canvas>
-        <p class="widget-cap"><span lang="en">fig. 2: chladni figure</span><span lang="es">fig. 2: figura de chladni</span>, (m, n) = (<span id="chladni-mn">2, 5</span>)</p>
+        <h2 class="widget-title"><span><span lang="en">~ contact</span><span lang="es">~ contacto</span></span></h2>
+        <canvas id="c-galton" class="widget-fig" aria-hidden="true"></canvas>
         <div class="widget-body">
           <p lang="en">Questions, proposals or collaborations? Write me.</p>
           <p lang="es">¿Preguntas, propuestas o colaboraciones? Escríbeme.</p>
@@ -320,7 +275,8 @@
       </section>
 
       <section class="widget">
-        <h2 class="widget-title"><span><span lang="en">~ visitor</span><span lang="es">~ visitante</span></span><span class="wt-sym" aria-hidden="true">ฅ</span></h2>
+        <h2 class="widget-title"><span><span lang="en">~ visitor</span><span lang="es">~ visitante</span></span></h2>
+        <div class="peek"><img src="static/cat2.gif" width="200" height="172" alt="Pixel art of a grey cat"></div>
         <div class="widget-body">
           <p lang="en">There's a cat chasing your cursor. This is expected behaviour.</p>
           <p lang="es">Hay un gato persiguiendo tu cursor. Es el comportamiento esperado.</p>
