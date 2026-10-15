@@ -47,11 +47,12 @@
 
   /* ───────── canvas animations ─────────
      Each one is make(ctx, w, h) → { frame(dt), still(), resize?(w, h), ... }.
-     A single rAF loop drives only the ones on screen; with reduced motion
-     they draw one still frame instead, unless registered with always = true. */
+     A single rAF loop at ~30fps drives only the ones on screen; with reduced
+     motion they draw one still frame instead, unless registered with always.
+     dpr lets a big canvas (the full-screen background) render at a lower resolution. */
   const anims = [];
 
-  function canvasAnim(id, make, always = false) {
+  function canvasAnim(id, make, { always = false, dpr = DPR } = {}) {
     const cv = document.getElementById(id);
     if (!cv || !cv.getContext) return null;
     const ctx = cv.getContext('2d');
@@ -60,8 +61,8 @@
       const w = cv.clientWidth, h = cv.clientHeight;
       if (w < 2 || h < 2 || (w === a.w && h === a.h)) return;
       a.w = w; a.h = h;
-      cv.width = Math.round(w * DPR); cv.height = Math.round(h * DPR);
-      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+      cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       if (a.state && a.state.resize) a.state.resize(w, h);
       else { a.state = make(ctx, w, h); if (reduce && !always) a.state.still(); }
     };
@@ -75,7 +76,7 @@
   const loop = now => {
     requestAnimationFrame(loop);
     const dt = now - last;
-    if (dt < 15 || document.hidden) return;   // cap at ~60fps on high-refresh screens
+    if (dt < 31 || document.hidden) return;   // ~30fps is plenty for these and halves the CPU cost
     last = now;
     const step = Math.min(dt, 50);
     for (const a of anims) if (a.visible && a.state && (a.always || !reduce)) a.state.frame(step);
@@ -123,8 +124,9 @@
         ctx.fill();
       }
     }
+    draw();
     return {
-      frame(dt) { acc += dt; if (acc >= 120) { acc = 0; step(); } draw(); },
+      frame(dt) { acc += dt; if (acc >= 120) { acc = 0; step(); draw(); } },   // only redraw on a new generation
       still: draw,
       poke(px, py) { seed(px / S | 0, py / S | 0, 1, 0.6); if (reduce) draw(); },
     };
@@ -178,7 +180,7 @@
     return {
       frame(dt) {
         th += dt * 0.00022;
-        for (const t of trails) for (let k = 0; k < 2; k++) {
+        for (const t of trails) for (let k = Math.max(1, Math.round(dt / 8)); k > 0; k--) {   // ~2 steps per 16ms, whatever the frame rate
           step(t.q);
           t.tr[t.head] = [t.q.x, t.q.y, t.q.z];
           t.head = (t.head + 1) % L;
@@ -412,7 +414,7 @@
       },
       still() { i = 9; phase = 'rest'; draw(true); },
     };
-  }, true);
+  }, { always: true });
 
   /* Sanghelios — blood stock so far and a 14-day forecast with its uncertainty band */
   canvasAnim('c-sanghelios', (ctx, W, H) => {
@@ -463,7 +465,7 @@
       frame(dt) { now += dt / 650; pulse += dt / 1100; draw(); },
       still: draw,
     };
-  }, true);
+  }, { always: true });
 
   /* InvestigIA — the agent graph: plan → search → read (→ search again) → write → plan */
   canvasAnim('c-investigia', (ctx, W, H) => {
@@ -526,7 +528,7 @@
       },
       still: draw,
     };
-  }, true);
+  }, { always: true });
 
   /* Krylov on GPU — C = A × B one thread block at a time: each thread of the 3×3 tile
      walks its row of A and its column of B, accumulating one entry of C */
@@ -586,7 +588,7 @@
       },
       still: draw,
     };
-  }, true);
+  }, { always: true });
 
   /* background — Delaunay triangulation of drifting points (+ the cursor) */
   const ptr = { x: 0, y: 0, on: false };
@@ -665,5 +667,5 @@
         if (reduce) draw();
       },
     };
-  });
+  }, { dpr: 1 });   // full-screen and faint: 1× resolution is enough
 })();
