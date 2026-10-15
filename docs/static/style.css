@@ -110,10 +110,9 @@ html[lang="es"] body [lang="en"]{display:none !important}
 .talk-photo{border:1px solid var(--ink);margin-bottom:1.2rem;background:var(--paper-2)}
 .talk-photo img{width:100%}
 .talk-photo figcaption{font-size:.64rem;line-height:1.55;color:var(--muted);padding:.5rem .7rem;border-top:1px solid var(--ink)}
-.talks{list-style:none;counter-reset:talk}
-.talk{display:grid;grid-template-columns:2.1rem minmax(0,1fr);column-gap:.6rem;padding:.85rem 0;border-top:1px dashed var(--rule)}
+.talks{list-style:none}
+.talk{display:flex;flex-direction:column;padding:.85rem 0;border-top:1px dashed var(--rule)}
 .talk:first-child{border-top:0;padding-top:.1rem}
-.talk::before{counter-increment:talk;content:counter(talk,decimal-leading-zero);grid-row:span 2;font-size:.7rem;color:var(--muted);padding-top:.15rem}
 .talk-venue{font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
 .talk-title{font-family:var(--serif);font-size:1.12rem;line-height:1.3;text-decoration:none}
 .talk-title:hover{text-decoration:underline}
