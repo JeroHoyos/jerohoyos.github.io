@@ -78,7 +78,6 @@ html[lang="es"] body [lang="en"]{display:none !important}
 .links a{display:flex;align-items:center;gap:.6rem;padding:.42rem 0;text-decoration:none;transition:padding .15s}
 .links a:is(:hover,:focus-visible){padding-left:.3rem}
 .links svg{width:15px;height:15px;fill:currentColor;flex:none}
-.links svg.stroke{fill:none;stroke:currentColor;stroke-width:1.8}
 .links a::after{content:"↗";margin-left:auto;opacity:.4}
 
 .into{list-style:none}
