@@ -467,69 +467,6 @@
     };
   }, { always: true });
 
-  /* InvestigIA — the agent graph: plan → search → read (→ search again) → write → plan */
-  canvasAnim('c-investigia', (ctx, W, H) => {
-    const N = { plan: [W * 0.17, H * 0.54], search: [W * 0.5, H * 0.28], read: [W * 0.83, H * 0.54], write: [W * 0.5, H * 0.82] };
-    const HW = 27, HH = 10, BEND = { 'search>read': 12, 'read>search': 12 };
-    const ROUTE = ['plan', 'search', 'read', 'search', 'read', 'write', 'plan'], DWELL = 420, MOVE = 700;
-
-    const clip = (p, q) => {   // where the segment p→q leaves the box around p
-      const dx = q[0] - p[0], dy = q[1] - p[1], s = Math.min((HW + 3) / Math.abs(dx || 1e-9), (HH + 3) / Math.abs(dy || 1e-9));
-      return [p[0] + dx * s, p[1] + dy * s];
-    };
-    const edges = {};
-    for (const key of ['plan>search', 'search>read', 'read>search', 'read>write', 'write>plan']) {
-      const [a, b] = key.split('>'), A = clip(N[a], N[b]), B = clip(N[b], N[a]);
-      const len = Math.hypot(B[0] - A[0], B[1] - A[1]), c = BEND[key] || 0;
-      edges[key] = [A, [(A[0] + B[0]) / 2 - (B[1] - A[1]) / len * c, (A[1] + B[1]) / 2 + (B[0] - A[0]) / len * c], B];
-    }
-    const bez = ([A, C, B], u) => [
-      (1 - u) ** 2 * A[0] + 2 * (1 - u) * u * C[0] + u * u * B[0],
-      (1 - u) ** 2 * A[1] + 2 * (1 - u) * u * C[1] + u * u * B[1],
-    ];
-    let s = 0, t = 0;
-
-    function draw() {
-      ctx.clearRect(0, 0, W, H);
-      const moving = t > DWELL, u = Math.min(1, (t - DWELL) / MOVE);
-      const active = moving ? ROUTE[s] + '>' + ROUTE[s + 1] : null;
-      for (const [key, e] of Object.entries(edges)) {
-        const [A, C, B] = e, on = key === active;
-        ctx.strokeStyle = paper(on ? 0.7 : 0.28); ctx.lineWidth = 1;
-        ctx.beginPath(); ctx.moveTo(...A); ctx.quadraticCurveTo(...C, ...B); ctx.stroke();
-        const ang = Math.atan2(B[1] - C[1], B[0] - C[0]);
-        ctx.fillStyle = paper(on ? 0.7 : 0.35); ctx.beginPath(); ctx.moveTo(...B);
-        ctx.lineTo(B[0] - 6 * Math.cos(ang - 0.4), B[1] - 6 * Math.sin(ang - 0.4));
-        ctx.lineTo(B[0] - 6 * Math.cos(ang + 0.4), B[1] - 6 * Math.sin(ang + 0.4)); ctx.fill();
-      }
-      if (moving) for (let k = 0; k < 5; k++) {
-        const [x, y] = bez(edges[active], Math.max(0, u - k * 0.04));
-        ctx.fillStyle = paper(1 - k * 0.2); ctx.beginPath(); ctx.arc(x, y, 2.6 - k * 0.35, 0, 6.2832); ctx.fill();
-      }
-      ctx.font = `10px ${MONO}`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-      for (const [name, [x, y]] of Object.entries(N)) {
-        const here = !moving && ROUTE[s] === name;
-        ctx.beginPath();
-        ctx.roundRect ? ctx.roundRect(x - HW, y - HH, HW * 2, HH * 2, 4) : ctx.rect(x - HW, y - HH, HW * 2, HH * 2);
-        ctx.fillStyle = here ? paper(1) : '#050505'; ctx.fill();
-        ctx.strokeStyle = paper(here ? 1 : 0.7); ctx.lineWidth = 1; ctx.stroke();
-        ctx.fillStyle = here ? '#050505' : paper(0.85); ctx.fillText(name, x, y + 0.5);
-      }
-      ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
-    }
-    return {
-      frame(dt) {
-        t += dt;
-        if (t > DWELL + MOVE) {
-          t = 0; s++;
-          if (s === ROUTE.length - 1) s = 0;
-        }
-        draw();
-      },
-      still: draw,
-    };
-  }, { always: true });
-
   /* Krylov on GPU — C = A × B one thread block at a time: each thread of the 3×3 tile
      walks its row of A and its column of B, accumulating one entry of C */
   canvasAnim('c-krylov', (ctx, W, H) => {

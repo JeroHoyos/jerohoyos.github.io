@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blog · Estudio</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✎</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="app.css">
+<link rel="stylesheet" href="blog.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><span class="logo"><i data-i="pen"></i></span>Estudio</div>
+  <nav class="tabs" aria-label="Herramientas"><a href="./" aria-current="page">Blog</a><a href="readme.html">README</a></nav>
+  <div class="doc-title"><b id="doc-name">—</b><span class="save" id="save" data-s="saved">Guardado</span></div>
+  <div class="actions">
+    <button type="button" class="btn ghost icon" id="toggle-preview" title="Mostrar u ocultar la vista previa" aria-label="Mostrar u ocultar la vista previa" aria-pressed="true"><i data-i="panel"></i></button>
+    <a class="btn ghost" href="/" target="_blank" rel="noopener"><i data-i="external"></i>Ver web</a>
+    <button type="button" class="btn primary" id="btn-publish"><i data-i="rocket"></i>Publicar</button>
+  </div>
+</header>
+
+<div class="workspace">
+  <aside class="sidebar" aria-label="Posts">
+    <div class="sidebar-head">
+      <button type="button" class="btn primary block" id="btn-new"><i data-i="plus"></i>Nuevo post</button>
+      <label class="search"><span class="sr">Buscar posts</span><i data-i="search"></i><input type="search" id="search" placeholder="Buscar…"></label>
+    </div>
+    <div class="sidebar-list" id="posts"></div>
+    <div class="sidebar-foot" id="posts-count"></div>
+  </aside>
+
+  <section class="pane editor" id="pane-editor">
+    <div class="toolbar" role="toolbar" aria-label="Formato">
+      <button type="button" data-md="bold" title="Negrita · Ctrl+B" aria-label="Negrita"><i data-i="bold"></i></button>
+      <button type="button" data-md="italic" title="Cursiva · Ctrl+I" aria-label="Cursiva"><i data-i="italic"></i></button>
+      <button type="button" data-md="h2" title="Título de sección" aria-label="Título de sección"><i data-i="heading"></i></button>
+      <span class="sep"></span>
+      <button type="button" data-md="link" title="Enlace · Ctrl+K" aria-label="Enlace"><i data-i="link"></i></button>
+      <button type="button" data-md="image" title="Imagen (también puedes arrastrarla o pegarla)" aria-label="Imagen"><i data-i="image"></i></button>
+      <button type="button" data-md="code" title="Código" aria-label="Código"><i data-i="code"></i></button>
+      <button type="button" data-md="quote" title="Cita" aria-label="Cita"><i data-i="quote"></i></button>
+      <span class="sep"></span>
+      <button type="button" data-md="ul" title="Lista" aria-label="Lista"><i data-i="list"></i></button>
+      <button type="button" data-md="ol" title="Lista numerada" aria-label="Lista numerada"><i data-i="olist"></i></button>
+      <button type="button" data-md="math" title="Fórmula (LaTeX)" aria-label="Fórmula"><i data-i="sigma"></i></button>
+      <button type="button" data-md="table" title="Tabla" aria-label="Tabla"><i data-i="table"></i></button>
+      <span class="grow"></span>
+      <span class="count" id="count"></span>
+    </div>
+
+    <div class="doc-scroll" id="doc-scroll">
+      <div class="empty-doc" id="empty" hidden>
+        <p>Elige un post de la izquierda o crea uno nuevo.</p>
+        <button type="button" class="btn primary" data-new><i data-i="plus"></i>Nuevo post</button>
+      </div>
+
+      <article class="doc" id="doc">
+        <div class="cover" id="cover">
+          <button type="button" class="cover-drop" id="cover-drop">
+            <i data-i="image"></i><span><b>Añadir portada</b> · arrastra una imagen o haz clic</span>
+          </button>
+          <figure class="cover-img" hidden>
+            <img id="cover-img" alt="Portada del post">
+            <div class="cover-actions">
+              <button type="button" class="btn sm" id="cover-change"><i data-i="upload"></i>Cambiar</button>
+              <button type="button" class="btn sm danger" id="cover-remove"><i data-i="trash"></i>Quitar</button>
+            </div>
+          </figure>
+          <input type="file" id="cover-file" accept="image/*" hidden>
+        </div>
+
+        <label class="sr" for="f-title">Título</label>
+        <textarea id="f-title" class="t-title" rows="1" placeholder="Título del post"></textarea>
+        <label class="sr" for="f-summary">Resumen</label>
+        <textarea id="f-summary" class="t-summary" rows="1" placeholder="Resumen: una frase que aparece en la lista y al compartir"></textarea>
+
+        <div class="meta">
+          <label class="meta-date" title="Fecha"><i data-i="calendar"></i><span class="sr">Fecha</span><input type="date" id="f-date"></label>
+          <div class="chips" id="tags"><input type="text" id="tag-input" placeholder="+ etiqueta" aria-label="Añadir etiqueta (Enter)"></div>
+          <label class="switch"><input type="checkbox" id="f-draft">Borrador</label>
+          <button type="button" class="btn ghost sm" id="btn-more" aria-expanded="false"><i data-i="settings"></i>Más</button>
+        </div>
+        <div class="more" id="more" hidden>
+          <div class="row">
+            <label class="field"><span>Título en inglés <small>opcional</small></span><input type="text" id="f-title_en"></label>
+            <label class="field"><span>Resumen en inglés <small>opcional</small></span><input type="text" id="f-summary_en"></label>
+          </div>
+          <p class="hint">Dirección del post: <code id="slug"></code> · archivo <code id="file"></code></p>
+          <button type="button" class="btn sm danger" id="btn-delete"><i data-i="trash"></i>Borrar este post</button>
+        </div>
+
+        <hr class="doc-sep">
+        <label class="sr" for="body">Texto del post en Markdown</label>
+        <textarea id="body" class="t-body" spellcheck="true" placeholder="Escribe en Markdown…
+
+## Una sección
+
+Texto con **negrita**, *cursiva*, `código` y fórmulas como $e^{i\pi}+1=0$.
+Arrastra o pega imágenes aquí."></textarea>
+      </article>
+    </div>
+  </section>
+
+  <div class="splitter" id="splitter" role="separator" aria-orientation="vertical" title="Arrastra para cambiar el tamaño · doble clic para restablecer"></div>
+
+  <section class="pane preview" id="pane-preview">
+    <div class="pane-head">
+      <span class="title">Vista previa</span>
+      <div class="seg" role="group" aria-label="Tamaño de la vista previa">
+        <button type="button" data-size="desktop" aria-pressed="true"><i data-i="monitor"></i>Escritorio</button>
+        <button type="button" data-size="mobile" aria-pressed="false"><i data-i="phone"></i>Móvil</button>
+      </div>
+      <button type="button" class="btn ghost sm icon" id="open-tab" title="Abrir en una pestaña" aria-label="Abrir la vista previa en una pestaña"><i data-i="external"></i></button>
+    </div>
+    <div class="preview-body" id="preview-body"><iframe id="preview" title="Vista previa del post"></iframe></div>
+  </section>
+</div>
+
+<dialog id="dlg-new">
+  <form class="dlg" method="dialog" id="form-new">
+    <h2>Nuevo post</h2>
+    <label class="field"><span>Título</span><input type="text" id="new-title" required placeholder="Construyendo un Transformer con Rust"></label>
+    <p class="hint">Se crea como borrador. La dirección será <code id="new-slug">/blog/…/</code></p>
+    <div class="dlg-foot">
+      <button type="button" class="btn" data-close>Cancelar</button>
+      <button type="submit" class="btn primary">Crear</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="dlg-publish">
+  <div class="dlg">
+    <h2>Publicar en la web</h2>
+    <p>Genera las páginas del blog, guarda los cambios en git y los sube a GitHub. La web se actualiza en un minuto más o menos. Los borradores no se publican.</p>
+    <div class="files" id="pending"></div>
+    <label class="field"><span>Descripción del cambio</span><input type="text" id="commit-msg"></label>
+    <div class="log" id="publish-log" hidden></div>
+    <div class="dlg-foot">
+      <button type="button" class="btn" data-close>Cerrar</button>
+      <button type="button" class="btn primary" id="btn-publish-go"><i data-i="rocket"></i>Publicar</button>
+    </div>
+  </div>
+</dialog>
+
+<script type="module" src="editor.js"></script>
+</body>
+</html>

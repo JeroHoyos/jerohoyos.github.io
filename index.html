@@ -7,6 +7,7 @@
 <script>try{var l=localStorage.getItem('lang')}catch(e){}document.documentElement.lang=l||(/^es/i.test(navigator.language||'')?'es':'en')</script>
 <meta name="description" content="Jerónimo Hoyos Botero: machine learning enthusiast studying at the Universidad Nacional de Colombia. Talks, projects and drawings.">
 <meta name="theme-color" content="#050505">
+<link rel="alternate" type="application/rss+xml" title="Blog" href="https://jerohoyos.github.io/blog/feed.xml">
 <link rel="canonical" href="https://jerohoyos.github.io/">
 <link rel="icon" href="favicon.ico" sizes="32x32">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐈‍⬛</text></svg>" type="image/svg+xml">
@@ -22,7 +23,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="static/style.css?v=20261108a">
+<link rel="stylesheet" href="static/style.css?v=20261125b">
 </head>
 <body>
 <canvas id="bg" aria-hidden="true"></canvas>
@@ -102,6 +103,32 @@
         </div>
       </article>
 
+      <!-- BLOG:START (lo genera tools/blog.mjs a partir de posts/*.md; no editar a mano) -->
+      <article class="post" id="blog">
+        <header class="post-head">
+          <h2 class="post-title">~ blog ~</h2>
+          <span class="post-date">1 post</span>
+        </header>
+        <div class="post-body">
+          <a class="featured" href="blog/proximamente/">
+            <div class="proj-media"><canvas class="proj-canvas" data-cover="attention" aria-hidden="true"></canvas><span class="proj-badge"><span lang="en">LATEST</span><span lang="es">ÚLTIMO</span></span></div>
+            <div class="proj-body">
+              <span class="post-date">2026-11-25 · 1 min</span>
+              <h3 class="proj-name"><span lang="en">Coming soon</span><span lang="es">Próximamente</span></h3>
+              <p class="proj-desc"><span lang="en">I'll write here about machine learning, Rust, GPUs and statistics. The first posts are coming soon.</span><span lang="es">Aquí voy a escribir sobre machine learning, Rust, GPU y estadística. Los primeros posts llegan pronto.</span></p>
+              <div class="tags"><span class="tag">blog</span></div>
+            </div>
+          </a>
+          <a class="more" href="blog/"><span lang="en">all posts</span><span lang="es">todos los posts</span></a>
+        </div>
+      </article>
+
+
+
+
+
+      <!-- BLOG:END -->
+
       <article class="post" id="talks">
         <header class="post-head">
           <h2 class="post-title"><span lang="en">~ talks ~</span><span lang="es">~ charlas ~</span></h2>
@@ -123,6 +150,10 @@
             <li class="talk">
               <a class="talk-title" href="https://github.com/JeroHoyos/charla-git" target="_blank" rel="noopener noreferrer"><span lang="en">Introduction to Git and GitHub</span><span lang="es">Introducción a Git y GitHub</span></a>
               <span class="talk-venue"><span lang="en">Aperture research group</span><span lang="es">Semillero Aperture</span></span>
+            </li>
+            <li class="talk">
+              <a class="talk-title" href="https://github.com/JeroHoyos/charla-agentica" target="_blank" rel="noopener noreferrer"><span lang="en">From prompts to agents: AI agents with Python and LangChain</span><span lang="es">De prompts a agentes: agentes de IA con Python y LangChain</span></a>
+              <span class="talk-venue"><span lang="en">Workshop</span><span lang="es">Taller</span></span>
             </li>
           </ol>
         </div>
@@ -151,15 +182,6 @@
                 <p class="proj-desc" lang="es">Anticipa la escasez de sangre del Hospital General de Medellín con 14 días de anticipación usando XGBoost, y convierte esa señal en campañas de donación diseñadas con IA.</p>
               </div>
             </a>
-            <a class="proj" href="https://github.com/JeroHoyos/InvestigIA" target="_blank" rel="noopener noreferrer">
-              <div class="proj-media"><canvas id="c-investigia" class="proj-canvas" aria-hidden="true"></canvas></div>
-              <div class="proj-body">
-                <h3 class="proj-name">InvestigIA</h3>
-                <p class="proj-note"><span lang="en">★ 3rd place at DataHack 2026</span><span lang="es">★ 3.er lugar en DataHack 2026</span></p>
-                <p class="proj-desc" lang="en">Autonomous research assistant built with LangGraph and Ollama: academic literature analysis with fully local inference.</p>
-                <p class="proj-desc" lang="es">Asistente autónomo de investigación construido con LangGraph y Ollama: análisis de literatura académica con inferencia completamente local.</p>
-              </div>
-            </a>
             <a class="proj" href="https://github.com/JeroHoyos/VertexRS" target="_blank" rel="noopener noreferrer">
               <div class="proj-media"><div class="proj-glyph" aria-hidden="true"><div class="cube"><i></i><i></i><i></i><i></i><i></i><i></i></div></div></div>
               <div class="proj-body">
@@ -176,27 +198,6 @@
                 <p class="proj-desc" lang="es">Benchmarking de multiplicación iterativa de matrices para generar subespacios de Krylov, CPU vs GPU: estrategias tiled, coalesced y cuBLAS en CUDA.</p>
               </div>
             </a>
-            <a class="proj" href="https://github.com/JeroHoyos/mysql-vs-postgres-benchmark" target="_blank" rel="noopener noreferrer">
-              <div class="proj-media"><div class="proj-glyph" aria-hidden="true">
-                <svg class="glyph-db" viewBox="0 0 220 112">
-                  <g fill="none" stroke="currentColor" stroke-width="1.4">
-                    <ellipse cx="55" cy="16" rx="24" ry="7"/><path d="M31 16v40c0 3.9 10.7 7 24 7s24-3.1 24-7V16M31 29c0 3.9 10.7 7 24 7s24-3.1 24-7M31 42c0 3.9 10.7 7 24 7s24-3.1 24-7"/>
-                    <ellipse cx="165" cy="16" rx="24" ry="7"/><path d="M141 16v40c0 3.9 10.7 7 24 7s24-3.1 24-7V16M141 29c0 3.9 10.7 7 24 7s24-3.1 24-7M141 42c0 3.9 10.7 7 24 7s24-3.1 24-7"/>
-                  </g>
-                  <text x="110" y="42" text-anchor="middle">vs</text>
-                  <rect class="track" x="31" y="78" width="48" height="5"/><rect class="track" x="141" y="78" width="48" height="5"/>
-                  <rect class="bar" style="--to:.55" x="31" y="78" width="48" height="5"/>
-                  <rect class="bar" style="--to:.85" x="141" y="78" width="48" height="5"/>
-                  <text x="55" y="102" text-anchor="middle">mysql</text>
-                  <text x="165" y="102" text-anchor="middle">postgres</text>
-                </svg>
-              </div></div>
-              <div class="proj-body">
-                <h3 class="proj-name">mysql-vs-postgres-benchmark</h3>
-                <p class="proj-desc" lang="en">Performance comparison of MySQL and PostgreSQL on insertion and query workloads, with pandas as an in-memory reference.</p>
-                <p class="proj-desc" lang="es">Comparación de rendimiento entre MySQL y PostgreSQL en cargas de inserción y consulta, con pandas como referencia en memoria.</p>
-              </div>
-            </a>
             <a class="proj" href="https://github.com/JeroHoyos/CATlude" target="_blank" rel="noopener noreferrer">
               <div class="proj-media"><div class="proj-glyph" aria-hidden="true"><span class="glyph-cat">=^.^=</span></div></div>
               <div class="proj-body">
@@ -207,7 +208,7 @@
             </a>
           </div>
 
-          <a class="more" href="https://github.com/JeroHoyos" target="_blank" rel="noopener noreferrer"><span lang="en">more on GitHub ↗</span><span lang="es">más en GitHub ↗</span></a>
+          <a class="more" href="https://github.com/JeroHoyos" target="_blank" rel="noopener noreferrer"><span lang="en">more on GitHub</span><span lang="es">más en GitHub</span></a>
         </div>
       </article>
 
@@ -290,7 +291,8 @@
   <img alt="">
 </dialog>
 
-<script src="static/main.js?v=20261014b"></script>
+<script src="static/main.js?v=20261125b"></script>
+<script src="static/blog.js?v=20261125b"></script>
 <script src="static/oneko.js" data-cat="static/oneko.gif"></script>
 </body>
 </html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>README · Estudio</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✎</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="app.css">
+<link rel="stylesheet" href="readme.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><span class="logo"><i data-i="pen"></i></span>Estudio</div>
+  <nav class="tabs" aria-label="Herramientas"><a href="./">Blog</a><a href="readme.html" aria-current="page">README</a></nav>
+  <div class="doc-title"><i data-i="github"></i><b id="doc-name">README del perfil</b><span class="save" id="save" data-s="saved">Guardado</span></div>
+  <div class="actions">
+    <button type="button" class="btn ghost icon" id="toggle-preview" title="Mostrar u ocultar la vista previa" aria-label="Mostrar u ocultar la vista previa" aria-pressed="true"><i data-i="panel"></i></button>
+    <div class="menu">
+      <button type="button" class="btn ghost icon" data-menu aria-label="Más opciones"><i data-i="more"></i></button>
+      <div class="menu-list">
+        <button type="button" id="btn-copy"><i data-i="copy"></i>Copiar markdown</button>
+        <button type="button" id="btn-download"><i data-i="download"></i>Descargar README.md</button>
+        <a id="lnk-profile" href="https://github.com/JeroHoyos" target="_blank" rel="noopener"><i data-i="external"></i>Ver mi perfil en GitHub</a>
+        <hr>
+        <button type="button" id="btn-settings"><i data-i="settings"></i>Repositorio del perfil…</button>
+      </div>
+    </div>
+    <button type="button" class="btn primary" id="btn-publish"><i data-i="github"></i>Publicar en GitHub</button>
+  </div>
+</header>
+
+<div class="workspace">
+  <aside class="sidebar" aria-label="Bloques del README">
+    <div class="group-label" style="padding:14px 18px 6px">Bloques</div>
+    <div class="sidebar-list">
+      <ul class="outline" id="outline"></ul>
+      <div class="menu add-menu">
+        <button type="button" class="btn ghost add-btn" data-menu><i data-i="plus"></i>Añadir sección</button>
+        <div class="menu-list" style="left:0;right:auto">
+          <button type="button" data-add="text"><i data-i="text"></i><span><b>Texto</b><br><small>Un párrafo, «About me», etc.</small></span></button>
+          <button type="button" data-add="talks"><i data-i="mic"></i><span><b>Charlas</b><br><small>Evento + título + enlace</small></span></button>
+          <button type="button" data-add="projects"><i data-i="folder"></i><span><b>Proyectos</b><br><small>Tabla nombre + descripción</small></span></button>
+          <button type="button" data-add="list"><i data-i="list"></i><span><b>Lista</b><br><small>Viñetas sueltas: «Now», «Stack»…</small></span></button>
+        </div>
+      </div>
+    </div>
+    <div class="sidebar-foot">Arrastra los bloques para reordenarlos. Haz clic en la vista previa para editar esa parte.</div>
+  </aside>
+
+  <section class="pane editor" id="pane-editor">
+    <div class="pane-head" id="block-head">
+      <span class="kind" id="block-kind"></span>
+      <span class="grow"></span>
+      <button type="button" class="btn ghost sm" id="btn-hide"><i data-i="eyeOff"></i><span>Ocultar</span></button>
+      <button type="button" class="btn ghost sm danger" id="btn-del"><i data-i="trash"></i>Borrar</button>
+    </div>
+    <div class="block-scroll"><div class="block" id="block"></div></div>
+  </section>
+
+  <div class="splitter" id="splitter" role="separator" aria-orientation="vertical" title="Arrastra para cambiar el tamaño · doble clic para restablecer"></div>
+
+  <section class="pane preview" id="pane-preview">
+    <div class="pane-head">
+      <div class="seg" role="group" aria-label="Vista">
+        <button type="button" data-tab="preview" aria-pressed="true"><i data-i="eye"></i>Vista previa</button>
+        <button type="button" data-tab="code" aria-pressed="false"><i data-i="code"></i>Markdown</button>
+      </div>
+      <span class="grow"></span>
+      <div class="seg" role="group" aria-label="Tema de GitHub">
+        <button type="button" data-theme="dark" aria-pressed="true">Oscuro</button>
+        <button type="button" data-theme="light" aria-pressed="false">Claro</button>
+      </div>
+    </div>
+    <div class="gh-wrap" id="gh-wrap" data-theme="dark">
+      <article class="gh" id="gh"></article>
+      <pre class="code" id="code" hidden></pre>
+    </div>
+  </section>
+</div>
+
+<dialog id="dlg-publish">
+  <div class="dlg">
+    <h2>Publicar en GitHub</h2>
+    <p>Sube el README a <b id="dlg-repo"></b> con tu sesión de <code>gh</code>. Se ve en tu perfil al instante.</p>
+    <label class="field"><span>Descripción del cambio</span><input type="text" id="dlg-msg" value="Actualizar README"></label>
+    <div class="log" id="dlg-log" hidden></div>
+    <div class="dlg-foot">
+      <button type="button" class="btn" data-close>Cerrar</button>
+      <button type="button" class="btn primary" id="dlg-go"><i data-i="github"></i>Publicar</button>
+    </div>
+  </div>
+</dialog>
+
+<dialog id="dlg-settings">
+  <form class="dlg" method="dialog">
+    <h2>Repositorio del perfil</h2>
+    <p>El README de tu perfil vive en un repositorio con tu mismo nombre de usuario.</p>
+    <div class="row">
+      <label class="field"><span>Repositorio</span><input type="text" data-k="repo" placeholder="JeroHoyos/JeroHoyos"></label>
+      <label class="field"><span>Rama</span><input type="text" data-k="branch" placeholder="main"></label>
+    </div>
+    <div class="dlg-foot"><button type="submit" class="btn primary">Listo</button></div>
+  </form>
+</dialog>
+
+<script type="module" src="readme.js"></script>
+</body>
+</html>

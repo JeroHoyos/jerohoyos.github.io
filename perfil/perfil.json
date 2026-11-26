@@ -1,0 +1,94 @@
+{
+  "repo": "JeroHoyos/JeroHoyos",
+  "branch": "main",
+  "header": {
+    "image": "./assets/cat.gif",
+    "imageWidth": 300,
+    "imageAlt": "Pixel art cat",
+    "title": "Hi, I'm Jerónimo Hoyos Botero",
+    "subtitle": "",
+    "badgeColor": "21364D",
+    "badges": [
+      {
+        "emoji": "😼",
+        "label": "LinkedIn",
+        "url": "https://www.linkedin.com/in/jeronimo-hoyos-botero/"
+      },
+      {
+        "emoji": "😸",
+        "label": "Website",
+        "url": "https://jerohoyos.github.io"
+      },
+      {
+        "emoji": "🙀",
+        "label": "Aperture",
+        "url": "https://aperture-systems-lab.github.io/"
+      }
+    ]
+  },
+  "sections": [
+    {
+      "type": "text",
+      "title": "About me",
+      "body": "I'm a machine learning enthusiast currently studying at the Universidad Nacional de Colombia. I love cats, coding, and statistics. I sometimes give animated talks, and I coordinate Aperture, a student research group at my university."
+    },
+    {
+      "type": "talks",
+      "title": "Talks",
+      "items": [
+        {
+          "venue": "PyCon Colombia 2026",
+          "title": "Building a Transformer with Rust",
+          "url": "https://github.com/JeroHoyos/Molinete-AI"
+        },
+        {
+          "venue": "Python Medellín x Medellín AI",
+          "title": "How do neural networks work? A visual introduction",
+          "url": "https://github.com/JeroHoyos/charla-redes-neuronales"
+        },
+        {
+          "venue": "Aperture student research group",
+          "title": "Introduction to Git and GitHub",
+          "url": "https://github.com/JeroHoyos/charla-git"
+        },
+        {
+          "venue": "Workshop",
+          "title": "From prompts to agents: AI agents with Python and LangChain",
+          "url": "https://github.com/JeroHoyos/charla-agentica"
+        }
+      ]
+    },
+    {
+      "type": "projects",
+      "title": "Featured projects",
+      "items": [
+        {
+          "name": "Molinete-AI",
+          "url": "https://github.com/JeroHoyos/Molinete-AI",
+          "desc": "A GPT-2 Transformer built from scratch in Rust, trained on the works of Cervantes."
+        },
+        {
+          "name": "Sanghelios",
+          "url": "https://github.com/JeroHoyos/Sanghelios",
+          "desc": "Predicts blood shortages 14 days in advance and generates AI-designed donation campaigns."
+        },
+        {
+          "name": "VertexRS",
+          "url": "https://github.com/JeroHoyos/VertexRS",
+          "desc": "A 3D software renderer written in Rust."
+        },
+        {
+          "name": "Efficient-Krylov-Sequence-Computation-in-GPU",
+          "url": "https://github.com/JeroHoyos/Efficient-Krylov-Sequence-Computation-in-GPU",
+          "desc": "Benchmarking iterative matrix multiplication for Krylov subspace generation, CPU vs GPU with CUDA."
+        },
+        {
+          "name": "CATlude",
+          "url": "https://github.com/JeroHoyos/CATlude",
+          "desc": "A tiny coding agent, like Claude Code, but with a cat."
+        }
+      ]
+    }
+  ],
+  "footer": "Cat GIF from <a href=\"https://giphy.com/gifs/pixel-animals-cats-sZPQXNBBN7mbDALod9\">GIPHY</a>"
+}

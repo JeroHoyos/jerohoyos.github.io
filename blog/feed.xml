@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+<channel>
+  <title>Blog de Jerónimo Hoyos Botero</title>
+  <link>https://jerohoyos.github.io/blog/</link>
+  <description>Machine learning, Rust, GPU y estadística.</description>
+  <item>
+    <title>Próximamente</title>
+    <link>https://jerohoyos.github.io/blog/proximamente/</link>
+    <guid>https://jerohoyos.github.io/blog/proximamente/</guid>
+    <pubDate>Wed, 25 Nov 2026 12:00:00 GMT</pubDate>
+    <description>Aquí voy a escribir sobre machine learning, Rust, GPU y estadística. Los primeros posts llegan pronto.</description>
+  </item>
+</channel>
+</rss>

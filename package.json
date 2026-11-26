@@ -1,0 +1,11 @@
+{
+  "name": "jerohoyos.github.io",
+  "private": true,
+  "type": "module",
+  "description": "Sitio personal + blog. Sin dependencias: solo Node 18+.",
+  "scripts": {
+    "escribir": "node tools/editor.mjs",
+    "blog": "node tools/blog.mjs",
+    "blog:borradores": "node tools/blog.mjs --borradores"
+  }
+}

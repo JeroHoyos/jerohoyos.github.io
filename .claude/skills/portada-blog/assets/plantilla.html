@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Portada</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;width:1600px;height:686px;overflow:hidden;background:#050505}
+  .lienzo{position:relative;width:1600px;height:686px;
+    background-color:#050505;
+    background-image:linear-gradient(rgba(244,244,239,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(244,244,239,.08) 1px,transparent 1px);
+    background-size:16px 16px;background-position:center}
+  svg{position:absolute;inset:0;width:100%;height:100%}
+  .nota{font:16px 'Space Mono',monospace;fill:rgba(244,244,239,.6)}
+  .nota-grande{font:28px 'Space Mono',monospace;fill:rgba(244,244,239,.85)}
+</style>
+</head>
+<body>
+<div class="lienzo"><svg id="s" viewBox="0 0 1600 686" xmlns="http://www.w3.org/2000/svg"></svg></div>
+<script>
+  // ── utilidades ──
+  const svg = document.getElementById('s');
+  const papel = a => `rgba(244,244,239,${a})`;
+  const AMBAR = '#ffb35c';
+  const hash = (a, b = 0) => { const x = Math.sin(a * 127.1 + b * 311.7) * 43758.5453; return x - Math.floor(x); };
+  const el = (tag, attrs, text) => {
+    const e = document.createElementNS('http://www.w3.org/2000/svg', tag);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    if (text) e.textContent = text;
+    return svg.appendChild(e);
+  };
+
+  // ── EJEMPLO: matriz de atención con máscara causal (reemplázalo por el motivo del post) ──
+  const n = 14, s = 38, x0 = 1600 / 2 - (n * s) / 2 + 220, y0 = (686 - n * s) / 2;
+  for (let i = 0; i < n; i++) {
+    const e = [];
+    for (let j = 0; j <= i; j++) e.push(Math.exp(hash(i, j) * 3 + (j === i ? 1 : 0)));
+    const S = e.reduce((a, b) => a + b, 0);
+    for (let j = 0; j < n; j++) {
+      const a = j > i ? 0.05 : 0.12 + Math.sqrt(e[j] / S) * 0.88;
+      el('rect', { x: x0 + j * s + 2, y: y0 + i * s + 2, width: s - 4, height: s - 4, fill: papel(a) });
+    }
+  }
+  el('rect', { x: x0 - 3, y: y0 + 9 * s, width: n * s + 6, height: s, fill: 'none', stroke: AMBAR, 'stroke-width': 2 });
+  el('text', { x: x0, y: y0 - 18, class: 'nota' }, 'softmax(QKᵀ / √d)');
+  el('text', { x: x0 + n * s, y: y0 + n * s + 34, class: 'nota', 'text-anchor': 'end' }, 'máscara causal · fila 9');
+</script>
+</body>
+</html>

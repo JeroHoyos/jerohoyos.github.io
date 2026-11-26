@@ -12,4 +12,5 @@ env/
 .DS_Store
 Thumbs.db
 desktop.ini
-.claude/
+.claude/*
+!.claude/skills/
